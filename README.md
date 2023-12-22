@@ -5,5 +5,5 @@ Hello, this is the root page of the website.
 - [/ClientDJ](https://mdj0126.github.io/ClientDJ/)
 - [/Portfolio](https://mdj0126.github.io/Portfolio/)
 
-### Contect
-- email: ehdwns0126@naver.com
+### robots.txt
+Please note that a robots.txt file has been implemented on all pages of this site, disallowing search engine indexing.
