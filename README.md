@@ -1,4 +1,5 @@
 # mdj0126.github.io
+<img src="https://avatars.githubusercontent.com/u/83164393?v=4" alt="github_profile" width="250px" height="auto">
 Hello, this is the root page of the website.
 
 ### Here is a list of subpages
