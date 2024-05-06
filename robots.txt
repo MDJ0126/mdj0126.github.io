@@ -1,3 +1,2 @@
-# 주석 처리함
-# User-agent: *
-# Disallow: /
+User-agent: *
+Disallow: /
