@@ -40,8 +40,7 @@ jobs:
           bundler-cache: true
           working-directory: Resume
       - name: Build with Jekyll
-        working-directory: Resume
-        run: bundle exec jekyll build --destination ../_site/Resume --trace
+        run: bundle exec jekyll build --config _config.yml --destination _site/Resume --trace
       - name: Add root page
         run: |
           cp index.html _site/index.html

@@ -7,7 +7,7 @@ portfolio_root = File.join(project_root, 'Portfolio')
 local_site = File.join(project_root, '.local-site')
 
 def source_files(project_root, resume_root, portfolio_root)
-  root_files = %w[index.html 403.html 404.html robots.txt].map { |name| File.join(project_root, name) }
+  root_files = %w[_config.yml index.html 403.html 404.html robots.txt].map { |name| File.join(project_root, name) }
   nested_files = [resume_root, portfolio_root].flat_map do |root|
     Dir.glob(File.join(root, '**', '*'), File::FNM_DOTMATCH).select do |path|
       normalized = path.tr('\\', '/')
@@ -27,7 +27,7 @@ end
 def build_site(project_root, resume_root, portfolio_root, local_site)
   puts "\nChange detected. Rebuilding local site..."
   resume_destination = File.join(local_site, 'Resume')
-  success = system('bundle', 'exec', 'jekyll', 'build', '--source', resume_root, '--destination', resume_destination)
+  success = system('bundle', 'exec', 'jekyll', 'build', '--config', File.join(project_root, '_config.yml'), '--destination', resume_destination)
   unless success
     warn 'Jekyll build failed. Waiting for the next change.'
     return false
