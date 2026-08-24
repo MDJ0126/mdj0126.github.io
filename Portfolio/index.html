@@ -1,106 +1,15 @@
-<!doctype html>
-<html lang="ko">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script>document.documentElement.classList.add('page-loading');</script>
-    <meta name="robots" content="noindex, nofollow">
-    <title>문동준 포트폴리오</title>
-    <meta name="description" content="게임 클라이언트 개발자 문동준의 포트폴리오입니다.">
-    <meta property="og:type" content="profile">
-    <meta property="og:url" content="https://mdj0126.github.io/Portfolio/">
-    <meta property="og:title" content="문동준 | Portfolio">
-    <meta property="og:description" content="게임 클라이언트 개발자 문동준의 포트폴리오">
-    <meta property="og:image" content="https://mdj0126.github.io/Resume/assets/img/picture/profile-og.png?v=20260824">
-    <meta property="og:image:secure_url" content="https://mdj0126.github.io/Resume/assets/img/picture/profile-og.png?v=20260824">
-    <meta property="og:image:width" content="1731">
-    <meta property="og:image:height" content="908">
-    <meta property="og:image:alt" content="게임 클라이언트 개발자 문동준">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="문동준 | Portfolio">
-    <meta name="twitter:description" content="게임 클라이언트 개발자 문동준의 포트폴리오">
-    <meta name="twitter:image" content="https://mdj0126.github.io/Resume/assets/img/picture/profile-og.png?v=20260824">
-    <link rel="icon" type="image/x-icon" href="/favicon.ico?v=20260824">
-    <link rel="stylesheet" href="/assets/css/site-overlays.css">
-    <style>
-      @font-face{font-family:"Noto Sans KR";src:url("/Resume/assets/font/NotoSansKR.woff2") format("woff2");font-weight:100 900;font-display:swap}
-      *{box-sizing:border-box}
-      body{display:flex;min-height:100vh;align-items:center;justify-content:center;margin:0;padding:24px;background:#f0f0f0;color:#222;font-family:"Noto Sans KR","Malgun Gothic",sans-serif;text-align:center}
-      .page-loading{overflow:hidden}
-      .loading-screen{position:fixed;z-index:9999;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:18px;background:#f0f0f0;opacity:1;transition:opacity .2s ease}
-      .loading-screen.is-hidden{pointer-events:none;opacity:0}
-      .loading-document{width:48px;height:62px;padding:12px 9px;border:1px solid #777;background:#fff;box-shadow:0 3px 9px rgba(0,0,0,.1)}
-      .loading-document span{display:block;height:2px;margin-bottom:7px;background:#aaa;animation:loading-line 1.2s ease-in-out infinite}
-      .loading-document span:nth-child(2){width:72%;animation-delay:.12s}
-      .loading-document span:nth-child(3){width:88%;animation-delay:.24s}
-      .loading-document span:nth-child(4){width:60%;animation-delay:.36s}
-      .loading-message{display:flex;width:min(390px,calc(100vw - 40px));min-height:62px;margin:0;flex-direction:column;justify-content:center;gap:8px;color:#333;font-size:15px;font-weight:400;line-height:1.6;text-align:center}
-      .greeting-line{display:block;opacity:0;transform:translate3d(0,8px,0);transition:opacity .4s ease,transform .4s ease}
-      .greeting-line.is-visible{opacity:1;transform:translate3d(0,0,0)}
-      .experience-highlight{color:#f5821f;font-style:normal;font-weight:700}
-      .loading-name{color:#111;font-weight:700}
-      @keyframes loading-line{0%,100%{opacity:.25}50%{opacity:1}}
-      .home-back{position:fixed;z-index:100;top:18px;left:18px;display:flex;width:44px;height:44px;align-items:center;justify-content:center;text-decoration:none;opacity:.78;transition:opacity .18s ease,transform .18s ease}
-      .home-back img{display:block;width:32px;height:32px}
-      .home-back:hover{opacity:1;transform:translateX(-3px)}
-      .home-back:focus-visible{outline:2px solid #aaa;outline-offset:1px}
-      @media(max-width:680px){.home-back{top:8px;left:6px}}
-      h1{margin:0 0 8px;font-size:22px}
-      p{margin:0 0 22px;color:#666;font-size:13px}
-      main>a{display:inline-block;padding:12px 18px;border:1px solid #333;background:#fff;color:#222;font-size:12px;font-weight:600;text-decoration:none}
-      main>a:hover{background:#222;color:#fff}
-    </style>
-  </head>
-  <body>
-    <div class="loading-screen" id="loading-screen" role="status" aria-live="polite">
-      <div class="loading-document" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
-      <p class="loading-message">
-        <span class="greeting-line">안녕하세요.</span>
-        <span class="greeting-line"><em class="experience-highlight">8년 차</em> 게임 클라이언트 프로그래머 <strong class="loading-name">문동준</strong>입니다.</span>
-      </p>
-    </div>
-    <a class="home-back" href="/" aria-label="메인 페이지로 돌아가기"><img src="/Resume/assets/img/common/back-arrow.svg" alt="" width="32" height="32"></a>
-    <main>
-      <h1>Portfolio</h1>
-      <p>포트폴리오 페이지를 준비하고 있습니다.</p>
-      <a href="/">메인으로 돌아가기</a>
-    </main>
-    <script src="/assets/js/site-overlays.js"></script>
-    <script>
-      (function () {
-        var finished = false;
-        var greetingStarted = false;
-
-        function finishLoading() {
-          if (finished) return;
-          finished = true;
-          requestAnimationFrame(function () {
-            document.documentElement.classList.remove('page-loading');
-            var screen = document.getElementById('loading-screen');
-            if (!screen) return;
-            screen.classList.add('is-hidden');
-            setTimeout(function () { screen.remove(); }, 220);
-          });
-        }
-
-        function showGreeting() {
-          if (greetingStarted || finished) return;
-          greetingStarted = true;
-          var lines = document.querySelectorAll('.greeting-line');
-          lines.forEach(function (line, index) {
-            setTimeout(function () { line.classList.add('is-visible'); }, index * 350);
-          });
-          setTimeout(finishLoading, ((lines.length - 1) * 350) + 1000);
-        }
-
-        window.addEventListener('load', function () {
-          var fonts = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
-          fonts.then(function () {
-            requestAnimationFrame(function () { requestAnimationFrame(showGreeting); });
-          });
-        });
-        setTimeout(finishLoading, 7000);
-      })();
-    </script>
-  </body>
-</html>
+---
+layout: default
+title: 포트폴리오
+---
+<header class="portfolio-header"><small>PORTFOLIO</small><h1>문동준 포트폴리오</h1><p>개인 프로젝트와 문제 해결 과정을 기록합니다.</p></header>
+<section class="portfolio-section" aria-labelledby="personal-projects-title">
+  {% assign projects = site.posts | where: "category", "personal-projects" | sort: "order" %}
+  <div class="section-heading"><div><small>SECTION 01</small><h2 id="personal-projects-title">개인 프로젝트</h2></div><span>{{ projects | size }} POSTS</span></div>
+  <div class="post-grid">{% for post in projects %}{% include post-card.html post=post %}{% endfor %}</div>
+</section>
+<section class="portfolio-section" aria-labelledby="coding-tests-title">
+  {% assign tests = site.posts | where: "category", "coding-tests" | sort: "order" %}
+  <div class="section-heading"><div><small>SECTION 02</small><h2 id="coding-tests-title">코딩 테스트 게시물</h2></div><span>{{ tests | size }} POSTS</span></div>
+  <div class="post-grid">{% for post in tests %}{% include post-card.html post=post %}{% endfor %}</div>
+</section>

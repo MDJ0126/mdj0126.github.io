@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  {% unless page.category_label %}<script>try{if(sessionStorage.getItem('portfolio-loading-shown')==='true'){document.documentElement.classList.add('portfolio-skip-loading')}else{sessionStorage.setItem('portfolio-loading-shown','true');document.documentElement.classList.add('page-loading')}}catch(e){document.documentElement.classList.add('page-loading')}</script>{% endunless %}
+  <meta name="robots" content="noindex,nofollow">
+  <title>{{ page.title }} · 문동준 포트폴리오</title>
+  <link rel="stylesheet" href="{{ '/assets/css/portfolio.css' | relative_url }}">
+  {% unless page.category_label %}<link rel="stylesheet" href="{{ '/assets/css/loading.css' | relative_url }}">{% endunless %}
+  <link rel="stylesheet" href="/assets/css/site-overlays.css">
+</head>
+<body>
+  {% unless page.category_label %}
+  <div class="loading-screen" id="loading-screen" role="status" aria-live="polite">
+    <div class="loading-document" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+    <p class="loading-message"><span class="greeting-line">안녕하세요.</span><span class="greeting-line"><em class="experience-highlight">8년 차</em> 게임 클라이언트 프로그래머 <strong class="loading-name">문동준</strong>입니다.</span></p>
+  </div>
+  {% endunless %}
+  {% if page.category_label %}
+  <a class="home-back" href="{{ '/' | relative_url }}" aria-label="포트폴리오 목록으로 돌아가기"><img src="/Resume/assets/img/common/back-arrow.svg" alt="" width="32" height="32"></a>
+  {% else %}
+  <span class="home-back is-disabled" aria-hidden="true" style="display:none"><img src="/Resume/assets/img/common/back-arrow.svg" alt="" width="32" height="32"></span>
+  {% endif %}
+  <main class="portfolio-shell">{{ content }}</main>
+  <script src="/assets/js/site-overlays.js"></script>
+  {% unless page.category_label %}<script src="{{ '/assets/js/loading.js' | relative_url }}"></script>{% endunless %}
+</body>
+</html>

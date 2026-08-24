@@ -1,0 +1,1 @@
+<a class="post-card" href="{{ include.post.url | relative_url }}"><small>{{ include.post.category_label }}</small><h3>{{ include.post.title }}</h3><p>{{ include.post.summary }}</p><div class="post-card-footer"><span>{% if include.post.date %}{{ include.post.date | date: "%Y.%m.%d" }}{% endif %}</span><strong>게시물 보기 →</strong></div></a>

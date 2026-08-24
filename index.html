@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script>document.documentElement.classList.add('page-loading');</script>
+    <script>try{if(sessionStorage.getItem('root-loading-shown')==='true'){document.documentElement.classList.add('root-skip-loading')}else{sessionStorage.setItem('root-loading-shown','true');document.documentElement.classList.add('page-loading')}}catch(e){document.documentElement.classList.add('page-loading')}</script>
     <meta name="robots" content="noindex, nofollow">
     <title>문동준</title>
     <meta name="description" content="게임 클라이언트 개발자 문동준의 이력서와 포트폴리오입니다.">
@@ -36,6 +36,7 @@
       *{box-sizing:border-box}
       body{display:flex;min-height:100vh;align-items:center;margin:0;background:#f0f0f0;color:#222;font-family:"Noto Sans KR","Malgun Gothic",sans-serif}
       .page-loading{overflow:hidden}
+      .root-skip-loading .loading-screen{display:none}
       .loading-screen{position:fixed;z-index:9999;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:18px;background:#f0f0f0;opacity:1;transition:opacity .2s ease}
       .loading-screen.is-hidden{pointer-events:none;opacity:0}
       .loading-document{width:48px;height:62px;padding:12px 9px;border:1px solid #777;background:#fff;box-shadow:0 3px 9px rgba(0,0,0,.1)}
@@ -73,6 +74,11 @@
       nav a:hover{background:#222;color:#fff}
       nav a:hover small{color:#f5821f}
       nav a:hover span{color:#ccc}
+      nav a.is-disabled{cursor:not-allowed}
+      nav a.is-disabled:hover{background:#e7e7e7;color:#777}
+      nav a.is-disabled:hover small{color:#f5821f}
+      nav a.is-disabled:hover span{color:#888}
+      nav a strong em{margin-left:6px;color:#999;font-size:10px;font-style:normal;font-weight:500}
       @media(max-width:680px){main{width:100%;max-width:none;margin:auto 0;padding:14px}.github-profile{width:112px;height:112px;margin-bottom:18px}.headline{margin:12px 0 18px;gap:8px}h1{font-size:17px}.admin-icon{width:28px;height:28px;flex-basis:28px;font-size:16px}.intro{margin-bottom:8px;padding:18px 22px}.intro p{font-size:12px;line-height:1.8}nav{grid-template-columns:1fr;gap:8px}nav a{min-height:92px;padding:18px 22px}nav a span{right:20px;bottom:16px}}
     </style>
   </head>
@@ -105,16 +111,29 @@
           <strong>이력서 보기</strong>
           <span>페이지 열기 →</span>
         </a>
-        <a href="/Portfolio/">
+        <a class="is-disabled" data-local-href="/Portfolio/" aria-disabled="true" tabindex="-1">
           <small>PORTFOLIO</small>
-          <strong>포트폴리오 보기</strong>
-          <span>페이지 열기 →</span>
+          <strong>포트폴리오 보기 <em class="portfolio-status">준비 중</em></strong>
+          <span class="portfolio-action">접근 불가</span>
         </a>
       </nav>
     </main>
     <script src="/assets/js/site-overlays.js"></script>
     <script>
       (function () {
+        var localHosts = ['localhost', '127.0.0.1', '0.0.0.0', '[::1]'];
+        var portfolioLink = document.querySelector('[data-local-href]');
+        if (portfolioLink && localHosts.indexOf(window.location.hostname) !== -1) {
+          portfolioLink.href = portfolioLink.getAttribute('data-local-href');
+          portfolioLink.classList.remove('is-disabled');
+          portfolioLink.removeAttribute('aria-disabled');
+          portfolioLink.removeAttribute('tabindex');
+          var portfolioStatus = portfolioLink.querySelector('.portfolio-status');
+          var portfolioAction = portfolioLink.querySelector('.portfolio-action');
+          if (portfolioStatus) portfolioStatus.style.display = 'none';
+          if (portfolioAction) portfolioAction.textContent = '페이지 열기 →';
+        }
+
         var profileLink = document.querySelector('.github-profile');
         var profileGuide = document.getElementById('github-profile-guide');
         var profileResetTimer;
@@ -173,13 +192,17 @@
           setTimeout(finishLoading, ((lines.length - 1) * 350) + 1000);
         }
 
-        window.addEventListener('load', function () {
-          var fonts = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
-          fonts.then(function () {
-            requestAnimationFrame(function () { requestAnimationFrame(showGreeting); });
+        if (document.documentElement.classList.contains('root-skip-loading')) {
+          finishLoading();
+        } else {
+          window.addEventListener('load', function () {
+            var fonts = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
+            fonts.then(function () {
+              requestAnimationFrame(function () { requestAnimationFrame(showGreeting); });
+            });
           });
-        });
-        setTimeout(finishLoading, 7000);
+          setTimeout(finishLoading, 7000);
+        }
       })();
     </script>
   </body>

@@ -49,7 +49,8 @@ jobs:
           cp robots.txt _site/robots.txt
           cp -R assets _site/assets
           cp Resume/assets/img/common/favicon.ico _site/favicon.ico
-          cp -R Portfolio _site/Portfolio
+          mkdir -p _site/Portfolio
+          cp Portfolio/production.html _site/Portfolio/index.html
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
 

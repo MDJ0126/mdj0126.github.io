@@ -7,7 +7,7 @@
   </p>
 </div>
 {% if site.public == false %}{% include private_notice.html %}{% else %}{{ content }}{% endif %}
-<a class="home-back" href="/" aria-label="메인 페이지로 돌아가기"><img src="{{ '/assets/img/common/back-arrow.svg' | relative_url }}" alt="" width="32" height="32"></a>
+<span class="home-back is-disabled" aria-hidden="true" style="display:none"><img src="{{ '/assets/img/common/back-arrow.svg' | relative_url }}" alt="" width="32" height="32"></span>
 <link rel="stylesheet" href="/assets/css/site-overlays.css">
 <script src="/assets/js/site-overlays.js"></script>
 <script>
@@ -64,11 +64,15 @@
     setTimeout(finishLoading, ((lines.length - 1) * 350) + 1000);
   }
 
-  window.addEventListener('load', function () {
-    var fonts = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
-    fonts.then(function () { requestAnimationFrame(function () { requestAnimationFrame(showGreeting); }); });
-  });
-  setTimeout(finishLoading, 7000);
+  if (document.documentElement.classList.contains('resume-skip-loading')) {
+    finishLoading();
+  } else {
+    window.addEventListener('load', function () {
+      var fonts = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
+      fonts.then(function () { requestAnimationFrame(function () { requestAnimationFrame(showGreeting); }); });
+    });
+    setTimeout(finishLoading, 7000);
+  }
 })();
 </script>
 </body></html>
