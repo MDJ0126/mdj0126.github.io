@@ -51,7 +51,7 @@
     separator.textContent = '·';
 
     var copyright = document.createElement('small');
-    copyright.textContent = 'Copyright © 2025 Moon Dongjun. All rights reserved.';
+    copyright.textContent = 'Copyright © 2018 Moon Dongjun. All rights reserved.';
 
     footer.appendChild(license);
     footer.appendChild(separator);
