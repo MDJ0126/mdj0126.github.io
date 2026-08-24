@@ -38,7 +38,7 @@ jobs:
         with:
           ruby-version: "3.1"
           bundler-cache: true
-          working-directory: Resume
+          working-directory: .
       - name: Build with Jekyll
         run: bundle exec jekyll build --config _config.yml --destination _site/Resume --trace
       - name: Add root page

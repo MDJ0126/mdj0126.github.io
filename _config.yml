@@ -33,6 +33,8 @@ linkedin: "https://www.linkedin.com/in/moondongjun/"
 exclude:
   - LICENSE
   - README.md
+  - vendor
+  - vendor/bundle
 
 sass:
   sass_dir: _sass
