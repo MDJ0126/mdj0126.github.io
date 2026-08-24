@@ -47,6 +47,7 @@ jobs:
           cp 403.html _site/403.html
           cp 404.html _site/404.html
           cp robots.txt _site/robots.txt
+          cp -R assets _site/assets
           cp Resume/assets/img/common/favicon.ico _site/favicon.ico
           cp -R Portfolio _site/Portfolio
       - name: Upload artifact

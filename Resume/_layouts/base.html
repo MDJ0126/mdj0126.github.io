@@ -8,11 +8,8 @@
 </div>
 {% if site.public == false %}{% include private_notice.html %}{% else %}{{ content }}{% endif %}
 <a class="home-back" href="/" aria-label="메인 페이지로 돌아가기"><img src="{{ '/assets/img/common/back-arrow.svg' | relative_url }}" alt="" width="32" height="32"></a>
-{% unless site.public == false %}
-<div class="utility-actions" aria-label="바로가기">
-  {% include coffeeChat.html %}
-</div>
-{% endunless %}
+<link rel="stylesheet" href="/assets/css/site-overlays.css">
+<script src="/assets/js/site-overlays.js"></script>
 <script>
 (function () {
   var scrollKey = 'resume-scroll:' + window.location.pathname;

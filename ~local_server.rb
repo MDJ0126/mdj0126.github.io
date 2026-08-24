@@ -14,7 +14,8 @@ def source_files(project_root, resume_root, portfolio_root)
       File.file?(path) && !normalized.include?('/.jekyll-cache/') && !normalized.include?('/.sass-cache/') && !normalized.end_with?('/.jekyll-metadata')
     end
   end
-  root_files.concat(nested_files).select { |path| File.file?(path) }
+  shared_assets = Dir.glob(File.join(project_root, 'assets', '**', '*')).select { |path| File.file?(path) }
+  root_files.concat(nested_files, shared_assets).select { |path| File.file?(path) }
 end
 
 def snapshot(project_root, resume_root, portfolio_root)
@@ -38,6 +39,8 @@ def build_site(project_root, resume_root, portfolio_root, local_site)
   FileUtils.cp(File.join(project_root, '403.html'), File.join(local_site, '403.html'))
   FileUtils.cp(File.join(project_root, '404.html'), File.join(local_site, '404.html'))
   FileUtils.cp(File.join(project_root, 'robots.txt'), File.join(local_site, 'robots.txt'))
+  FileUtils.rm_rf(File.join(local_site, 'assets'))
+  FileUtils.cp_r(File.join(project_root, 'assets'), File.join(local_site, 'assets'))
   FileUtils.cp(File.join(resume_root, 'assets', 'img', 'common', 'favicon.ico'), File.join(local_site, 'favicon.ico'))
   FileUtils.rm_rf(File.join(local_site, 'Portfolio'))
   FileUtils.cp_r(portfolio_root, File.join(local_site, 'Portfolio'))

@@ -30,6 +30,7 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-6GHV7BHE5J"></script>
     <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-6GHV7BHE5J');</script>
     <link rel="icon" type="image/x-icon" href="/favicon.ico?v=20260824">
+    <link rel="stylesheet" href="/assets/css/site-overlays.css">
     <style>
       @font-face{font-family:"Noto Sans KR";src:url("/Resume/assets/font/NotoSansKR.woff2") format("woff2");font-weight:100 900;font-display:swap}
       *{box-sizing:border-box}
@@ -53,11 +54,14 @@
       .github-profile img{display:block;width:100%;height:100%;border-radius:inherit;object-fit:cover}
       .github-profile:hover{transform:translateY(-3px);box-shadow:0 7px 20px rgba(0,0,0,.2)}
       .github-profile:focus-visible{outline:2px solid #f5821f;outline-offset:4px}
-      .admin-link{position:fixed;z-index:100;right:18px;bottom:18px;display:flex;width:44px;height:44px;align-items:center;justify-content:center;border:1px solid #aaa;background:#fff;color:#222;font-size:17px;text-decoration:none;box-shadow:0 3px 10px rgba(0,0,0,.12);transition:background .18s ease,color .18s ease,transform .18s ease}
-      .admin-link:hover{background:#222;color:#f5821f;transform:translateY(-2px)}
-      .admin-link:focus-visible{outline:2px solid #f5821f;outline-offset:3px}
-      h1{margin:0 0 18px;font-size:20px;font-weight:700}
+      .github-profile-guide{position:fixed;z-index:10001;top:0;left:0;display:block;width:max-content;max-width:calc(100vw - 24px);padding:9px 12px;background:#222;color:#fff;font-size:11px;font-weight:500;line-height:1.5;text-align:center;visibility:hidden;opacity:0;pointer-events:none;transition:opacity .12s ease}
+      .github-profile-guide.is-visible{visibility:visible;opacity:1}
+      .headline{display:flex;margin:0 0 18px;align-items:center;justify-content:space-between;gap:16px}
+      h1{margin:0;font-size:20px;font-weight:700}
       h1 .experience{color:#f5821f}
+      .admin-icon{display:flex;width:32px;height:32px;flex:0 0 32px;align-items:center;justify-content:center;border:0;background:transparent;color:#888;font-size:18px;text-decoration:none;transition:color .18s ease,transform .18s ease}
+      .admin-icon:hover{color:#222;transform:rotate(25deg)}
+      .admin-icon:focus-visible{outline:2px solid #f5821f;outline-offset:2px}
       .intro{display:flex;min-height:112px;margin-bottom:12px;flex-direction:column;justify-content:center;padding:22px 28px;border:0;background:#fff;box-shadow:0 3px 14px rgba(0,0,0,.12)}
       .intro small{display:block;margin-bottom:3px;color:#f5821f;font-size:9px;font-weight:600;letter-spacing:.1em}
       .intro p{margin:0;color:#444;font-size:13px;line-height:1.85}
@@ -69,7 +73,7 @@
       nav a:hover{background:#222;color:#fff}
       nav a:hover small{color:#f5821f}
       nav a:hover span{color:#ccc}
-      @media(max-width:680px){main{width:100%;max-width:none;margin:auto 0;padding:14px}.github-profile{width:112px;height:112px;margin-bottom:18px}.admin-link{right:12px;bottom:12px;width:40px;height:40px}h1{margin:12px 0 18px;font-size:17px}.intro{margin-bottom:8px;padding:18px 22px}.intro p{font-size:12px;line-height:1.8}nav{grid-template-columns:1fr;gap:8px}nav a{min-height:92px;padding:18px 22px}nav a span{right:20px;bottom:16px}}
+      @media(max-width:680px){main{width:100%;max-width:none;margin:auto 0;padding:14px}.github-profile{width:112px;height:112px;margin-bottom:18px}.headline{margin:12px 0 18px;gap:8px}h1{font-size:17px}.admin-icon{width:28px;height:28px;flex-basis:28px;font-size:16px}.intro{margin-bottom:8px;padding:18px 22px}.intro p{font-size:12px;line-height:1.8}nav{grid-template-columns:1fr;gap:8px}nav a{min-height:92px;padding:18px 22px}nav a span{right:20px;bottom:16px}}
     </style>
   </head>
   <body>
@@ -81,10 +85,14 @@
       </p>
     </div>
     <main>
-      <a class="github-profile" href="https://github.com/MDJ0126/" aria-label="문동준 GitHub 프로필로 이동">
+      <a class="github-profile" href="https://github.com/MDJ0126/" aria-label="문동준 GitHub 프로필로 이동" aria-describedby="github-profile-guide">
         <img src="https://github.com/MDJ0126.png?size=312" alt="문동준 GitHub 프로필 이미지" width="156" height="156">
       </a>
-      <h1>안녕하세요. <strong class="experience">8년 차</strong> 게임 클라이언트 프로그래머 <strong>문동준</strong>입니다.</h1>
+      <span class="github-profile-guide" id="github-profile-guide" role="status" aria-live="polite">한 번 더 누르면 GitHub 프로필로 이동합니다.</span>
+      <div class="headline">
+        <h1>안녕하세요. <strong class="experience">8년 차</strong> 게임 클라이언트 프로그래머 <strong>문동준</strong>입니다.</h1>
+        <a class="admin-icon" href="https://resume-analytics-dashboard.ehdwns0126.workers.dev" target="_blank" rel="noopener" aria-label="관리 페이지 열기" title="사이트 관리" onclick="try { localStorage.setItem('exclude_analytics', 'true'); } catch (e) {}">⚙️</a>
+      </div>
       <section class="intro" aria-labelledby="intro-title">
         <small id="intro-title">ABOUT ME</small>
         <p>Unity 기반 3개 프로젝트의 초기 개발부터 글로벌 출시, 라이브 서비스까지 함께했습니다.<br>
@@ -104,9 +112,42 @@
         </a>
       </nav>
     </main>
-    <a class="admin-link" href="https://resume-analytics-dashboard.ehdwns0126.workers.dev" target="_blank" rel="noopener" aria-label="관리 페이지 열기" onclick="try { localStorage.setItem('exclude_analytics', 'true'); } catch (e) {}">⚙️</a>
+    <script src="/assets/js/site-overlays.js"></script>
     <script>
       (function () {
+        var profileLink = document.querySelector('.github-profile');
+        var profileGuide = document.getElementById('github-profile-guide');
+        var profileResetTimer;
+
+        function hideProfileGuide() {
+          profileLink.classList.remove('is-confirming');
+          if (profileGuide) profileGuide.classList.remove('is-visible');
+        }
+
+        if (profileLink) {
+          profileLink.addEventListener('click', function (event) {
+            if (profileLink.classList.contains('is-confirming')) return;
+            event.preventDefault();
+            profileLink.classList.add('is-confirming');
+            if (profileGuide) {
+              var gap = 14;
+              var rect = profileGuide.getBoundingClientRect();
+              var x = Math.min(event.clientX + gap, window.innerWidth - rect.width - 12);
+              var y = event.clientY + gap;
+              if (y + rect.height > window.innerHeight - 12) y = event.clientY - rect.height - gap;
+              profileGuide.style.left = Math.max(12, x) + 'px';
+              profileGuide.style.top = Math.max(12, y) + 'px';
+              profileGuide.classList.add('is-visible');
+            }
+            clearTimeout(profileResetTimer);
+            profileResetTimer = setTimeout(hideProfileGuide, 4000);
+          });
+          document.addEventListener('click', function (event) {
+            if (!profileLink.contains(event.target)) hideProfileGuide();
+          });
+          profileLink.addEventListener('blur', hideProfileGuide);
+        }
+
         var finished = false;
         var greetingStarted = false;
 
