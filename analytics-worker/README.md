@@ -1,6 +1,6 @@
-# Resume Analytics Dashboard
+# Site Analytics Dashboard
 
-본인 Google 계정만 접근 가능한 GA4 대시보드용 Cloudflare Worker입니다.
+루트 사이트에서 사용하는 본인 Google 계정 전용 GA4 관리 대시보드 Cloudflare Worker입니다.
 
 ## Google 설정
 
@@ -12,7 +12,7 @@
 
 ## Cloudflare 배포
 
-`analytics-worker` 폴더에서 아래 명령을 실행합니다.
+저장소 루트의 `analytics-worker` 폴더에서 아래 명령을 실행합니다.
 
 ```powershell
 npx wrangler login

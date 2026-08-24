@@ -79,15 +79,6 @@
     background-color: #fae100;
 }
 
-.admin-fab {
-    bottom: 24px;
-
-    &:link,
-    &:visited {
-        color: #333;
-    }
-}
-
 @media (max-width: $mobile-width) {
     .theme-toggle {
         bottom: 64px;
@@ -100,22 +91,12 @@
     .coffee-chat-fab {
         bottom: 160px;
     }
-
-    .admin-fab {
-        bottom: 16px;
-    }
 }
 
 html.dark {
     .theme-toggle,
-    .pdf-btn,
-    .admin-fab {
+    .pdf-btn {
         background-color: #2a2c31;
-        color: #eaeaea;
-    }
-
-    .admin-fab:link,
-    .admin-fab:visited {
         color: #eaeaea;
     }
 }

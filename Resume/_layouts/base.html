@@ -6,13 +6,13 @@
     <span class="greeting-line"><em class="experience-highlight">8년차</em> 게임 클라이언트 프로그래머 <strong class="loading-name">문동준</strong>입니다.</span>
   </p>
 </div>
-{% if site.public %}{{ content }}{% else %}{% include private_notice.html %}{% endif %}
-{% if site.public %}
+{% if site.public == false %}{% include private_notice.html %}{% else %}{{ content }}{% endif %}
+<a class="home-back" href="/" aria-label="메인 페이지로 돌아가기"><img src="{{ '/assets/img/common/back-arrow.svg' | relative_url }}" alt="" width="32" height="32"></a>
+{% unless site.public == false %}
 <div class="utility-actions" aria-label="바로가기">
   {% include coffeeChat.html %}
-  {% include adminButton.html %}
 </div>
-{% endif %}
+{% endunless %}
 <script>
 (function () {
   var scrollKey = 'resume-scroll:' + window.location.pathname;

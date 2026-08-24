@@ -1,3 +1,4 @@
 .local-site/
 .sass-cache/
 .jekyll-cache/
+analytics-worker/.wrangler/

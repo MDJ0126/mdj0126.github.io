@@ -39,10 +39,15 @@
       .experience-highlight{color:#f5821f;font-style:normal;font-weight:700}
       .loading-name{color:#111;font-weight:700}
       @keyframes loading-line{0%,100%{opacity:.25}50%{opacity:1}}
+      .home-back{position:fixed;z-index:100;top:18px;left:18px;display:flex;width:44px;height:44px;align-items:center;justify-content:center;text-decoration:none;opacity:.78;transition:opacity .18s ease,transform .18s ease}
+      .home-back img{display:block;width:32px;height:32px}
+      .home-back:hover{opacity:1;transform:translateX(-3px)}
+      .home-back:focus-visible{outline:2px solid #aaa;outline-offset:1px}
+      @media(max-width:680px){.home-back{top:8px;left:6px}}
       h1{margin:0 0 8px;font-size:22px}
       p{margin:0 0 22px;color:#666;font-size:13px}
-      a{display:inline-block;padding:12px 18px;border:1px solid #333;background:#fff;color:#222;font-size:12px;font-weight:600;text-decoration:none}
-      a:hover{background:#222;color:#fff}
+      main>a{display:inline-block;padding:12px 18px;border:1px solid #333;background:#fff;color:#222;font-size:12px;font-weight:600;text-decoration:none}
+      main>a:hover{background:#222;color:#fff}
     </style>
   </head>
   <body>
@@ -53,6 +58,7 @@
         <span class="greeting-line"><em class="experience-highlight">8년 차</em> 게임 클라이언트 프로그래머 <strong class="loading-name">문동준</strong>입니다.</span>
       </p>
     </div>
+    <a class="home-back" href="/" aria-label="메인 페이지로 돌아가기"><img src="/Resume/assets/img/common/back-arrow.svg" alt="" width="32" height="32"></a>
     <main>
       <h1>Portfolio</h1>
       <p>포트폴리오 페이지를 준비하고 있습니다.</p>
