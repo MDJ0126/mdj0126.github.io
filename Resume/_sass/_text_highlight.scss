@@ -1,0 +1,42 @@
+$green: #dcffe4;   // 초록색
+$yellow: #fff5b1;  // 노란색
+$blue: #e9f4ff;    // 파란색
+$red: #ffdce0;     // 빨간색
+$gray: #f6f8fa;    // 회색
+$purple: #f5f0ff;  // 보라색
+$orange: #ffe8cd;  // 주황색
+
+.color-box {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 100px;
+
+  &-green {
+    background-color: $green;
+  }
+
+  &-yellow {
+    background-color: $yellow;
+  }
+
+  &-blue {
+    background-color: $blue;
+  }
+
+  &-red {
+    background-color: $red;
+  }
+
+  &-gray {
+    background-color: $gray;
+  }
+  
+  &-purple {
+    background-color: $purple;
+  }
+  
+  &-orange {
+    background-color: $orange;
+  }
+}

@@ -1,0 +1,19 @@
+<section id="top"></section>
+<div class="top">
+    <div class="left">
+        {{ site.title }}
+    </div>
+    <div class="right">
+        {% if site.tistory %}
+        <a href="{{ site.tistory }}" target='_blank'><div class="tistory-icon"></div>Tistory</a>
+        {% endif %}
+
+        {% if site.github %}
+        <a href="{{ site.github }}" target='_blank'><div class="github-icon"></div>Github</a>
+        {% endif %}
+
+        {% if site.linkedin %}
+        <a href="{{ site.linkedin }}" target='_blank'><div class="linkedin-icon"></div>Linkedin</a>
+        {% endif %}
+    </div>
+</div>

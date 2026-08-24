@@ -1,0 +1,16 @@
+<section id="companys"></section>
+<div class="box-container">
+    <div class="companys">
+        <h2 class="section-title">경력</h2>
+        {% assign category = "companys" %}
+        {% for post in site.categories[category] reversed %}
+
+        <div id="companys-post-container-{{ forloop.index }}"></div>
+
+        <script>
+            loadPost("{{ site.baseurl }}{{ post.url }}", "companys-post-container-{{ forloop.index }}");
+        </script>
+
+        {% endfor %}
+    </div>
+</div>

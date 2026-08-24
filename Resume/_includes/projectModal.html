@@ -1,0 +1,93 @@
+<div id="projectModal" class="project-modal-root">
+    <button class="project-modal-close" type="button" aria-label="닫기">&times;</button>
+    <div class="project-modal-body" id="projectModalBody"></div>
+</div>
+
+<script>
+    (function () {
+        const modal = document.getElementById("projectModal");
+        const body = document.getElementById("projectModalBody");
+        const closeBtn = modal ? modal.querySelector(".project-modal-close") : null;
+        if (!modal || !body) return;
+
+        let savedScrollY = 0;
+
+        function lockScroll() {
+            savedScrollY = window.scrollY || window.pageYOffset || 0;
+            document.body.style.position = "fixed";
+            document.body.style.top = `-${savedScrollY}px`;
+            document.body.style.left = "0";
+            document.body.style.right = "0";
+            document.body.style.width = "100%";
+            document.body.style.overflow = "hidden";
+        }
+
+        function unlockScroll() {
+            document.body.style.position = "";
+            document.body.style.top = "";
+            document.body.style.left = "";
+            document.body.style.right = "";
+            document.body.style.width = "";
+            document.body.style.overflow = "";
+            window.scrollTo(0, savedScrollY);
+        }
+
+        function trackModalView(url, title) {
+            if (typeof window.gtag !== "function") return;
+            const pageUrl = new URL(url, window.location.origin);
+            window.gtag("event", "page_view", {
+                page_title: title || "프로젝트 상세",
+                page_location: pageUrl.href,
+                page_path: pageUrl.pathname
+            });
+        }
+
+        function openModal(url, title) {
+            const root = document.documentElement;
+            const alreadyOpen = root.classList.contains("modal-open");
+            body.innerHTML = "";
+            loadPost(url, "projectModalBody");
+            trackModalView(url, title);
+            modal.classList.add("open");
+            modal.scrollTop = 0;
+            if (!alreadyOpen) {
+                const sbw = window.innerWidth - root.clientWidth;
+                root.style.setProperty("--modal-sbw", sbw + "px");
+                root.classList.add("modal-open");
+                lockScroll();
+            }
+        }
+
+        function closeModal() {
+            modal.classList.remove("open");
+            // 페이드아웃이 끝난 뒤 잠금 해제 + 내용 비우기 (도중에 다시 열리면 유지)
+            window.setTimeout(() => {
+                if (modal.classList.contains("open")) return;
+                unlockScroll();
+                document.documentElement.classList.remove("modal-open");
+                document.documentElement.style.removeProperty("--modal-sbw");
+                body.innerHTML = "";
+            }, 260);
+        }
+
+        // 프로젝트 항목 클릭 시 모달 오픈
+        document.addEventListener("click", (e) => {
+            const item = e.target.closest(".project-item");
+            if (item && item.dataset.postUrl) {
+                const title = item.querySelector("strong")?.textContent?.trim();
+                openModal(item.dataset.postUrl, title);
+            }
+        });
+
+        // 닫기: X 버튼 / 카드 바깥(배경) 클릭
+        if (closeBtn) closeBtn.addEventListener("click", closeModal);
+        modal.addEventListener("click", (e) => {
+            if (e.target === modal) closeModal();
+        });
+
+        // ESC로 닫기
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape" && modal.classList.contains("open")) closeModal();
+        });
+    })();
+</script>

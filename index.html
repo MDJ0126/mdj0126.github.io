@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>document.documentElement.classList.add('page-loading');</script>
+    <meta name="robots" content="noindex, nofollow">
+    <title>문동준</title>
+    <meta name="description" content="게임 클라이언트 개발자 문동준의 이력서와 포트폴리오입니다.">
+    <meta property="og:type" content="profile">
+    <meta property="og:url" content="https://mdj0126.github.io/">
+    <meta property="og:title" content="문동준">
+    <meta property="og:description" content="게임 클라이언트 개발자 문동준의 이력서와 포트폴리오">
+    <meta property="og:image" content="https://mdj0126.github.io/Resume/assets/img/picture/profile-og.png?v=20260824">
+    <meta property="og:image:secure_url" content="https://mdj0126.github.io/Resume/assets/img/picture/profile-og.png?v=20260824">
+    <meta property="og:image:width" content="1731">
+    <meta property="og:image:height" content="908">
+    <meta property="og:image:alt" content="게임 클라이언트 개발자 문동준">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="문동준">
+    <meta name="twitter:description" content="게임 클라이언트 개발자 문동준의 이력서와 포트폴리오">
+    <meta name="twitter:image" content="https://mdj0126.github.io/Resume/assets/img/picture/profile-og.png?v=20260824">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico?v=20260824">
+    <style>
+      @font-face{font-family:"Noto Sans KR";src:url("/Resume/assets/font/NotoSansKR.woff2") format("woff2");font-weight:100 900;font-display:swap}
+      *{box-sizing:border-box}
+      body{display:flex;min-height:100vh;align-items:center;margin:0;background:#f0f0f0;color:#222;font-family:"Noto Sans KR","Malgun Gothic",sans-serif}
+      .page-loading{overflow:hidden}
+      .loading-screen{position:fixed;z-index:9999;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:18px;background:#f0f0f0;opacity:1;transition:opacity .2s ease}
+      .loading-screen.is-hidden{pointer-events:none;opacity:0}
+      .loading-document{width:48px;height:62px;padding:12px 9px;border:1px solid #777;background:#fff;box-shadow:0 3px 9px rgba(0,0,0,.1)}
+      .loading-document span{display:block;height:2px;margin-bottom:7px;background:#aaa;animation:loading-line 1.2s ease-in-out infinite}
+      .loading-document span:nth-child(2){width:72%;animation-delay:.12s}
+      .loading-document span:nth-child(3){width:88%;animation-delay:.24s}
+      .loading-document span:nth-child(4){width:60%;animation-delay:.36s}
+      .loading-message{display:flex;width:min(390px,calc(100vw - 40px));min-height:62px;margin:0;flex-direction:column;justify-content:center;gap:8px;color:#333;font-size:15px;font-weight:400;line-height:1.6;text-align:center}
+      .greeting-line{display:block;opacity:0;transform:translate3d(0,8px,0);transition:opacity .4s ease,transform .4s ease}
+      .greeting-line.is-visible{opacity:1;transform:translate3d(0,0,0)}
+      .experience-highlight{color:#f5821f;font-style:normal;font-weight:700}
+      .loading-name{color:#111;font-weight:700}
+      @keyframes loading-line{0%,100%{opacity:.25}50%{opacity:1}}
+      main{width:940px;max-width:calc(100% - 32px);margin:32px auto}
+      h1{margin:0 0 18px;font-size:20px;font-weight:700}
+      h1 .experience{color:#f5821f}
+      .intro{display:flex;min-height:112px;margin-bottom:12px;flex-direction:column;justify-content:center;padding:22px 28px;border:0;background:#fff;box-shadow:0 3px 14px rgba(0,0,0,.12)}
+      .intro small{display:block;margin-bottom:3px;color:#f5821f;font-size:9px;font-weight:600;letter-spacing:.1em}
+      .intro p{margin:0;color:#444;font-size:13px;line-height:1.85}
+      nav{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+      a{position:relative;display:flex;min-height:112px;flex-direction:column;justify-content:center;padding:22px 28px;border:1px solid #333;background:#fff;color:#222;text-decoration:none;transition:background .18s ease,color .18s ease}
+      a small{margin-bottom:3px;color:#f5821f;font-size:9px;font-weight:600;letter-spacing:.1em}
+      a strong{font-size:17px}
+      a span{position:absolute;right:26px;bottom:18px;color:#777;font-size:10px}
+      a:hover{background:#222;color:#fff}
+      a:hover small{color:#f5821f}
+      a:hover span{color:#ccc}
+      @media(max-width:680px){main{width:100%;max-width:none;margin:auto 0;padding:14px}h1{margin:12px 0 18px;font-size:17px}.intro{margin-bottom:8px;padding:18px 22px}.intro p{font-size:12px;line-height:1.8}nav{grid-template-columns:1fr;gap:8px}a{min-height:92px;padding:18px 22px}a span{right:20px;bottom:16px}}
+    </style>
+  </head>
+  <body>
+    <div class="loading-screen" id="loading-screen" role="status" aria-live="polite">
+      <div class="loading-document" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+      <p class="loading-message">
+        <span class="greeting-line">안녕하세요.</span>
+        <span class="greeting-line"><em class="experience-highlight">8년 차</em> 게임 클라이언트 프로그래머 <strong class="loading-name">문동준</strong>입니다.</span>
+      </p>
+    </div>
+    <main>
+      <h1>안녕하세요. <strong class="experience">8년 차</strong> 게임 클라이언트 프로그래머 <strong>문동준</strong>입니다.</h1>
+      <section class="intro" aria-labelledby="intro-title">
+        <small id="intro-title">ABOUT ME</small>
+        <p>Unity 기반 3개 프로젝트의 초기 개발부터 글로벌 출시, 라이브 서비스까지 함께했습니다.<br>
+        소수의 클라이언트 팀에서 콘텐츠·전투·네트워크·빌드·최적화까지 폭넓게 담당했습니다.<br>
+        유지보수성과 확장성을 고려해 구조를 설계하고, 문제의 원인과 해결 경험을 팀에 공유합니다.</p>
+      </section>
+      <nav aria-label="페이지 바로가기">
+        <a href="/Resume/">
+          <small>RESUME</small>
+          <strong>이력서 보기</strong>
+          <span>페이지 열기 →</span>
+        </a>
+        <a href="/Portfolio/">
+          <small>PORTFOLIO</small>
+          <strong>포트폴리오 보기</strong>
+          <span>페이지 열기 →</span>
+        </a>
+      </nav>
+    </main>
+    <script>
+      (function () {
+        var finished = false;
+        var greetingStarted = false;
+
+        function finishLoading() {
+          if (finished) return;
+          finished = true;
+          requestAnimationFrame(function () {
+            document.documentElement.classList.remove('page-loading');
+            var screen = document.getElementById('loading-screen');
+            if (!screen) return;
+            screen.classList.add('is-hidden');
+            setTimeout(function () { screen.remove(); }, 220);
+          });
+        }
+
+        function showGreeting() {
+          if (greetingStarted || finished) return;
+          greetingStarted = true;
+          var lines = document.querySelectorAll('.greeting-line');
+          lines.forEach(function (line, index) {
+            setTimeout(function () { line.classList.add('is-visible'); }, index * 350);
+          });
+          setTimeout(finishLoading, ((lines.length - 1) * 350) + 1000);
+        }
+
+        window.addEventListener('load', function () {
+          var fonts = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
+          fonts.then(function () {
+            requestAnimationFrame(function () { requestAnimationFrame(showGreeting); });
+          });
+        });
+        setTimeout(finishLoading, 7000);
+      })();
+    </script>
+  </body>
+</html>

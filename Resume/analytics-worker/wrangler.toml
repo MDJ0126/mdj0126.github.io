@@ -1,0 +1,7 @@
+name = "resume-analytics-dashboard"
+main = "src/worker.js"
+compatibility_date = "2026-07-18"
+keep_vars = true
+
+[vars]
+GA_PROPERTY_ID = "546066893"

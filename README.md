@@ -1,14 +1,18 @@
 # mdj0126.github.io
-<img src="https://avatars.githubusercontent.com/u/83164393?v=4" alt="github_profile" width="250px" height="auto">
 
-Hello, this is the root page of the website.
+문동준의 개인 웹사이트 저장소입니다.
 
-### Here is a list of subpages
-- [/ClientDJ](https://mdj0126.github.io/ClientDJ/)
-- [/Resume](http://127.0.0.1:4000/Resume/)
-- [/Portfolio(obsolete)](https://mdj0126.github.io/Portfolio/)
+루트 페이지에서 이력서와 포트폴리오를 선택할 수 있으며, 각 페이지는 하위 경로에서 관리합니다.
 
-### robots.txt
-Please note that a robots.txt file has been implemented on all pages of this site, disallowing search engine indexing.
+## Pages
 
-[Go to 'Github'](https://github.com/MDJ0126)
+- [Resume](https://mdj0126.github.io/Resume/) — 이력서 및 경력기술서
+- [Portfolio](https://mdj0126.github.io/Portfolio/) — 프로젝트 포트폴리오
+
+## Structure
+
+- `/` — Resume·Portfolio 선택 페이지
+- `/Resume/` — 이력서 프로젝트
+- `/Portfolio/` — 포트폴리오 프로젝트(추후 개발)
+
+모든 페이지는 이 저장소에서 GitHub Pages로 함께 배포합니다.

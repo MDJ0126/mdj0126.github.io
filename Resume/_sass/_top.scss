@@ -1,0 +1,36 @@
+.top {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: 2.5em;
+    padding: 0 10px;
+
+    @media (max-width: $mobile-width) {
+        display: none;
+    }
+
+    .left {
+        user-select: none;
+        margin: 0.05em auto 0 0; // 제목은 좌측, SNS는 우측
+        font-size: 1.1em;
+        font-weight: 400;
+    }
+
+    .left::before {
+        content: "";
+    }
+
+    .right {
+        height: 100%;
+        font-size: 0.8em;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        a {
+            padding: 10px 0;
+            display: block;
+            height: 100%;
+        }
+    }
+}

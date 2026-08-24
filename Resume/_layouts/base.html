@@ -1,0 +1,77 @@
+<!doctype html><html lang="ko">{% include head.html %}<body>
+<div class="loading-screen" id="loading-screen" role="status" aria-live="polite">
+  <div class="loading-document" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+  <p class="loading-message">
+    <span class="greeting-line">안녕하세요.</span>
+    <span class="greeting-line"><em class="experience-highlight">8년차</em> 게임 클라이언트 프로그래머 <strong class="loading-name">문동준</strong>입니다.</span>
+  </p>
+</div>
+{% if site.public %}{{ content }}{% else %}{% include private_notice.html %}{% endif %}
+{% if site.public %}
+<div class="utility-actions" aria-label="바로가기">
+  {% include coffeeChat.html %}
+  {% include adminButton.html %}
+</div>
+{% endif %}
+<script>
+(function () {
+  var scrollKey = 'resume-scroll:' + window.location.pathname;
+  var navigation = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
+  var shouldRestore = navigation && (navigation.type === 'reload' || navigation.type === 'back_forward');
+  var savedScroll = shouldRestore ? sessionStorage.getItem(scrollKey) : null;
+  var finished = false;
+  var greetingStarted = false;
+
+  window.addEventListener('pagehide', function () {
+    try { sessionStorage.setItem(scrollKey, String(window.scrollY)); } catch (e) {}
+  });
+
+  function finishLoading() {
+    if (finished) return;
+    finished = true;
+    if (savedScroll !== null) window.scrollTo(0, Number(savedScroll) || 0);
+    requestAnimationFrame(function () {
+      setupRevealBoxes();
+      document.documentElement.classList.remove('page-loading');
+      var screen = document.getElementById('loading-screen');
+      if (!screen) return;
+      screen.classList.add('is-hidden');
+      setTimeout(function () { screen.remove(); }, 220);
+    });
+  }
+
+  function setupRevealBoxes() {
+    var boxes = document.querySelectorAll('[data-reveal]');
+    if (!('IntersectionObserver' in window)) {
+      boxes.forEach(function (box) { box.classList.add('is-visible'); });
+      return;
+    }
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -4% 0px' });
+    boxes.forEach(function (box) { observer.observe(box); });
+  }
+
+  function showGreeting() {
+    if (greetingStarted || finished) return;
+    greetingStarted = true;
+    var lines = document.querySelectorAll('.greeting-line');
+    if (!lines.length) return finishLoading();
+    lines.forEach(function (line, index) {
+      setTimeout(function () { line.classList.add('is-visible'); }, index * 350);
+    });
+    setTimeout(finishLoading, ((lines.length - 1) * 350) + 1000);
+  }
+
+  window.addEventListener('load', function () {
+    var fonts = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
+    fonts.then(function () { requestAnimationFrame(function () { requestAnimationFrame(showGreeting); }); });
+  });
+  setTimeout(finishLoading, 7000);
+})();
+</script>
+</body></html>

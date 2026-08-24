@@ -1,0 +1,30 @@
+// PDF 버튼 스타일은 _fab.scss 에서 공통 처리 (.fab .pdf-btn)
+
+.print-only-on {
+    display: none;
+}
+
+.print-only-off {
+    display: block;
+}
+
+// 인쇄 시 숨김 처리는 유지
+@media print {
+    .spy-nav,
+    .pdf-btn {
+        display: none !important;
+    }
+
+    * {
+        -webkit-print-color-adjust: exact !important; // 크롬, 사파리, 엣지용
+        print-color-adjust: exact !important; // 표준 속성
+    }
+
+    .print-only-on {
+        display: block;
+    }
+
+    .print-only-off {
+        display: none;
+    }
+}

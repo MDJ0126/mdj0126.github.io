@@ -1,0 +1,14 @@
+{% if site.author.coffee_chat_url %}
+<div class="box-container coffee-chat-section">
+    <div class="coffee-chat-content">
+        <div>
+            <h2 class="section-title">더 궁금한 점이 있으신가요?</h2>
+            <p>이력서에 담지 못한 경험이나 개발 이야기는 커피챗에서 편하게 나누겠습니다.</p>
+        </div>
+        <a class="coffee-chat-link" href="{{ site.author.coffee_chat_url }}" target="_blank" rel="noopener">
+            <span class="coffee-chat-link-icon" style="background-image: url({{ site.baseurl }}/assets/img/thumbnails/coffeeChat.png);" aria-hidden="true"></span>
+            <span>카카오톡으로 대화하기</span>
+        </a>
+    </div>
+</div>
+{% endif %}

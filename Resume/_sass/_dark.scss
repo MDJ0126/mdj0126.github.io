@@ -1,0 +1,262 @@
+// 테마 전환 순간에만 색상 트랜지션 적용 (토글 시 JS가 클래스 부여 후 제거)
+.theme-transition,
+.theme-transition * {
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease,
+        filter 0.3s ease !important;
+}
+
+html.dark {
+    color: #d6d6d6;
+
+    .background .cover {
+        background-color: rgba(16, 17, 20, 0.95);
+    }
+
+    .box-container,
+    .profile-box-container,
+    .project .project-box-container {
+        background-color: #1f2125 !important;
+        border-color: rgba(255, 255, 255, 0.16) !important;
+        box-shadow: none !important;
+    }
+
+    .profile {
+        color: #d6d6d6;
+
+        h2,
+        dt {
+            color: #f1f1f1;
+        }
+
+    }
+
+    .profile .profile-skills-chart {
+        b {
+            color: #f1f1f1;
+        }
+
+        span {
+            color: #c4c4c4;
+        }
+
+        .skills-pie::after {
+            background-color: #1f2125;
+        }
+    }
+
+    .section-title,
+    .qa-panel .qa-summary strong,
+    .qa .qa-item h3,
+    .company .title,
+    .company .content-container h4,
+    .information h2 {
+        color: #f1f1f1;
+    }
+
+    .about .about-content,
+    .qa .qa-item p,
+    .coffee-chat-section p,
+    .about .about-content p,
+    .company .content-container p,
+    .company .time,
+    .projects-summary .projects-summary-desc,
+    .projects-summary-list strong,
+    .information dt,
+    .information dd,
+    .information li {
+        color: #c4c4c4 !important;
+    }
+
+    .projects-summary-list span,
+    .qa-panel .qa-summary small,
+    .projects-personal-list .project-meta,
+    .information .cert-date,
+    .information .cert-meta {
+        color: #8a8a8a;
+    }
+
+    .company .title-container,
+    .qa .qa-list,
+    .qa .qa-item,
+    .coffee-chat-section,
+    .companys [id^="companys-post-container-"] + [id^="companys-post-container-"],
+    .information .cert-item,
+    .projects-summary-list li,
+    .projects-personal-list li {
+        border-color: rgba(255, 255, 255, 0.08) !important;
+    }
+
+    .information .cert-title,
+    .information .cert-issuer {
+        color: #f1f1f1;
+    }
+
+    .company .content-container {
+        .role-item::before {
+            background-color: #777;
+        }
+
+        .role-item::after {
+            background-color: rgba(255, 255, 255, 0.12);
+        }
+
+        .role-desc {
+            color: #d6d6d6 !important;
+        }
+    }
+
+    .company .title-container[role="button"]::after {
+        border-color: #aaa;
+    }
+
+    .qa-panel .qa-summary i {
+        border-color: #aaa;
+    }
+
+    .qa-panel .qa-summary {
+        background: linear-gradient(105deg, rgba(245, 130, 31, 0.12) 0%, #1f2125 58%);
+
+        &:hover {
+            background: linear-gradient(105deg, rgba(245, 130, 31, 0.18) 0%, #1f2125 65%);
+        }
+    }
+
+    .information .cert-summary::after {
+        border-color: #aaa;
+    }
+
+    .projects-personal-list .project-link-icon {
+        background-color: #2c2f35;
+        color: #ddd;
+    }
+
+    .projects-summary .projects-personal-title,
+    .projects-personal-list strong {
+        color: #e0e0e0 !important;
+    }
+
+    .projects-personal-list .project-link-icon .github-icon,
+    .projects-personal-list .project-link-icon .link-icon,
+    .copy-icon {
+        filter: invert(1) brightness(1.4);
+    }
+
+    .projects-summary-list .project-item:hover,
+    .projects-personal-list a:hover,
+    .projects-personal-list .project-item:hover {
+        background-color: rgba(245, 130, 31, 0.14);
+    }
+
+    .projects-summary-list .project-item--latest {
+        background-color: rgba(245, 130, 31, 0.1);
+        border-color: rgba(245, 130, 31, 0.22) !important;
+    }
+
+    .projects-summary-list .project-latest-badge {
+        color: #ffb066;
+        background-color: rgba(245, 130, 31, 0.18);
+    }
+
+    .projects-summary-list .project-item:hover strong,
+    .projects-personal-list a:hover strong,
+    .projects-personal-list .project-item:hover strong {
+        color: #ffb066;
+    }
+
+    .spy-nav .nav-link {
+        .nav-text {
+            color: #888;
+        }
+
+        .nav-dot {
+            background-color: #555;
+        }
+
+        &:hover {
+            .nav-text {
+                color: #eaeaea;
+            }
+
+            .nav-dot {
+                background-color: #aaa;
+            }
+        }
+
+        &.active {
+            .nav-text {
+                color: #f5821f;
+            }
+
+            .nav-dot {
+                background-color: #f5821f;
+            }
+        }
+    }
+
+    .top {
+        color: #d6d6d6;
+    }
+
+    footer {
+        color: #888;
+    }
+
+    .career-header {
+        .career-header-title h1,
+        .career-header-info dt {
+            color: #f1f1f1;
+        }
+
+        .career-header-subtitle,
+        .career-header-tagline,
+        .career-header-info dd,
+        .career-header-highlights dt,
+        .career-header-highlights dd {
+            color: #c4c4c4;
+        }
+
+        .career-header-highlights {
+            border-left-color: rgba(255, 255, 255, 0.1);
+        }
+    }
+
+    .project {
+        .title-container {
+            border-bottom-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .title-text,
+        .title-release,
+        .title-member,
+        .developmentPhase,
+        .sub-title,
+        ol,
+        ol li {
+            color: #f1f1f1 !important;
+        }
+
+        .info-item-dd {
+            color: #d8d8d8 !important;
+        }
+
+        .info-item-dt {
+            color: #8a8a8a !important;
+            background-color: transparent !important;
+            border-top-color: rgba(255, 255, 255, 0.08) !important;
+        }
+
+        .title-latest-badge {
+            color: #ffb066;
+            background-color: rgba(245, 130, 31, 0.18);
+        }
+
+        .post-content,
+        .post-content p {
+            color: #c4c4c4 !important;
+        }
+    }
+}

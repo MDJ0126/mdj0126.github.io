@@ -1,0 +1,125 @@
+#loading-block {
+    user-select: none;
+    color: #5f6368;
+    position: fixed;
+    background-color: white;
+    width: 100%;
+    height: 100%;
+    z-index: 2147483647;
+    opacity: 1;
+    transition: opacity 0.1s ease-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+}
+
+body.loading {
+    overflow: hidden; /* 스크롤 비활성화 */
+}
+
+.loader-card {
+    display: grid;
+    gap: 5px;
+    width: 48px;
+    padding: 11px 10px;
+    border: 1px solid #ededed;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 8px 20px -14px rgba(0, 0, 0, 0.35);
+    animation: loading-card-bob 1.2s ease-in-out infinite;
+
+    span {
+        display: block;
+        height: 4px;
+        border-radius: 999px;
+        background-color: #e7e7e7;
+
+        &:nth-child(1) {
+            width: 72%;
+            background-color: #f5821f;
+        }
+
+        &:nth-child(2) {
+            width: 100%;
+        }
+
+        &:nth-child(3) {
+            width: 58%;
+        }
+    }
+}
+
+.loader-text {
+    color: #555;
+    font-size: 0.96em;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+}
+
+.loader-dots::after {
+    content: "";
+    display: inline-block;
+    width: 1.2em;
+    text-align: left;
+    animation: loading-dots 1.2s steps(4, end) infinite;
+}
+
+@keyframes loading-card-bob {
+    0% {
+        transform: translateY(0);
+    }
+
+    45% {
+        transform: translateY(-5px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes loading-dots {
+    0% {
+        content: "";
+    }
+
+    25% {
+        content: ".";
+    }
+
+    50% {
+        content: "..";
+    }
+
+    75%,
+    100% {
+        content: "...";
+    }
+}
+
+html.dark {
+    #loading-block {
+        background-color: #1f2125;
+        color: #c4c4c4;
+    }
+
+    .loader-card {
+        background-color: #25282d;
+        border-color: rgba(255, 255, 255, 0.08);
+        box-shadow: 0 12px 28px -16px rgba(0, 0, 0, 0.7);
+
+        span {
+            background-color: #3a3d43;
+
+            &:nth-child(1) {
+                background-color: #f5821f;
+            }
+        }
+    }
+
+    .loader-text {
+        color: #d6d6d6;
+    }
+}

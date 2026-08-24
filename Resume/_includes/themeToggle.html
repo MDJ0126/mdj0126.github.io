@@ -1,0 +1,31 @@
+<button id="theme-toggle" class="fab theme-toggle" type="button" aria-label="다크 모드 전환">
+    <span class="fab-label">테마 변경</span>
+    <span class="fab-icon">🌙</span>
+</button>
+
+<script>
+    (function () {
+        var btn = document.getElementById("theme-toggle");
+        if (!btn) return;
+        var icon = btn.querySelector(".fab-icon");
+
+        function sync() {
+            var dark = document.documentElement.classList.contains("dark");
+            if (icon) icon.textContent = dark ? "☀️" : "🌙";
+        }
+        sync();
+
+        btn.addEventListener("click", function () {
+            var root = document.documentElement;
+            root.classList.add("theme-transition");
+            var dark = root.classList.toggle("dark");
+            try {
+                localStorage.setItem("theme", dark ? "dark" : "light");
+            } catch (e) {}
+            sync();
+            window.setTimeout(function () {
+                root.classList.remove("theme-transition");
+            }, 320);
+        });
+    })();
+</script>

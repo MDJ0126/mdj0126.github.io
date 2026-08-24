@@ -1,0 +1,77 @@
+---
+layout: base
+---
+<main class="resume-wrap">
+  <article class="resume-sheet reveal-box" data-reveal>
+    <h1>이 력 서</h1>
+
+    <section class="personal-layout" aria-label="인적사항">
+      <div class="profile-photo"><img src="{{ site.author.picture | relative_url }}" alt="문동준 증명사진"></div>
+      <div class="resume-table personal-table">
+      <div class="label">이름</div><div class="value"><strong>문동준</strong></div>
+      <div class="label">영문</div><div class="value">MOONDONGJUN</div>
+      <div class="label">한문</div><div class="value">文東俊</div>
+      <div class="label">생년월일</div><div class="value">1993년 **월 **일</div>
+      <div class="label">전화번호</div><div class="value phone">010-****-****</div>
+      <div class="label">이메일</div><div class="value full"><a href="mailto:ehdwns0126@naver.com">ehdwns0126@naver.com</a></div>
+      <div class="label">주소</div><div class="value full">경기도 부천시 소사구</div>
+      </div>
+    </section>
+
+    <section class="resume-section">
+      <h2>학력사항 <small>( 최종학력 : 김포대학교(4년) 졸업 )</small></h2>
+      <div class="record-table education-table">
+        <div class="record-row head"><span>재학기간</span><span>학교명 및 전공</span><span>구분 (졸업/휴학/etc.)</span></div>
+        <div class="record-row"><span>2011년 ~ 2017년</span><span>김포대학교 컴퓨터공학</span><span>학사 졸업</span></div>
+        <div class="record-row"><span>2008년 ~ 2011년</span><span>공항고등학교</span><span>졸업</span></div>
+      </div>
+    </section>
+
+    <section class="resume-section">
+      <h2>개발 프로젝트 <span class="career-badge">경력 8년</span></h2>
+      <div class="record-table project-table">
+        <div class="record-row head"><span>참여기간</span><span>프로젝트명</span><span>비고</span></div>
+        <div class="record-row"><span>2023.12 ~ 2026.07</span><span>라스트헌터K: 서울</span><span>헌팅 액션</span></div>
+        <div class="record-row"><span>2020.08 ~ 2023.12</span><span>데미안전기</span><span>수집형 RPG</span></div>
+        <div class="record-row"><span>2018.09 ~ 2020.08</span><span>오버독스</span><span>배틀로얄</span></div>
+      </div>
+    </section>
+
+    <section class="resume-section">
+      <h2>자격증</h2>
+      <div class="record-table certificate-table">
+        <div class="record-row head"><span>취득일</span><span>자격증 / 면허증</span><span>등급</span><span>발행처</span></div>
+        <div class="record-row"><span>2025.09</span><span>정보처리기사</span><span>기사</span><span>한국산업인력공단</span></div>
+        <div class="record-row"><span>2015.07</span><span>정보처리산업기사</span><span>산업기사</span><span>한국산업인력공단</span></div>
+        <div class="record-row"><span>2015.01</span><span>M.O.S 2007 Master</span><span>Master</span><span>Microsoft</span></div>
+      </div>
+    </section>
+
+    <section class="resume-section">
+      <h2>병역</h2>
+      <div class="record-table military-table">
+        <div class="record-row head"><span>복무기간</span><span>군별 / 계급 / 병과</span><span>비고</span></div>
+        <div class="record-row"><span>2012.06 ~ 2014.03</span><span>육군 / 병장 / 보병</span><span>육군 병장 제대</span></div>
+      </div>
+    </section>
+
+    <div class="signature">
+      <p>위에 기재한 사항은 사실과 틀림이 없습니다.</p>
+      <p>성&nbsp;&nbsp;&nbsp;&nbsp;명 : &nbsp;문&nbsp;&nbsp;동&nbsp;&nbsp;준&nbsp;&nbsp;&nbsp;(인)</p>
+    </div>
+    <footer class="sheet-footer"><span>입사지원서</span><span>1 / 1</span></footer>
+  </article>
+
+  <aside class="privacy-note reveal-box" data-reveal>
+    <div class="introduction-content">
+      {% capture introduction_markdown %}{% include_relative _resume/introduction.md %}{% endcapture %}
+      {{ introduction_markdown | markdownify }}
+    </div>
+  </aside>
+
+  <section class="downloads" aria-label="문서 다운로드">
+    <a class="reveal-box" data-reveal href="{{ site.baseurl }}/assets/pdf/문동준_이력서.pdf"><small>RESUME</small><strong>이력서 PDF 보기</strong><span>문서 열기 →</span></a>
+    <a class="reveal-box" data-reveal href="{{ site.baseurl }}/assets/pdf/문동준_경력기술서.pdf"><small>CAREER DESCRIPTION</small><strong>경력기술서 PDF 보기</strong><span>문서 열기 →</span></a>
+  </section>
+  <p class="document-note">개인정보 보호를 위해 일부 정보를 가렸으며, 전체 정보와 자세한 경력은 아래 PDF에서 확인하실 수 있습니다.</p>
+</main>

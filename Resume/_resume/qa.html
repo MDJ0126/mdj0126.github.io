@@ -1,0 +1,116 @@
+<section id="qa"></section>
+<div class="box-container qa-combined">
+    <details class="qa-panel">
+        <summary class="qa-summary">
+            <span class="qa-summary-badge" aria-hidden="true">Q</span>
+            <span class="qa-summary-copy">
+                <strong>저에 대해 더 궁금한 점이 있으신가요?</strong>
+                <small>간단한 Q&amp;A와 커피챗 안내를 확인해 보세요.</small>
+            </span>
+            <i aria-hidden="true"></i>
+        </summary>
+
+        <div class="qa">
+            <div class="qa-list">
+            <div class="qa-item">
+                <h3>어떤 개발자이신가요?</h3>
+                <p>Unity와 C#을 중심으로, 소규모 팀에서 아웃게임부터 인게임까지 폭넓게 설계하고 구현해 온 게임 클라이언트 개발자입니다. 모르는 문제를 마주했을 때 피하기보다 필요한 지식을 찾아 검증하고, 끝내 해결해 내는 태도가 개발자의 본질이라고 생각합니다. 현재는 개인 프로젝트를 진행하며 Unreal Engine이라는 새로운 영역에도 꾸준히 도전하고 있습니다.</p>
+            </div>
+            <div class="qa-item">
+                <h3>업무에서 가장 중요하게 생각하는 것은 무엇인가요?</h3>
+                <p>출시뿐 아니라 라이브 운영과 유지보수까지 고려해, 동료가 쉽게 이해하고 이어서 다룰 수 있는 구조를 만드는 것을 중요하게 생각합니다. 프로젝트는 혼자 유지할 수 없기에 결정 과정과 사용 방법을 문서로 남겨 공유하고, 일관된 네이밍 컨벤션을 지켜 코드의 가독성을 높이려 합니다.</p>
+            </div>
+            <div class="qa-item">
+                <h3>실무를 할 때는 어떻게 진행하나요?</h3>
+                <p>다른 직군과 충분히 대화하며 서로 생각하는 방향을 확인한 뒤 업무를 진행합니다. 같은 직군의 동료에게는 초기 개발부터 라이브 서비스까지 경험한 내용을 바탕으로 방향을 제안하고, 저 역시 동료와 선배 개발자의 의견을 적극적으로 구합니다. 좋은 아이디어는 코드로 빠르게 검증해 프로젝트의 구조 개선과 최적화로 연결합니다.</p>
+            </div>
+            <div class="qa-item">
+                <h3>협업할 때 어떤 강점이 있나요?</h3>
+                <p>먼저 다가가 대화를 시작하고, 필요한 일을 적극적으로 찾아 움직이는 편입니다. 기획·아트·서버 등 여러 직군과 편하게 의견을 나누며, 기술적인 고민이 생겼을 때 팀에서 먼저 찾는 개발자이기도 했습니다. 질문이나 아이디어를 빠르게 정리해 조언하고, 작은 검증을 거쳐 실제 구현까지 연결하며 팀의 중심에서 협업을 이어가는 데 강점이 있습니다.</p>
+            </div>
+            <div class="qa-item">
+                <h3>새로운 기술은 어떻게 도입하시나요?</h3>
+                <p>먼저 빈 프로젝트에서 핵심 기능을 작게 구현해 기술의 효과와 위험 요소를 확인합니다. 검증 결과를 동료들과 공유해 도입 여부를 함께 결정하고, 효과가 분명할 때 프로젝트에 단계적으로 적용합니다.</p>
+            </div>
+            <div class="qa-item">
+                <h3>AI 도구를 어떻게 활용하시나요?</h3>
+                <p>AI 도구는 개발 생산성과 경쟁력을 높이기 위해 반드시 활용해야 하는 필수 도구라고 생각합니다. 업무와 개인 프로젝트에서 설계 검토, 기술 조사, 반복 작업 자동화, 문제 해결에 적극 활용하여 이전보다 체감상 3배 이상의 개발 속도를 내고 있습니다. 결과를 그대로 받아들이기보다 프로젝트의 구조와 요구사항에 맞는지 직접 검토하고 검증하며 활용하고 있습니다.</p>
+            </div>
+            </div>
+
+            {% if site.author.coffee_chat_url %}
+            <div class="coffee-chat-section">
+                <div class="coffee-chat-content">
+                    <div>
+                        <h2 class="section-title">더 이야기 나누고 싶으신가요?</h2>
+                        <p>이력서에 담지 못한 경험이나 개발 이야기는 커피챗에서 편하게 나누겠습니다.</p>
+                    </div>
+                    <a class="coffee-chat-link" href="{{ site.author.coffee_chat_url }}" target="_blank" rel="noopener">
+                        <span class="coffee-chat-link-icon" style="background-image: url({{ site.baseurl }}/assets/img/thumbnails/coffeeChat.png);" aria-hidden="true"></span>
+                        <span>카카오톡으로 대화하기</span>
+                    </a>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </details>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const panel = document.querySelector(".qa-panel");
+        if (!panel || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+        const summary = panel.querySelector(".qa-summary");
+        const content = panel.querySelector(".qa");
+        let animation = null;
+        let isClosing = false;
+        let isExpanding = false;
+
+        const finishAnimation = (open) => {
+            panel.open = open;
+            panel.classList.remove("is-closing");
+            animation = null;
+            isClosing = false;
+            isExpanding = false;
+            panel.style.height = "";
+            panel.style.overflow = "";
+        };
+
+        const animatePanel = (open) => {
+            if (animation) animation.cancel();
+            panel.classList.toggle("is-closing", !open);
+
+            const startHeight = `${panel.offsetHeight}px`;
+            if (open) panel.open = true;
+            const endHeight = open
+                ? `${summary.offsetHeight + content.offsetHeight}px`
+                : `${summary.offsetHeight}px`;
+
+            panel.style.overflow = "hidden";
+            animation = panel.animate(
+                { height: [startHeight, endHeight] },
+                { duration: 320, easing: "cubic-bezier(0.22, 1, 0.36, 1)" }
+            );
+            animation.onfinish = () => finishAnimation(open);
+            animation.oncancel = () => {
+                isClosing = false;
+                isExpanding = false;
+            };
+        };
+
+        summary.addEventListener("click", (event) => {
+            event.preventDefault();
+
+            if (isClosing || !panel.open) {
+                isClosing = false;
+                isExpanding = true;
+                animatePanel(true);
+            } else if (isExpanding || panel.open) {
+                isExpanding = false;
+                isClosing = true;
+                animatePanel(false);
+            }
+        });
+    });
+</script>

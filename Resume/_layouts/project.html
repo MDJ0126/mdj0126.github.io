@@ -1,0 +1,118 @@
+<article>
+    <div class="project">
+        <div class="project-box-container">
+            <div class="item">
+                <div class="container">
+                    <div class="title-container">
+                        <div class="title-main">
+                            <img class="title-icon" src="{{ site.baseurl }}/assets/img/icon/{{ page.icon }}" alt="{{ page.title }}">
+                            <span class="title-text">{{ page.title }}</span><span class="title-release">{{ page.release }}</span>
+                            {% if page.latest %}<span class="title-latest-badge">최근 출시</span>{% endif %}
+                            <span class="title-member">{{ page.member }}</span>
+                        </div>
+                        <div class="title-sub">
+                            {% for phase in page.developmentPhase %}
+                            <span class="developmentPhase">{{ phase }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="content">
+                        {% if page.images and page.images.size > 0 %}
+                        <div class="print-only-off">
+                            <div id="gallery-container-{{ page.galley_index }}" class="gallery-container">
+                                {% if page.images.size > 1 or page.youtubeId or page.video %}
+                                <button class="prev-button" onclick="prevSlide({{ page.galley_index }})"></button>
+                                {% endif %}
+                                <div class="gallerys-frame">
+                                    <div class="gallerys">
+                                        {% for image in page.images %}
+                                        <div class="gallery-item">
+                                            <div class="gallery-item-content">
+                                                <div class="image-container">
+                                                    {% if page.released %}
+                                                    <img src="{{ site.baseurl }}/assets/img/post/{{ image }}" class="modal" loading="lazy" decoding="async">
+                                                    {% else %}
+                                                    <img src="{{ site.baseurl }}/assets/img/post/{{ image }}" class="modal image" loading="lazy" decoding="async">
+                                                    <div class="overlay-text">생성형 AI로 만들어진 예시 이미지입니다.</div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                        {% if page.youtubeId or page.video %}
+                                        <div class="gallery-item">
+                                            <div class="gallery-item-content">
+                                                <div class="print-only-on">
+                                                    <img src="{{ site.baseurl }}/assets/img/post/{{ page.images[0] }}" class="modal">
+                                                </div>
+                                                <div class="print-only-off">
+                                                    {% include youtube.html id=page.youtubeId video=page.video %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% if page.images.size > 1 or page.youtubeId or page.video %}
+                                <button class="next-button" onclick="nextSlide({{ page.galley_index }})"></button>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="print-only-on">
+                            <div id="gallery-container-{{ page.galley_index }}" class="gallery-container">
+                                <div class="gallerys-frame">
+                                    <div class="gallerys">
+                                        <div class="gallery-item">
+                                            <div class="gallery-item-content">
+                                                <img src="{{ site.baseurl }}/assets/img/post/{{ page.images[0] }}" class="modal">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                        <div class="info-container">
+                            <div class="info-item-dt">참여기간</div>
+                            <div class="info-item-dt">{% if page.project_type == "personal" %}개발형태{% else %}소속회사{% endif %}</div>
+                            <div class="info-item-dt">장르</div>
+                            <div class="info-item-dd">{{ page.period }}</div>
+                            {% if page.group_logo %}
+                            <div class="info-item-dd"><div class="{{ page.group_logo }}"></div></div>
+                            {% else %}
+                            <div class="info-item-dd">{{ page.group }}</div>
+                            {% endif %}
+                            <div class="info-item-dd">{{ page.genre }}</div>
+                            <div class="info-item-dt">기술</div>
+                            <div class="info-item-dt">개발도구</div>
+                            <div class="info-item-dt">관리도구</div>
+                            <div class="info-item-dd">{{ page.tech }}</div>
+                            <div class="info-item-dd">{{ page.tools }}</div>
+                            <div class="info-item-dd">{{ page.project_managed }}</div>
+                        </div>
+                        <div class="sub-title">{% if page.project_type == "personal" %}주요 구현{% else %}담당업무{% endif %}</div>
+                        <ol>
+                            {% for item in page.works %}
+                            <li>{{ item }}</li>
+                            {% endfor %}
+                        </ol>
+                        {% if page.highlights %}
+                        <div class="sub-title">{% if page.project_type == "personal" %}개발 포인트{% else %}주요성과{% endif %}</div>
+                        <ol>
+                            {% for item in page.highlights %}
+                            <li>{{ item }}</li>
+                            {% endfor %}
+                        </ol>
+                        {% endif %}
+                        {% if page.project_type == "personal" %}
+                        <div class="sub-title">회고</div>
+                        <div class="post-content">
+                            {{ page.content }}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</article>

@@ -1,0 +1,9 @@
+{% if include.id %}
+<div class="youtube-container" data-video-id="{{ include.id }}"{% if include.video %} data-fallback="{{ site.baseurl }}/assets/video/{{ include.video }}"{% endif %}>
+    <iframe src="https://www.youtube.com/embed/{{ include.id }}?enablejsapi=1&playsinline=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen loading="lazy"></iframe>
+</div>
+{% elsif include.video %}
+<div class="youtube-container">
+    <video src="{{ site.baseurl }}/assets/video/{{ include.video }}" controls playsinline preload="none"></video>
+</div>
+{% endif %}

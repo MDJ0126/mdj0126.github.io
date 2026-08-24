@@ -1,0 +1,359 @@
+.project {
+    $accent: #f5821f; // 테마 포인트 색상 (주황)
+
+    &-box-container {
+        position: relative;
+        margin: 28px 0px;
+        background-color: #fff;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow:
+            0 1px 2px rgba(0, 0, 0, 0.04),
+            0 10px 28px -14px rgba(0, 0, 0, 0.16),
+            0 4px 12px -6px rgba(0, 0, 0, 0.06);
+    }
+
+    .item {
+        .container {
+            display: block;
+            width: 100%;
+        }
+        // 타이틀
+        .title {
+            &-container {
+                padding: 24px 30px;
+                border-bottom: 1px solid #f0f0f0;
+            }
+
+            &-main {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+            }
+
+            &-sub {
+                font-size: 14px;
+                margin: auto auto auto 52.5px;
+
+                @media (max-width: $mobile-width) {
+                    margin: 10px;
+                }
+
+                .developmentPhase:not(:last-child)::after {
+                    content: ",";
+                    margin-right: 0.2rem;
+                }
+            }
+
+            &-icon {
+                margin: auto 0;
+                width: 2.5em;
+                height: 2.5em;
+                object-fit: contain;
+                border-radius: 10px;
+            }
+
+            &-text {
+                font-size: 1.4em;
+                font-weight: bold;
+                margin-top: -0.2em;
+
+                @media (max-width: $mobile-width) {
+                    font-size: 1.2em;
+                }
+            }
+
+            &-release {
+                font-size: 1em;
+                font-weight: bold;
+                margin-top: -0.2em;
+
+                @media (max-width: $mobile-width) {
+                    display: none;
+                }
+            }
+
+            &-release::before {
+                content: "(";
+            }
+
+            &-release::after {
+                content: ")";
+            }
+
+            &-latest-badge {
+                display: inline-block;
+                padding: 3px 8px;
+                border-radius: 999px;
+                font-size: 0.72em;
+                font-weight: 700;
+                color: #b3590a;
+                background-color: rgba(245, 130, 31, 0.12);
+                margin-top: -0.2em;
+            }
+
+            &-member {
+                font-size: 0.9em;
+                margin-top: -0.2em;
+
+                @media (max-width: $mobile-width) {
+                    font-size: 0.8em;
+                }
+            }
+        }
+        // 정보 (스펙 목록)
+        .info {
+            &-container {
+                margin: 24px 30px;
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+
+                @media (max-width: $mobile-width) {
+                    margin: 20px;
+                }
+            }
+
+            &-item-dt {
+                user-select: none;
+                font-size: 0.78em;
+                font-weight: 600;
+                letter-spacing: 0.04em;
+                color: #9a9a9a;
+                padding: 14px 10px 4px;
+                text-align: left;
+                border-top: 1px solid #f2f2f2;
+            }
+
+            &-item-dd {
+                user-select: none;
+                color: #333;
+                font-weight: 500;
+                padding: 0 10px 14px;
+                text-align: left;
+            }
+        }
+        // 내용
+        .content {
+            line-height: 1.25;
+            padding: 20px 25px 30px;
+
+            @media (max-width: $mobile-width) {
+                padding: 10px 10px 25px;
+            }
+
+            .post-content {
+                padding: 0 5px;
+                color: #444;
+
+                p {
+                    margin: 6px 0;
+                    line-height: 1.7;
+                }
+            }
+
+            ol {
+                margin: 4px 0;
+
+                li {
+                    margin: 6px 0;
+                    line-height: 1.6;
+                }
+            }
+
+            .sub-title {
+                user-select: none;
+                font-size: 1.14em;
+                font-weight: 800;
+                color: #1f1f1f;
+                margin: 32px 0 14px;
+                line-height: 1.2;
+            }
+        }
+    }
+    // 이미지 갤러리
+    .gallery-container {
+        position: relative;
+        width: 100%;
+        margin: 10px auto;
+        overflow: hidden;
+    }
+
+    .gallerys {
+        display: flex;
+        transition: transform 0.3s ease-in-out;
+        margin-right: -1px;
+        cursor: grab;
+        touch-action: pan-y; // 세로 스크롤은 유지, 가로 드래그는 스크립트가 처리
+        user-select: none;
+
+        &:active {
+            cursor: grabbing;
+        }
+
+        &:active img {
+            cursor: grabbing;
+        }
+    }
+
+    .gallerys-frame {
+        overflow: hidden;
+        width: 100%;
+    }
+
+    .gallery-item {
+        margin: auto;
+        min-width: 100%;
+
+        &-content {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9; // 모든 슬라이드 비율 통일 (유튜브와 동일)
+            overflow: hidden;
+            background-color: #f3f3f3; // 여백 발생 시 채움색
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover; // 박스를 꽉 채우도록 비율 유지 크롭
+                vertical-align: middle;
+                cursor: grab; // 갤러리 이미지는 help 대신 드래그 커서
+            }
+        }
+    }
+
+    .image-container {
+        position: relative;
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+
+    .image-container .image {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: grayscale(30%) brightness(70%);
+    }
+
+    .image-container .overlay-text {
+        user-select: none;
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+        color: white;
+        background: rgba(0, 0, 0, 0.6); /* 반투명 배경 */
+        padding: 10px 20px;
+        border-radius: 10px;
+        font-family: monospace;
+        font-size: 1.2em;
+        white-space: nowrap;
+
+        @media (max-width: $mobile-width) {
+            font-size: 1em;
+        }
+    }
+
+    // 더 이동할 수 없는 방향의 화살표 숨김
+    .prev-button.nav-hidden,
+    .next-button.nav-hidden {
+        display: none;
+    }
+
+    // 갤러리 내비게이션
+    .prev-button,
+    .next-button {
+        position: absolute;
+        top: 0;
+        height: 100%;
+        width: 90px;
+        z-index: 5;
+        padding: 0;
+        border: none;
+        cursor: pointer;
+        opacity: 0; // 평소엔 숨김 (화살표·음영 모두)
+        transition: opacity 0.25s ease;
+
+        @media (max-width: $mobile-width) {
+            width: 64px;
+            opacity: 1; // 터치 기기에서는 항상 표시
+        }
+    }
+
+    // 갤러리에 마우스를 올렸을 때만 화살표·음영 표시
+    .gallery-container:hover .prev-button,
+    .gallery-container:hover .next-button {
+        opacity: 1;
+    }
+
+    // 사진 양 끝 음영 — 안쪽으로 부드럽게 사라짐
+    .prev-button {
+        left: 0;
+        background: linear-gradient(to right, rgba(0, 0, 0, 0.32), rgba(0, 0, 0, 0));
+    }
+
+    .next-button {
+        right: 0;
+        background: linear-gradient(to left, rgba(0, 0, 0, 0.32), rgba(0, 0, 0, 0));
+    }
+
+    // 원형 프로스트 버튼 (::before)
+    .prev-button::before,
+    .next-button::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.85);
+        -webkit-backdrop-filter: blur(6px);
+        backdrop-filter: blur(6px);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.22);
+        transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    .prev-button::before {
+        left: 14px;
+    }
+
+    .next-button::before {
+        right: 14px;
+    }
+
+    .prev-button:hover::before,
+    .next-button:hover::before {
+        background-color: #fff;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+        transform: translateY(-50%) scale(1.08);
+    }
+
+    .prev-button:active::before,
+    .next-button:active::before {
+        transform: translateY(-50%) scale(0.95);
+    }
+
+    // 쉐브론(화살표) — 원 중앙에 CSS로 그림
+    .prev-button::after,
+    .next-button::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        width: 9px;
+        height: 9px;
+        border-top: 2px solid #333;
+        border-right: 2px solid #333;
+    }
+
+    .prev-button::after {
+        left: 35px; // 원 중심(14 + 21)
+        transform: translate(calc(-50% + 1px), -50%) rotate(-135deg);
+    }
+
+    .next-button::after {
+        right: 35px;
+        transform: translate(calc(50% - 1px), -50%) rotate(45deg);
+    }
+}

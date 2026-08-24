@@ -1,0 +1,39 @@
+<article>
+    <div class="company">
+        <div class="company-box-container">
+            <div class="title-container">
+                <div class="company-logo">
+                    <div class="{{ page.group_logo }}"></div>
+                </div>
+                <div class="company-summary">
+                    <div class="company-name">
+                        <span class="title">{% if page.group_name %}{{ page.group_name }} | {% endif %}{{ page.title }}</span>
+                    </div>
+                    <div class="company-meta">
+                        <span class="time" datetime="{{ page.date | date_to_xmlschema }}" class="post-date"><span id="start-{{ page.title }}"></span> ~ </span>
+
+                        <script>
+                            parseDateAndDisplayFromString('{{ page.start }}', document.getElementById('start-{{ page.title }}'));
+                        </script>
+
+                        {% if page.end %}
+                        <span class="time" datetime="{{ page.date | date_to_xmlschema }}" class="post-date"><span id="end-{{ page.title }}"></span></span>
+                        <span class="experience" id="experience-{{ page.title }}"></span>
+                        <script>
+                            parseDateAndDisplayFromString('{{ page.end }}', document.getElementById('end-{{ page.title }}'));
+                            calculateAndDisplayExperience('{{ page.start }}', '{{ page.end }}', document.getElementById('experience-{{ page.title }}'));
+                        </script>
+                        {% else %}
+                        <span class="time" datetime="{{ page.date | date_to_xmlschema }}" class="post-date">재직 중</span>
+                        <span class="experience" id="experience-{{ page.title }}"></span>
+                        <script>
+                            calculateAndDisplayExperience('{{ page.start }}', document.getElementById('experience-{{ page.title }}'));
+                        </script>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="content-container">{{ page.content }}</div>
+        </div>
+    </div>
+</article>

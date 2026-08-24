@@ -1,0 +1,85 @@
+// 우측 마그네틱 인디케이터 네비 (마우스와 가까운 눈금이 길어짐)
+.spy-nav {
+    position: fixed;
+    right: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
+
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    li {
+        margin: 0;
+        padding: 0;
+    }
+
+    .nav-link {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end; // 점은 우측 고정, 라벨은 왼쪽으로 펼쳐짐
+        gap: 12px;
+        // 좌측으로 넓은 호버/클릭 영역 (점만 작게 잡히던 문제 보정)
+        padding: 6px 4px 6px 80px;
+        text-decoration: none;
+
+        .nav-text {
+            font-size: 13px;
+            font-weight: 600;
+            color: #888;
+            white-space: nowrap;
+            opacity: 0;
+            max-width: 0;
+            overflow: hidden;
+            transition: opacity 0.2s ease, max-width 0.25s ease;
+        }
+
+        .nav-dot {
+            flex: 0 0 auto;
+            width: calc(9px + (var(--nav-pull, 0) * 42px));
+            height: 9px;
+            border-radius: 999px;
+            background-color: #cfcfcf;
+            transform: translateY(var(--nav-shift-y, 0px));
+            transform-origin: right center;
+            transition: width 0.12s ease-out, transform 0.12s ease-out, background-color 0.2s ease;
+        }
+
+        &:hover {
+            text-decoration: none;
+
+            .nav-text {
+                opacity: 1;
+                max-width: 200px;
+                color: #333;
+            }
+
+            .nav-dot {
+                background-color: #888;
+            }
+        }
+
+        &.active {
+            .nav-text {
+                color: #f5821f;
+            }
+
+            .nav-dot {
+                background-color: #f5821f;
+            }
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .nav-link .nav-dot {
+            transition: background-color 0.2s ease;
+        }
+    }
+
+    @media (max-width: 1500px) {
+        display: none;
+    }
+}

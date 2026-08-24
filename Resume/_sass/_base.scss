@@ -1,0 +1,154 @@
+* {
+    line-height: 1.5;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    font-family: 'Noto Sans KR';
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 0.9em;
+
+    @media (min-width: 600px) {
+        font-size: 0.95em;
+    }
+}
+
+body {
+    /*background-color: #ccc;*/
+}
+
+.background {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    background-size: 180px;
+
+    .cover {
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.9);
+    }
+}
+
+
+.frame {
+    margin: auto;
+    min-height: 100vh;
+    max-width: 1200px;
+    padding: 0 30px;
+    transition: all 0s linear;
+
+    @media (max-width: $mobile-width) {
+        width: 100%;
+        padding: 0;
+    }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: auto;
+    line-height: normal;
+}
+
+hr {
+    border: none;
+    height: 2px;
+    margin-top: -0.8em;
+    background-color: #eaecef;
+}
+
+li,
+ul,
+p {
+    line-height: normal;
+}
+
+ol {
+    padding: 0 1rem 0 2rem;
+}
+
+li,
+ul {
+    padding: 0.1rem 0.2rem 0.2rem 0.7rem;
+
+    @media (max-width: $mobile-width) {
+        padding: 0.1rem 0rem 0.2rem 0rem;
+    }
+}
+
+dl {
+    margin: 0;
+}
+
+a {
+    color: chocolate;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+a:hover {
+    /*font-weight: bold;*/
+    color: crimson;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+html::selection {
+    background: #ffae44;
+    color: #fff;
+    text-shadow: none;
+}
+
+.copy {
+    cursor: pointer;
+}
+
+.search {
+    cursor: help;
+}
+
+
+footer {
+    padding: 10px 0 40px;
+    color: gray;
+    font-size: 12px;
+    text-align: center;
+
+    hr {
+        margin: 40px auto;
+        width: 100%;
+    }
+
+    div {
+        padding: 15px 40px 0;
+    }
+}
+
+.box-container {
+    position: relative;
+    margin: 8px 0;
+    background-color: white;
+    border: 1px solid #d8d8d8;
+    border-radius: 8px;
+    box-shadow: none;
+}
+
+.blur {
+    filter: blur(1.5px);
+}

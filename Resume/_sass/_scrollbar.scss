@@ -1,0 +1,53 @@
+html {
+    scrollbar-width: thin;
+    scrollbar-color: #c9c9c9 transparent;
+    scrollbar-gutter: stable; /* 처음부터 스크롤바 자리 예약 → 콘텐츠 로드 후 스크롤바 생겨도 안 밀림 */
+}
+
+/* 모달 열릴 땐 예약을 해제하고, 사라진 폭만큼 보정해 겹침·빈칸·밀림 방지 */
+html.modal-open {
+    scrollbar-gutter: auto;
+}
+
+html.modal-open .fab,
+html.modal-open .page-switch,
+html.modal-open .spy-nav {
+    margin-right: var(--modal-sbw, 0px);
+}
+
+html.modal-open body {
+    padding-right: var(--modal-sbw, 0px);
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #c9c9c9;
+    border-radius: 999px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+    transition: background-color 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #f5821f;
+}
+
+html.dark {
+    scrollbar-color: #4a4d55 transparent;
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #4a4d55;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: #f5821f;
+    }
+}
