@@ -10,6 +10,32 @@
   font-family: "Noto Sans KR", "Malgun Gothic", sans-serif;
 }
 
+body.has-site-footer {
+  position: relative;
+  padding-bottom: 64px;
+}
+
+.site-footer {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  left: 16px;
+  width: auto;
+  margin: 0;
+  padding: 0;
+  color: #888;
+  font-family: "Noto Sans KR", "Malgun Gothic", sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.7;
+  text-align: center;
+}
+
+.site-footer a, .site-footer small, .site-footer span { font-size: 11px; font-weight: 400; line-height: 1.7; }
+.site-footer a { color: #888; text-decoration: none; }
+.site-footer a:hover { color: #333; text-decoration: underline; }
+.site-footer span { margin: 0 7px; color: #bbb; }
+
 .site-overlay-button {
   display: flex;
   height: 44px;
@@ -86,6 +112,10 @@
   .site-overlay-button { width: 40px; height: 40px; }
   .site-overlay-icon { width: 38px; height: 38px; flex-basis: 38px; background-size: 20px; }
   .site-overlay-label { display: none; }
+  body.has-site-footer { padding-bottom: 82px; }
+  .site-footer { bottom: 12px; }
+  .site-footer span { display: none; }
+  .site-footer a, .site-footer small { display: block; }
 }
 
 @media print {

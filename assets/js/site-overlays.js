@@ -36,4 +36,26 @@
   }));
 
   document.body.appendChild(overlays);
+
+  if (!document.querySelector('.site-footer')) {
+    document.body.classList.add('has-site-footer');
+    var footer = document.createElement('footer');
+    footer.className = 'site-footer';
+
+    var license = document.createElement('a');
+    license.href = '/license.html';
+    license.textContent = 'LICENSE';
+
+    var separator = document.createElement('span');
+    separator.setAttribute('aria-hidden', 'true');
+    separator.textContent = '·';
+
+    var copyright = document.createElement('small');
+    copyright.textContent = 'Copyright © 2025 Moon Dongjun. All rights reserved.';
+
+    footer.appendChild(license);
+    footer.appendChild(separator);
+    footer.appendChild(copyright);
+    document.body.appendChild(footer);
+  }
 })();

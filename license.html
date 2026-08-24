@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>라이선스 · 문동준</title>
+  <link rel="stylesheet" href="/assets/css/site-overlays.css">
+  <style>
+    @font-face{font-family:"Noto Sans KR";src:url("/Resume/assets/font/NotoSansKR.woff2") format("woff2");font-weight:100 900;font-display:swap}
+    *{box-sizing:border-box}
+    body{margin:0;padding:48px 20px;background:#f0f0f0;color:#333;font-family:"Noto Sans KR","Malgun Gothic",sans-serif}
+    main{width:820px;max-width:100%;margin:0 auto;padding:36px 42px;background:#fff;box-shadow:0 3px 14px rgba(0,0,0,.1)}
+    small{color:#f5821f;font-size:9px;font-weight:700;letter-spacing:.12em}
+    h1{margin:7px 0 24px;font-size:24px}
+    pre{margin:0;overflow-wrap:anywhere;color:#444;font:12px/1.85 "Noto Sans KR","Malgun Gothic",sans-serif;white-space:pre-wrap}
+    .error{color:#a33}
+    @media(max-width:680px){body{padding:14px}main{padding:28px 22px}h1{font-size:21px}}
+  </style>
+</head>
+<body>
+  <main>
+    <small>LICENSE</small>
+    <h1>License Information</h1>
+    <pre id="license-content" aria-live="polite">라이선스를 불러오는 중입니다.</pre>
+  </main>
+  <script>
+    fetch('/LICENSE.md')
+      .then(function (response) { if (!response.ok) throw new Error('HTTP ' + response.status); return response.text(); })
+      .then(function (text) { document.getElementById('license-content').textContent = text; })
+      .catch(function () { var content = document.getElementById('license-content'); content.className = 'error'; content.textContent = '라이선스 내용을 불러오지 못했습니다.'; });
+  </script>
+  <script src="/assets/js/site-overlays.js"></script>
+</body>
+</html>

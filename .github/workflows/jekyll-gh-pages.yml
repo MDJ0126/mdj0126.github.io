@@ -44,6 +44,8 @@ jobs:
       - name: Add root page
         run: |
           cp index.html _site/index.html
+          cp license.html _site/license.html
+          cp Resume/LICENSE _site/LICENSE.md
           cp 403.html _site/403.html
           cp 404.html _site/404.html
           cp robots.txt _site/robots.txt
