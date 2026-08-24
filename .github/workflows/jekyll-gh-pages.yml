@@ -25,6 +25,9 @@ jobs:
   # Build job
   build:
     runs-on: ubuntu-latest
+    env:
+      BUNDLE_GEMFILE: ${{ github.workspace }}/Resume/Gemfile
+      JEKYLL_ENV: production
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -33,14 +36,12 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.2"
+          ruby-version: "3.1"
           bundler-cache: true
           working-directory: Resume
       - name: Build with Jekyll
-        env:
-          BUNDLE_GEMFILE: ${{ github.workspace }}/Resume/Gemfile
-          JEKYLL_ENV: production
-        run: bundle exec jekyll build --source Resume --destination _site/Resume
+        working-directory: Resume
+        run: bundle exec jekyll build --destination ../_site/Resume --trace
       - name: Add root page
         run: |
           cp index.html _site/index.html
