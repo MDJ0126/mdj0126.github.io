@@ -4,8 +4,10 @@ url: https://mdj0126.github.io
 baseurl: /Portfolio
 markdown: kramdown
 defaults:
+  - scope: { path: "_posts/company-projects", type: posts }
+    values: { layout: post, category: company-projects, category_label: "COMPANY PROJECT", permalink: "/company-projects/:title/" }
   - scope: { path: "_posts/personal-projects", type: posts }
     values: { layout: post, category: personal-projects, category_label: "PERSONAL PROJECT", permalink: "/personal-projects/:title/" }
   - scope: { path: "_posts/coding-tests", type: posts }
-    values: { layout: post, category: coding-tests, category_label: "CODING TEST", permalink: "/coding-tests/:title/" }
+    values: { layout: post, category: coding-tests, category_label: "ALGORITHM", permalink: "/coding-tests/:title/" }
 exclude: [production.html]

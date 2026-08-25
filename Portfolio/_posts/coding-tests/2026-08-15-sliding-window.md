@@ -1,7 +1,7 @@
 ---
 title: 연속 부분 수열 · 슬라이딩 윈도우
 category: coding-tests
-category_label: CODING TEST
+category_label: ALGORITHM
 permalink: /coding-tests/sliding-window/
 summary: 두 포인터로 조건을 만족하는 가장 짧은 연속 구간을 찾는 풀이입니다.
 date: 2026-08-15
