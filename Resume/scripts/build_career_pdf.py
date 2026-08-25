@@ -13,6 +13,7 @@ from reportlab.platypus import Paragraph
 
 
 ROOT = Path(__file__).resolve().parents[1]
+PORTFOLIO_IMAGES = ROOT.parent / "Portfolio" / "assets" / "img"
 OUT = ROOT / "output" / "pdf" / "문동준_경력기술서_가로형.pdf"
 FONT = Path("C:/Windows/Fonts/malgun.ttf")
 BOLD_FONT = Path("C:/Windows/Fonts/malgunbd.ttf")
@@ -20,7 +21,6 @@ BOLD_FONT = Path("C:/Windows/Fonts/malgunbd.ttf")
 PROJECTS = [
     {
         "title": "라스트 헌터 K : 서울",
-        "icon": "lasthunterk.jpg",
         "period": "2023.12 - 2026.07",
         "release": "2026년 4월 출시",
         "genre": "헌팅 액션",
@@ -29,7 +29,7 @@ PROJECTS = [
         "role_name": "클라이언트 코어·시스템 개발",
         "status": "초기 개발 · 글로벌 출시 · 라이브 운영",
         "tech": "Unity · C# · Addressables · uGUI · URP · SVN · Jenkins",
-        "image": ROOT / "assets" / "img" / "post" / "lastHunterK_1.jpg",
+        "image": PORTFOLIO_IMAGES / "post" / "lastHunterK_1.jpg",
         "achievements": [
             "<b>초기 로딩 병목 개선</b><br/>서버 통신과 데이터 로드가 순차 처리되던 구조를 병렬화하여 실제 서비스 초기 로딩을 약 20초에서 5초로 단축했습니다.",
             "<b>데이터 처리 구조 최적화</b><br/>반복 탐색이 많은 List를 Dictionary로 전환하고 UniTask·Async/Await 기반으로 데이터 역직렬화를 비동기 병렬 처리하여 탐색·로드 효율을 높였습니다.",
@@ -39,7 +39,6 @@ PROJECTS = [
     },
     {
         "title": "데미안 전기",
-        "icon": "demiansaga.jpg",
         "period": "2020.08 - 2023.12",
         "release": "2023년 4월 출시",
         "genre": "수집형 RPG",
@@ -48,7 +47,7 @@ PROJECTS = [
         "role_name": "아웃게임 프레임워크·콘텐츠 개발",
         "status": "초기 개발 · 글로벌 출시 · 라이브 운영",
         "tech": "Unity · C# · NGUI · URP · SVN · Jenkins",
-        "image": ROOT / "assets" / "img" / "post" / "demian_saga_1.jpg",
+        "image": PORTFOLIO_IMAGES / "post" / "demian_saga_1.jpg",
         "achievements": [
             "<b>아웃게임 구조 표준화</b><br/>UI 콘텐츠 전환, 팝업, 씬 관리를 공통 프레임워크로 설계해 콘텐츠별 화면 흐름과 상태 관리 방식을 표준화했습니다.",
             "<b>주요 콘텐츠 개발</b><br/>TCP 기반 길드 대항전과 멤버십·상점·이벤트·퀘스트·인벤토리 등 주요 콘텐츠를 구현했습니다.",
@@ -58,7 +57,6 @@ PROJECTS = [
     },
     {
         "title": "오버독스",
-        "icon": "overdox.jpg",
         "period": "2018.09 - 2020.08",
         "release": "2019년 11월 출시",
         "genre": "MOBA",
@@ -67,7 +65,7 @@ PROJECTS = [
         "role_name": "클라이언트 콘텐츠 개발",
         "status": "초기 개발 · 글로벌 출시 · 라이브 운영",
         "tech": "Unity · C# · NGUI · SVN · Jenkins",
-        "image": ROOT / "assets" / "img" / "post" / "overdox_1.jpg",
+        "image": PORTFOLIO_IMAGES / "post" / "overdox_1.jpg",
         "achievements": [
             "<b>인게임 프리징 완화</b><br/>Animation Event에서 호출되는 이펙트·사운드를 사전 수집·로딩(Preload)하여 동적 로드로 인한 프레임 스파이크를 완화하고 전투 쾌적성을 높였습니다.",
             "<b>TCP 기반 채팅 시스템 구현</b><br/>TCP 통신 기반 채팅 시스템을 개발하며 메시지 송수신과 연결 상태 처리 구조를 구축했습니다.",
