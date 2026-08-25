@@ -98,15 +98,12 @@
       <p class="github-provider">POWERED BY GITHUB</p>
       <span class="github-profile-guide" id="github-profile-guide" role="status" aria-live="polite">한 번 더 누르면 GitHub 프로필로 이동합니다.</span>
       <div class="headline">
-        <h1>안녕하세요. <strong class="experience">8년 차</strong> 게임 클라이언트 프로그래머 <strong>문동준</strong>입니다.</h1>
+        <h1 id="about-headline"></h1>
         <a class="admin-icon" href="https://resume-analytics-dashboard.ehdwns0126.workers.dev" target="_blank" rel="noopener" aria-label="관리 페이지 열기" title="사이트 관리" onclick="try { localStorage.setItem('exclude_analytics', 'true'); } catch (e) {}">⚙️</a>
       </div>
       <section class="intro" aria-labelledby="intro-title">
-        <small id="intro-title">ABOUT ME</small>
-        <p>
-			Unity 기반 프로젝트인 오버독스, 데미안전기, 라스트헌터K 등의 초기 개발부터 글로벌 출시 및 라이브 서비스까지 함께했습니다.<br>
-			로그인부터 아웃게임, 인게임까지 전반적인 클라이언트 로직과 시스템을 개발했으며, 빌드 및 배포를 포함해 프로젝트 전반의 클라이언트 개발을 경험해 왔습니다.
-		</p>
+        <small id="intro-title"></small>
+        <p id="about-description"></p>
       </section>
       <nav aria-label="페이지 바로가기">
         <a href="/Resume/">
@@ -124,6 +121,47 @@
     <script src="/assets/js/site-overlays.js"></script>
     <script>
       (function () {
+        function inlineMarkdown(text) {
+          var fragment = document.createDocumentFragment();
+          text.split(/(\*\*[^*]+\*\*)/).forEach(function (part) {
+            if (part.slice(0, 2) === '**' && part.slice(-2) === '**') {
+              var strong = document.createElement('strong');
+              strong.textContent = part.slice(2, -2);
+              if (strong.textContent === '8년 차') strong.className = 'experience';
+              fragment.appendChild(strong);
+            } else {
+              fragment.appendChild(document.createTextNode(part));
+            }
+          });
+          return fragment;
+        }
+
+        function loadAbout() {
+          return fetch('/about.md', { cache: 'no-cache' }).then(function (response) {
+            if (!response.ok) throw new Error('about.md를 불러오지 못했습니다.');
+            return response.text();
+          }).then(function (markdown) {
+            var lines = markdown.replace(/\r/g, '').trim().split('\n');
+            var headline = lines.find(function (line) { return line.indexOf('# ') === 0; });
+            var title = lines.find(function (line) { return line.indexOf('## ') === 0; });
+            var titleIndex = lines.indexOf(title);
+            var description = lines.slice(titleIndex + 1).filter(function (line) { return line.trim(); });
+            var headlineElement = document.getElementById('about-headline');
+            headlineElement.replaceChildren(inlineMarkdown(headline.slice(2).trim()));
+            document.getElementById('intro-title').textContent = title.slice(3).trim();
+            var descriptionElement = document.getElementById('about-description');
+            descriptionElement.replaceChildren();
+            description.forEach(function (line, index) {
+              if (index) descriptionElement.appendChild(document.createElement('br'));
+              descriptionElement.appendChild(document.createTextNode(line.replace(/\s{2}$/, '').trim()));
+            });
+          }).catch(function () {
+            document.getElementById('about-headline').textContent = '소개 내용을 불러오지 못했습니다.';
+            document.getElementById('intro-title').textContent = 'ABOUT ME';
+          });
+        }
+
+        var aboutReady = loadAbout();
         var localHosts = ['localhost', '127.0.0.1', '0.0.0.0', '[::1]'];
         var portfolioLink = document.querySelector('[data-local-href]');
         if (portfolioLink && localHosts.indexOf(window.location.hostname) !== -1) {
@@ -196,11 +234,11 @@
         }
 
         if (document.documentElement.classList.contains('root-skip-loading')) {
-          finishLoading();
+          aboutReady.finally(finishLoading);
         } else {
           window.addEventListener('load', function () {
             var fonts = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
-            fonts.then(function () {
+            Promise.all([fonts, aboutReady]).then(function () {
               requestAnimationFrame(function () { requestAnimationFrame(showGreeting); });
             });
           });

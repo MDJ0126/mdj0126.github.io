@@ -2,6 +2,9 @@
 setlocal
 
 pushd "%~dp0" || goto :directory_error
+if exist "C:\Ruby31-x64\bin\ruby.exe" (
+  set "PATH=C:\Ruby31-x64\bin;%PATH%"
+)
 set "BUNDLE_GEMFILE=%CD%\Resume\Gemfile"
 echo Checking Ruby dependencies...
 call bundle check >nul 2>&1

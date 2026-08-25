@@ -1,4 +1,5 @@
 require 'fileutils'
+require 'rbconfig'
 require 'webrick'
 
 project_root = File.expand_path(__dir__)
@@ -7,7 +8,7 @@ portfolio_root = File.join(project_root, 'Portfolio')
 local_site = File.join(project_root, '.local-site')
 
 def source_files(project_root, resume_root, portfolio_root)
-  root_files = %w[_config.yml index.html license.html 403.html 404.html robots.txt].map { |name| File.join(project_root, name) }
+  root_files = %w[_config.yml index.html about.md license.html 403.html 404.html robots.txt].map { |name| File.join(project_root, name) }
   nested_files = [resume_root, portfolio_root].flat_map do |root|
     Dir.glob(File.join(root, '**', '*'), File::FNM_DOTMATCH).select do |path|
       normalized = path.tr('\\', '/')
@@ -27,8 +28,9 @@ end
 
 def build_site(project_root, resume_root, portfolio_root, local_site)
   puts "\nChange detected. Rebuilding local site..."
+  jekyll = File.join(RbConfig::CONFIG['bindir'], 'jekyll')
   resume_destination = File.join(local_site, 'Resume')
-  success = system('bundle', 'exec', 'jekyll', 'build', '--config', File.join(project_root, '_config.yml'), '--destination', resume_destination)
+  success = system(RbConfig.ruby, '-rbundler/setup', jekyll, 'build', '--config', File.join(project_root, '_config.yml'), '--destination', resume_destination)
   unless success
     warn 'Jekyll build failed. Waiting for the next change.'
     return false
@@ -36,7 +38,7 @@ def build_site(project_root, resume_root, portfolio_root, local_site)
 
   portfolio_destination = File.join(local_site, 'Portfolio')
   portfolio_success = system(
-    'bundle', 'exec', 'jekyll', 'build',
+    RbConfig.ruby, '-rbundler/setup', jekyll, 'build',
     '--source', portfolio_root,
     '--config', File.join(portfolio_root, '_config.yml'),
     '--destination', portfolio_destination
@@ -47,6 +49,7 @@ def build_site(project_root, resume_root, portfolio_root, local_site)
   end
 
   FileUtils.cp(File.join(project_root, 'index.html'), File.join(local_site, 'index.html'))
+  FileUtils.cp(File.join(project_root, 'about.md'), File.join(local_site, 'about.md'))
   FileUtils.cp(File.join(project_root, 'license.html'), File.join(local_site, 'license.html'))
   FileUtils.cp(File.join(resume_root, 'LICENSE'), File.join(local_site, 'LICENSE.md'))
   FileUtils.cp(File.join(project_root, '403.html'), File.join(local_site, '403.html'))
