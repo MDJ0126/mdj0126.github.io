@@ -9,6 +9,8 @@
 3. 배포 후 표시되는 Worker 주소를 `승인된 JavaScript 원본`에 등록합니다.
 4. 서비스 계정을 만들고 JSON 키를 발급합니다.
 5. Google Analytics의 `관리 > 속성 액세스 관리`에서 서비스 계정 이메일을 `뷰어`로 추가합니다.
+6. 같은 Google Cloud 프로젝트에서 `Maps Embed API`를 활성화하고 API 키를 생성합니다.
+7. API 키의 애플리케이션 제한을 `웹사이트`로 설정해 Worker 주소만 허용하고, API 제한은 `Maps Embed API`만 허용합니다.
 
 ## Cloudflare 배포
 
@@ -20,8 +22,9 @@ npx wrangler secret put GOOGLE_CLIENT_ID
 npx wrangler secret put ALLOWED_EMAIL
 npx wrangler secret put SERVICE_ACCOUNT_EMAIL
 npx wrangler secret put SERVICE_ACCOUNT_PRIVATE_KEY
+npx wrangler secret put GOOGLE_MAPS_EMBED_API_KEY
 npx wrangler deploy
 ```
 
-각 값에는 OAuth 클라이언트 ID, 허용 이메일, 서비스 계정 이메일, JSON 키의 `private_key`를 입력합니다. 비밀 값은 파일이나 Git 저장소에 저장하지 않습니다.
+각 값에는 OAuth 클라이언트 ID, 허용 이메일, 서비스 계정 이메일, JSON 키의 `private_key`, Maps Embed API 키를 입력합니다. 값은 파일이나 Git 저장소에 저장하지 않습니다.
 
