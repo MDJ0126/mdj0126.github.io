@@ -28,6 +28,14 @@
   }
 
   overlays.appendChild(createButton({
+    className: 'site-overlay-linkedin',
+    href: 'https://www.linkedin.com/in/moondongjun/',
+    label: 'LinkedIn 프로필 열기',
+    text: 'LinkedIn',
+    newTab: true
+  }));
+
+  overlays.appendChild(createButton({
     className: 'site-overlay-kakao',
     href: 'https://open.kakao.com/o/sWoSndmh',
     label: '카카오톡 1:1 오픈채팅 열기',
