@@ -7,7 +7,7 @@ summary: 태양계 천체를 자동으로 순회하며 우주 여행을 감상�
 date: 2026-07-02
 order: 2
 tags: [Unity, C#, WebGL, Simulation]
-images: [easebeyond.gif, easebeyond_1.png]
+images: [easebeyond.gif]
 tools:
   - { name: Unity, icon: unity.png }
 ---

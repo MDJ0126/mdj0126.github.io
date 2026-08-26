@@ -1,3 +1,3 @@
 exclude:
   - production.html
-  - _posts/coding-tests
+  - _posts/technical-notes

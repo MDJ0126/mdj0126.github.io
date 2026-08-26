@@ -2,7 +2,7 @@
 layout: default
 title: 포트폴리오
 ---
-<header class="portfolio-header"><small>PORTFOLIO</small><h1>문동준 포트폴리오</h1><p>회사 프로젝트와 개인 프로젝트{% unless jekyll.environment == "production" %}, 알고리즘 문제 해결 과정{% endunless %}을 기록합니다.</p></header>
+<header class="portfolio-header"><small>PORTFOLIO</small><h1>문동준 포트폴리오</h1><p>회사 프로젝트와 개인 프로젝트{% unless jekyll.environment == "production" %}, 기술적으로 눈에 띄는 작업{% endunless %}을 기록합니다.</p></header>
 <section class="portfolio-section" aria-labelledby="company-projects-title">
   {% assign company_projects = site.posts | where: "category", "company-projects" | sort: "date" | reverse %}
   <div class="section-heading"><div><small>COMPANY PROJECT</small><h2 id="company-projects-title">회사 프로젝트</h2></div><span>{{ company_projects | size }} POSTS</span></div>
@@ -14,9 +14,9 @@ title: 포트폴리오
   <div class="post-grid">{% for post in projects %}{% include post-card.html post=post %}{% endfor %}</div>
 </section>
 {% unless jekyll.environment == "production" %}
-<section class="portfolio-section" aria-labelledby="algorithms-title">
-  {% assign tests = site.posts | where: "category", "coding-tests" | sort: "date" | reverse %}
-  <div class="section-heading"><div><small>ALGORITHM</small><h2 id="algorithms-title">알고리즘</h2></div><span>{{ tests | size }} POSTS</span></div>
-  <div class="post-grid">{% for post in tests %}{% include post-card.html post=post %}{% endfor %}</div>
+<section class="portfolio-section" aria-labelledby="technical-notes-title">
+  {% assign technical_notes = site.posts | where: "category", "technical-notes" | sort: "date" | reverse %}
+  <div class="section-heading"><div><small>TECHNICAL NOTES</small><h2 id="technical-notes-title">기술 노트</h2></div><span>{{ technical_notes | size }} POSTS</span></div>
+  <div class="post-grid">{% for post in technical_notes %}{% include post-card.html post=post %}{% endfor %}</div>
 </section>
 {% endunless %}
