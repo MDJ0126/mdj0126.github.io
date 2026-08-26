@@ -1,0 +1,3 @@
+exclude:
+  - production.html
+  - _posts/coding-tests

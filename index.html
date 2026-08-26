@@ -111,10 +111,10 @@
           <strong>이력서 보기</strong>
           <span>페이지 열기 →</span>
         </a>
-        <a class="is-disabled" data-local-href="/Portfolio/" aria-disabled="true" tabindex="-1">
+        <a href="/Portfolio/">
           <small>PORTFOLIO</small>
-          <strong>포트폴리오 보기 <em class="portfolio-status">준비 중</em></strong>
-          <span class="portfolio-action">접근 불가</span>
+          <strong>포트폴리오 보기</strong>
+          <span>페이지 열기 →</span>
         </a>
       </nav>
     </main>
@@ -162,19 +162,6 @@
         }
 
         var aboutReady = loadAbout();
-        var localHosts = ['localhost', '127.0.0.1', '0.0.0.0', '[::1]'];
-        var portfolioLink = document.querySelector('[data-local-href]');
-        if (portfolioLink && localHosts.indexOf(window.location.hostname) !== -1) {
-          portfolioLink.href = portfolioLink.getAttribute('data-local-href');
-          portfolioLink.classList.remove('is-disabled');
-          portfolioLink.removeAttribute('aria-disabled');
-          portfolioLink.removeAttribute('tabindex');
-          var portfolioStatus = portfolioLink.querySelector('.portfolio-status');
-          var portfolioAction = portfolioLink.querySelector('.portfolio-action');
-          if (portfolioStatus) portfolioStatus.style.display = 'none';
-          if (portfolioAction) portfolioAction.textContent = '페이지 열기 →';
-        }
-
         var profileLink = document.querySelector('.github-profile');
         var profileGuide = document.getElementById('github-profile-guide');
         var profileResetTimer;

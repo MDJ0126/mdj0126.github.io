@@ -10,6 +10,10 @@
   font-family: "Noto Sans KR", "Malgun Gothic", sans-serif;
 }
 
+.error-page .site-overlays {
+  display: none;
+}
+
 body.has-site-footer {
   position: relative;
   padding-bottom: 64px;

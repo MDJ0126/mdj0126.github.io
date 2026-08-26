@@ -41,6 +41,8 @@ jobs:
           working-directory: .
       - name: Build with Jekyll
         run: bundle exec jekyll build --config _config.yml --destination "${{ github.workspace }}/_site/Resume" --trace
+      - name: Build Portfolio
+        run: bundle exec jekyll build --source Portfolio --config Portfolio/_config.yml,Portfolio/_config.production.yml --destination "${{ github.workspace }}/_site/Portfolio" --trace
       - name: Add root page
         run: |
           cp index.html _site/index.html
@@ -52,8 +54,6 @@ jobs:
           cp robots.txt _site/robots.txt
           cp -R assets _site/assets
           cp Resume/assets/img/common/favicon.ico _site/favicon.ico
-          mkdir -p _site/Portfolio
-          cp Portfolio/production.html _site/Portfolio/index.html
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
 

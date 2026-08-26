@@ -6,6 +6,27 @@
   gap: 6px;
 }
 
+.post-card-thumbnail {
+  height: 124px;
+  margin: -24px -24px 18px;
+  overflow: hidden;
+  background: #e5e5e5;
+}
+
+.post-card-thumbnail img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(.88) brightness(.92);
+  transition: filter .18s ease, transform .25s ease;
+}
+
+.post-card:hover .post-card-thumbnail img {
+  filter: saturate(1) brightness(1);
+  transform: scale(1.025);
+}
+
 .post-card .post-tools img {
   display: block;
   width: 17px;
@@ -57,5 +78,20 @@
 .default-project-icon {
   border-radius: 0 !important;
   box-shadow: none !important;
-  opacity: .38;
+}
+
+.post-card .post-card-title > .default-project-icon {
+  width: 32px;
+  height: 32px;
+  margin: 3px;
+}
+
+.post-document .post-title > .default-project-icon {
+  width: 34px;
+  height: 34px;
+  margin: 3px;
+}
+
+.post-content {
+  font-size: 14px;
 }
