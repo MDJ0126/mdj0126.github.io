@@ -80,10 +80,21 @@
       nav a.is-disabled:hover small{color:#f5821f}
       nav a.is-disabled:hover span{color:#888}
       nav a strong em{margin-left:6px;color:#999;font-size:10px;font-style:normal;font-weight:500}
-      @media(max-width:680px){main{width:100%;max-width:none;margin:auto 0;padding:14px}.github-profile{width:112px;height:112px;margin-top:14px}.github-provider{margin:7px 0 18px}.headline{margin:12px 0 18px;gap:8px}h1{font-size:17px}.admin-icon{width:28px;height:28px;flex-basis:28px;font-size:16px}.intro{margin-bottom:8px;padding:18px 22px}.intro p{font-size:12px;line-height:1.8}nav{grid-template-columns:1fr;gap:8px}nav a{min-height:92px;padding:18px 22px}nav a span{right:20px;bottom:16px}}
+      .home-contact-section{margin-top:54px;text-align:center}
+      .home-contact-section small{display:block;margin-bottom:4px;color:#f5821f;font-size:9px;font-weight:600;letter-spacing:.12em}
+      .home-contact-links{display:flex;justify-content:center;gap:8px;margin-top:10px}
+      .home-contact-link{display:grid;width:32px;height:32px;padding:0;place-items:center;border:1px solid transparent;border-radius:50%;background-position:center;background-repeat:no-repeat;background-size:16px;box-shadow:0 2px 7px rgba(0,0,0,.12);opacity:.72;cursor:pointer;transition:opacity .18s ease,transform .18s ease}
+      .home-contact-link:hover{opacity:1;transform:translateY(-2px)}
+      .home-contact-link:focus-visible{outline:2px solid #f5821f;outline-offset:3px;opacity:1}
+      .home-contact-link.linkedin{border-color:#0073b2;background-color:#0073b2;background-image:url('/assets/img/icon/linkedin.png')}
+      .home-contact-link.email{border-color:#555;background:#555;color:#fff;font:400 15px/1 Arial,sans-serif}
+      .home-contact-link.kakao{border-color:#d6be00;background-color:#fae100;background-image:url('/Resume/assets/img/thumbnails/coffeeChat.png')}
+      .copy-toast{position:fixed;z-index:10002;bottom:26px;left:50%;padding:9px 13px;background:#222;color:#fff;font-size:11px;font-weight:500;line-height:1.5;white-space:nowrap;visibility:hidden;opacity:0;pointer-events:none;transform:translate(-50%,10px);transition:opacity .18s ease,transform .18s ease,visibility 0s linear .18s}
+      .copy-toast.is-visible{visibility:visible;opacity:1;transform:translate(-50%,0);transition-delay:0s}
+      @media(max-width:680px){main{width:100%;max-width:none;margin:auto 0;padding:14px}.github-profile{width:112px;height:112px;margin-top:14px}.github-provider{margin:7px 0 18px}.headline{margin:12px 0 18px;gap:8px}h1{font-size:17px}.admin-icon{width:28px;height:28px;flex-basis:28px;font-size:16px}.intro{margin-bottom:8px;padding:18px 22px}.intro p{font-size:12px;line-height:1.8}nav{grid-template-columns:1fr;gap:8px}nav a{min-height:92px;padding:18px 22px}nav a span{right:20px;bottom:16px}.home-contact-section{margin-top:34px}.home-contact-link{width:30px;height:30px;background-size:15px}.copy-toast{bottom:18px}}
     </style>
   </head>
-  <body>
+  <body class="root-page">
     <div class="loading-screen" id="loading-screen" role="status" aria-live="polite">
       <div class="loading-document" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
       <p class="loading-message">
@@ -117,7 +128,16 @@
           <span>페이지 열기 →</span>
         </a>
       </nav>
+      <section class="home-contact-section" aria-label="연락처">
+        <small>CONTACT</small>
+        <div class="home-contact-links" aria-label="연락처 바로가기">
+          <a class="home-contact-link linkedin" href="https://www.linkedin.com/in/moondongjun/" target="_blank" rel="noopener" aria-label="LinkedIn 프로필 열기" title="LinkedIn"></a>
+          <button class="home-contact-link email" id="copy-email" type="button" aria-label="이메일 주소 복사" title="이메일 주소 복사"><span aria-hidden="true">✉</span></button>
+          <a class="home-contact-link kakao" href="https://open.kakao.com/o/sWoSndmh" target="_blank" rel="noopener" aria-label="카카오톡 1:1 오픈채팅 열기" title="카카오톡 1:1 오픈채팅"></a>
+        </div>
+      </section>
     </main>
+    <div class="copy-toast" id="copy-toast" role="status" aria-live="polite"></div>
     <script src="/assets/js/site-overlays.js"></script>
     <script>
       (function () {
@@ -162,6 +182,50 @@
         }
 
         var aboutReady = loadAbout();
+        var emailAddress = 'ehdwns0126@naver.com';
+        var copyEmailButton = document.getElementById('copy-email');
+        var copyToast = document.getElementById('copy-toast');
+        var copyToastTimer;
+
+        function showCopyToast(message) {
+          if (!copyToast) return;
+          copyToast.textContent = message;
+          copyToast.classList.add('is-visible');
+          clearTimeout(copyToastTimer);
+          copyToastTimer = setTimeout(function () {
+            copyToast.classList.remove('is-visible');
+          }, 2200);
+        }
+
+        function fallbackCopyEmail() {
+          var textarea = document.createElement('textarea');
+          textarea.value = emailAddress;
+          textarea.setAttribute('readonly', '');
+          textarea.style.position = 'fixed';
+          textarea.style.opacity = '0';
+          document.body.appendChild(textarea);
+          textarea.select();
+          var copied = document.execCommand('copy');
+          textarea.remove();
+          return copied;
+        }
+
+        if (copyEmailButton) {
+          copyEmailButton.addEventListener('click', function () {
+            var copyTask;
+            if (navigator.clipboard && window.isSecureContext) {
+              copyTask = navigator.clipboard.writeText(emailAddress).then(function () { return true; });
+            } else {
+              copyTask = Promise.resolve(fallbackCopyEmail());
+            }
+            copyTask.then(function (copied) {
+              showCopyToast(copied ? '이메일 주소를 복사했습니다.' : '이메일 주소를 복사하지 못했습니다.');
+            }).catch(function () {
+              showCopyToast(fallbackCopyEmail() ? '이메일 주소를 복사했습니다.' : '이메일 주소를 복사하지 못했습니다.');
+            });
+          });
+        }
+
         var profileLink = document.querySelector('.github-profile');
         var profileGuide = document.getElementById('github-profile-guide');
         var profileResetTimer;
