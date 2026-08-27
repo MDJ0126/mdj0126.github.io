@@ -1,52 +1,153 @@
 (function () {
-  if (document.querySelector('.site-overlays')) return;
+  var emailAddress = 'ehdwns0126@naver.com';
 
-  var overlays = document.createElement('div');
-  overlays.className = 'site-overlays';
-  overlays.setAttribute('aria-label', '사이트 바로가기');
-
-  function createButton(options) {
+  function createLink(className, href, label, tooltipText) {
     var link = document.createElement('a');
-    link.className = 'site-overlay-button ' + options.className;
-    link.href = options.href;
-    link.setAttribute('aria-label', options.label);
-    if (options.newTab) {
-      link.target = '_blank';
-      link.rel = 'noopener';
-    }
-
-    var label = document.createElement('span');
-    label.className = 'site-overlay-label';
-    label.textContent = options.text;
-    var icon = document.createElement('span');
-    icon.className = 'site-overlay-icon';
-    icon.setAttribute('aria-hidden', 'true');
-    if (options.icon) icon.textContent = options.icon;
-    link.appendChild(label);
-    link.appendChild(icon);
+    link.className = 'site-contact-button ' + className;
+    link.href = href;
+    link.target = '_blank';
+    link.rel = 'noopener';
+    link.setAttribute('aria-label', label);
+    link.dataset.pointerTooltip = tooltipText;
     return link;
   }
 
-  overlays.appendChild(createButton({
-    className: 'site-overlay-linkedin',
-    href: 'https://www.linkedin.com/in/moondongjun/',
-    label: 'LinkedIn 프로필 열기',
-    text: 'LinkedIn',
-    newTab: true
-  }));
+  function fallbackCopyEmail() {
+    var textarea = document.createElement('textarea');
+    textarea.value = emailAddress;
+    textarea.setAttribute('readonly', '');
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea);
+    textarea.select();
+    var copied = document.execCommand('copy');
+    textarea.remove();
+    return copied;
+  }
 
-  overlays.appendChild(createButton({
-    className: 'site-overlay-kakao',
-    href: 'https://open.kakao.com/o/sWoSndmh',
-    label: '카카오톡 1:1 오픈채팅 열기',
-    text: '1:1 오픈채팅',
-    newTab: true
-  }));
+  function showToast(message) {
+    var toast = document.querySelector('.site-copy-toast');
+    if (!toast) return;
+    toast.textContent = message;
+    toast.classList.add('is-visible');
+    clearTimeout(showToast.timer);
+    showToast.timer = setTimeout(function () {
+      toast.classList.remove('is-visible');
+    }, 2200);
+  }
 
-  document.body.appendChild(overlays);
+  function ensurePointerTooltip() {
+    var tooltip = document.querySelector('.site-pointer-tooltip');
+    if (tooltip) return tooltip;
+    tooltip = document.createElement('span');
+    tooltip.className = 'site-pointer-tooltip';
+    tooltip.setAttribute('role', 'tooltip');
+    document.body.appendChild(tooltip);
+    return tooltip;
+  }
+
+  function positionPointerTooltip(tooltip, clientX, clientY) {
+    var gap = 14;
+    var edge = 12;
+    var rect = tooltip.getBoundingClientRect();
+    var left = Math.min(clientX + gap, window.innerWidth - rect.width - edge);
+    var top = clientY + gap;
+    if (top + rect.height > window.innerHeight - edge) top = clientY - rect.height - gap;
+    tooltip.style.left = Math.max(edge, left) + 'px';
+    tooltip.style.top = Math.max(edge, top) + 'px';
+  }
+
+  function attachPointerTooltip(target, text) {
+    if (!target || target.dataset.pointerTooltipBound === 'true') return;
+    var tooltip = ensurePointerTooltip();
+    target.dataset.pointerTooltipBound = 'true';
+
+    function show(clientX, clientY) {
+      tooltip.textContent = text;
+      tooltip.classList.add('is-visible');
+      positionPointerTooltip(tooltip, clientX, clientY);
+    }
+
+    function hide() {
+      tooltip.classList.remove('is-visible');
+    }
+
+    target.addEventListener('mouseenter', function (event) {
+      show(event.clientX, event.clientY);
+    });
+    target.addEventListener('mousemove', function (event) {
+      if (!tooltip.classList.contains('is-visible')) return;
+      positionPointerTooltip(tooltip, event.clientX, event.clientY);
+    });
+    target.addEventListener('mouseleave', hide);
+    target.addEventListener('focus', function () {
+      if (!target.matches(':focus-visible')) return;
+      var rect = target.getBoundingClientRect();
+      show(rect.left + (rect.width / 2), rect.bottom);
+    });
+    target.addEventListener('blur', hide);
+  }
+
+  if (!document.querySelector('.site-contact')) {
+    var contact = document.createElement('section');
+    contact.className = 'site-contact';
+    contact.setAttribute('aria-label', '연락처');
+
+    var title = document.createElement('small');
+    title.className = 'site-contact-title';
+    title.textContent = 'CONTACT';
+
+    var links = document.createElement('div');
+    links.className = 'site-contact-links';
+    links.setAttribute('aria-label', '연락처 바로가기');
+
+    links.appendChild(createLink(
+      'site-contact-linkedin',
+      'https://www.linkedin.com/in/moondongjun/',
+      'LinkedIn 프로필 열기',
+      'LinkedIn으로 이동하기'
+    ));
+
+    var email = document.createElement('button');
+    email.className = 'site-contact-button site-contact-email';
+    email.type = 'button';
+    email.setAttribute('aria-label', '이메일 주소 복사');
+    email.dataset.pointerTooltip = '이메일 주소 복사하기';
+    email.innerHTML = '<span aria-hidden="true">✉</span>';
+    email.addEventListener('click', function () {
+      var copyTask;
+      if (navigator.clipboard && window.isSecureContext) {
+        copyTask = navigator.clipboard.writeText(emailAddress).then(function () { return true; });
+      } else {
+        copyTask = Promise.resolve(fallbackCopyEmail());
+      }
+      copyTask.then(function (copied) {
+        showToast(copied ? '이메일 주소를 복사했습니다.' : '이메일 주소를 복사하지 못했습니다.');
+      }).catch(function () {
+        showToast(fallbackCopyEmail() ? '이메일 주소를 복사했습니다.' : '이메일 주소를 복사하지 못했습니다.');
+      });
+    });
+    links.appendChild(email);
+
+    links.appendChild(createLink(
+      'site-contact-kakao',
+      'https://open.kakao.com/o/sWoSndmh',
+      '카카오톡 1:1 오픈채팅 열기',
+      '카카오톡 오픈채팅으로 이동하기'
+    ));
+
+    contact.appendChild(title);
+    contact.appendChild(links);
+    document.body.appendChild(contact);
+
+    var toast = document.createElement('div');
+    toast.className = 'site-copy-toast';
+    toast.setAttribute('role', 'status');
+    toast.setAttribute('aria-live', 'polite');
+    document.body.appendChild(toast);
+  }
 
   if (!document.querySelector('.site-footer')) {
-    document.body.classList.add('has-site-footer');
     var footer = document.createElement('footer');
     footer.className = 'site-footer';
 
@@ -66,4 +167,12 @@
     footer.appendChild(copyright);
     document.body.appendChild(footer);
   }
+
+  document.body.classList.add('has-site-footer');
+
+  var profile = document.querySelector('.github-profile');
+  if (profile) attachPointerTooltip(profile, 'GitHub로 이동하기');
+  document.querySelectorAll('.site-contact-button').forEach(function (button) {
+    attachPointerTooltip(button, button.dataset.pointerTooltip);
+  });
 })();

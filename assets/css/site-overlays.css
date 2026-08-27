@@ -1,23 +1,134 @@
-.site-overlays {
-  position: fixed;
-  z-index: 9998;
-  right: 18px;
-  bottom: 18px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 8px;
-  font-family: "Noto Sans KR", "Malgun Gothic", sans-serif;
-}
-
-.error-page .site-overlays,
-.root-page .site-overlays {
-  display: none;
-}
-
 body.has-site-footer {
   position: relative;
-  padding-bottom: 64px;
+  padding-bottom: 116px;
+}
+
+.site-contact {
+  position: absolute;
+  right: 16px;
+  bottom: 48px;
+  left: 16px;
+  color: #222;
+  font-family: "Noto Sans KR", "Malgun Gothic", sans-serif;
+  text-align: center;
+}
+
+.site-contact-title {
+  display: block;
+  margin-bottom: 9px;
+  color: #f5821f;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  line-height: 1;
+}
+
+.site-contact-links {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.site-contact-button {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  place-items: center;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 16px;
+  box-shadow: 0 2px 7px rgba(0, 0, 0, .12);
+  opacity: .72;
+  cursor: pointer;
+  text-decoration: none;
+  transition: opacity .18s ease, transform .18s ease;
+}
+
+.site-contact-button:hover {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+.site-contact-button:focus-visible {
+  opacity: 1;
+  outline: 2px solid #f5821f;
+  outline-offset: 3px;
+}
+
+.site-contact-linkedin {
+  border-color: #0073b2;
+  background-color: #0073b2;
+  background-image: url('/assets/img/icon/linkedin.png');
+}
+
+.site-contact-email {
+  border-color: #555;
+  background: #555;
+  color: #fff;
+  font: 400 15px/1 Arial, sans-serif;
+}
+
+.site-contact-kakao {
+  border-color: #d6be00;
+  background-color: #fae100;
+  background-image: url('/Resume/assets/img/thumbnails/coffeeChat.png');
+}
+
+.site-copy-toast {
+  position: fixed;
+  z-index: 10002;
+  bottom: 26px;
+  left: 50%;
+  padding: 9px 13px;
+  background: #222;
+  color: #fff;
+  font-family: "Noto Sans KR", "Malgun Gothic", sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.5;
+  white-space: nowrap;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 10px);
+  transition: opacity .18s ease, transform .18s ease, visibility 0s linear .18s;
+}
+
+.site-copy-toast.is-visible {
+  visibility: visible;
+  opacity: 1;
+  transform: translate(-50%, 0);
+  transition-delay: 0s;
+}
+
+.site-pointer-tooltip {
+  position: fixed;
+  z-index: 10003;
+  top: 0;
+  left: 0;
+  display: block;
+  width: max-content;
+  max-width: calc(100vw - 24px);
+  padding: 8px 11px;
+  background: #222;
+  color: #fff;
+  font-family: "Noto Sans KR", "Malgun Gothic", sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: center;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .1s ease;
+}
+
+.site-pointer-tooltip.is-visible {
+  visibility: visible;
+  opacity: 1;
 }
 
 .site-footer {
@@ -36,111 +147,48 @@ body.has-site-footer {
   text-align: center;
 }
 
-.site-footer a, .site-footer small, .site-footer span { font-size: 11px; font-weight: 400; line-height: 1.7; }
-.site-footer a { color: #888; text-decoration: none; }
-.site-footer a:hover { color: #333; text-decoration: underline; }
-.site-footer span { margin: 0 7px; color: #bbb; }
-
-.site-overlay-button {
-  display: flex;
-  height: 44px;
-  align-items: center;
-  justify-content: flex-end;
-  overflow: hidden;
-  padding: 0;
-  border: 1px solid #aaa;
-  background: #fff;
-  color: #222;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, .12);
-  opacity: .72;
-  text-decoration: none;
-  white-space: nowrap;
-  transition: background .18s ease, color .18s ease, opacity .18s ease, transform .18s ease;
-}
-
-.site-overlay-button:hover {
-  background: #222;
-  color: #fff;
-  opacity: 1;
-  transform: translateY(-2px);
-}
-
-.site-overlay-button:focus-visible {
-  opacity: 1;
-  outline: 2px solid #f5821f;
-  outline-offset: 3px;
-}
-
-.site-overlay-icon {
-  display: flex;
-  width: 42px;
-  height: 42px;
-  flex: 0 0 42px;
-  align-items: center;
-  justify-content: center;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 22px;
-  font-size: 17px;
-}
-
-.site-overlay-label {
-  max-width: 0;
-  overflow: hidden;
-  opacity: 0;
+.site-footer a,
+.site-footer small,
+.site-footer span {
   font-size: 11px;
-  font-weight: 600;
-  transition: max-width .22s ease, opacity .18s ease, padding .22s ease;
+  font-weight: 400;
+  line-height: 1.7;
 }
 
-.site-overlay-button:hover .site-overlay-label,
-.site-overlay-button:focus-visible .site-overlay-label {
-  max-width: 150px;
-  padding-left: 14px;
-  opacity: 1;
+.site-footer a {
+  color: #888;
+  text-decoration: none;
 }
 
-.site-overlay-kakao {
-  border-color: #d6be00;
-  background: #fae100;
-  color: #111;
+.site-footer a:hover {
+  color: #333;
+  text-decoration: underline;
 }
 
-.site-overlay-linkedin {
-  border-color: #0073b2;
-  background: #0073b2;
-  color: #fff;
-}
-
-.site-overlay-linkedin:hover {
-  background: #0073b2;
-  color: #fff;
-}
-
-.site-overlay-linkedin .site-overlay-icon {
-  background-image: url('/assets/img/icon/linkedin.png');
-}
-
-.site-overlay-kakao:hover {
-  background: #fae100;
-  color: #111;
-}
-
-.site-overlay-kakao .site-overlay-icon {
-  background-image: url('/Resume/assets/img/thumbnails/coffeeChat.png');
+.site-footer span {
+  margin: 0 7px;
+  color: #bbb;
 }
 
 @media (max-width: 680px) {
-  .site-overlays { right: 12px; bottom: 12px; }
-  .site-overlay-button { width: 40px; height: 40px; }
-  .site-overlay-icon { width: 38px; height: 38px; flex-basis: 38px; background-size: 20px; }
-  .site-overlay-label { display: none; }
-  body.has-site-footer { padding-bottom: 82px; }
+  body.has-site-footer { padding-bottom: 136px; }
+  .site-contact { bottom: 68px; }
+  .site-contact-button { width: 30px; height: 30px; background-size: 15px; }
+  .site-copy-toast { bottom: 18px; }
   .site-footer { bottom: 12px; }
   .site-footer span { display: none; }
   .site-footer a, .site-footer small { display: block; }
 }
 
 @media print {
-  .site-overlays { display: none; }
+  .site-contact,
+  .site-copy-toast,
+  .site-pointer-tooltip,
+  .site-footer {
+    display: none;
+  }
+
+  body.has-site-footer {
+    padding-bottom: 0;
+  }
 }
