@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  {% unless page.category_label %}<script>try{if(sessionStorage.getItem('portfolio-loading-shown')==='true'){document.documentElement.classList.add('portfolio-skip-loading')}else{sessionStorage.setItem('portfolio-loading-shown','true');document.documentElement.classList.add('page-loading')}}catch(e){document.documentElement.classList.add('page-loading')}</script>{% endunless %}
+  {% unless page.category_label %}<script>document.documentElement.classList.add('portfolio-js');try{if(sessionStorage.getItem('portfolio-loading-shown')==='true'){document.documentElement.classList.add('portfolio-skip-loading')}else{sessionStorage.setItem('portfolio-loading-shown','true');document.documentElement.classList.add('page-loading')}}catch(e){document.documentElement.classList.add('page-loading')}</script>{% endunless %}
   <meta name="robots" content="noindex,nofollow">
   <title>문동준 포트폴리오</title>
   <link rel="stylesheet" href="{{ '/assets/css/portfolio.css' | relative_url }}">
