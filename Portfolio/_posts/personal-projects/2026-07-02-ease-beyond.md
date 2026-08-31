@@ -4,6 +4,7 @@ category: personal-projects
 category_label: PERSONAL PROJECT
 permalink: /personal-projects/ease-beyond/
 summary: 태양계 천체를 자동으로 순회하며 우주 여행을 감상하는 WebGL 프로젝트입니다.
+genre: 우주 크루즈 시뮬레이션
 date: 2026-07-02
 order: 2
 tags: [Unity, C#, WebGL, Simulation]

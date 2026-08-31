@@ -4,6 +4,7 @@ category: company-projects
 category_label: COMPANY PROJECT
 permalink: /company-projects/demian-saga/
 summary: 공통 UI 프레임워크와 주요 아웃게임 콘텐츠를 개발한 수집형 RPG 프로젝트입니다.
+genre: 수집형 RPG
 date: 2023-04-13
 order: 2
 tags: [Unity, C#, NGUI, URP, AssetBundle]

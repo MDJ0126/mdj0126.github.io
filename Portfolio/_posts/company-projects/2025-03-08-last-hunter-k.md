@@ -4,6 +4,7 @@ category: company-projects
 category_label: COMPANY PROJECT
 permalink: /company-projects/last-hunter-k/
 summary: 클라이언트 전체 흐름과 비동기 로딩·리소스 관리 구조를 설계한 헌팅 액션 프로젝트입니다.
+genre: 헌팅 액션
 date: 2025-03-08
 order: 3
 tags: [Unity 6, C#, UniTask, Addressables, Jenkins]
