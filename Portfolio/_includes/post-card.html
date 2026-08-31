@@ -1,4 +1,4 @@
-<a class="post-card" data-card-reveal href="{{ include.post.url | relative_url }}">
+<a class="post-card" data-page-reveal href="{{ include.post.url | relative_url }}">
   {% if include.post.category != 'technical-notes' and include.post.images and include.post.images.size > 0 %}
     <div class="post-card-thumbnail">
       <img src="{{ '/assets/img/post/' | append: include.post.images[0] | relative_url }}" alt="" loading="lazy" decoding="async">

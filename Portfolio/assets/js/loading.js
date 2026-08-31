@@ -1,28 +1,32 @@
 (function () {
-  var cardRevealReady = false;
+  var pageRevealReady = false;
 
-  function setupCardReveal() {
-    if (cardRevealReady) return;
-    cardRevealReady = true;
-    var cards = document.querySelectorAll('[data-card-reveal]');
-    if (!cards.length) return;
+  function setupPageReveal() {
+    if (pageRevealReady) return;
+    pageRevealReady = true;
+    var elements = document.querySelectorAll('[data-page-reveal]');
+    if (!elements.length) return;
 
     if (!('IntersectionObserver' in window)) {
-      cards.forEach(function (card) { card.classList.add('is-visible'); });
+      elements.forEach(function (element) { element.classList.add('is-visible'); });
       return;
     }
 
     var observer = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (!entry.isIntersecting) return;
+      var visibleEntries = entries.filter(function (entry) { return entry.isIntersecting; });
+      visibleEntries.sort(function (a, b) {
+        return a.target.compareDocumentPosition(b.target) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1;
+      });
+      visibleEntries.forEach(function (entry, index) {
+        entry.target.style.setProperty('--page-reveal-delay', (index * 0.07).toFixed(2) + 's');
         entry.target.classList.add('is-visible');
         observer.unobserve(entry.target);
       });
-    }, { threshold: 0.08, rootMargin: '0px 0px -4% 0px' });
+    }, { threshold: 0.08, rootMargin: '0px 0px 14% 0px' });
 
     requestAnimationFrame(function () {
       requestAnimationFrame(function () {
-        cards.forEach(function (card) { observer.observe(card); });
+        elements.forEach(function (element) { observer.observe(element); });
       });
     });
   }
@@ -30,7 +34,7 @@
   if (document.documentElement.classList.contains('portfolio-skip-loading')) {
     var skippedScreen = document.getElementById('loading-screen');
     if (skippedScreen) skippedScreen.remove();
-    setupCardReveal();
+    setupPageReveal();
     return;
   }
 
@@ -43,11 +47,11 @@
     requestAnimationFrame(function () {
       document.documentElement.classList.remove('page-loading');
       var screen = document.getElementById('loading-screen');
-      if (!screen) return setupCardReveal();
+      if (!screen) return setupPageReveal();
       screen.classList.add('is-hidden');
       setTimeout(function () {
         screen.remove();
-        setupCardReveal();
+        setupPageReveal();
       }, 220);
     });
   }

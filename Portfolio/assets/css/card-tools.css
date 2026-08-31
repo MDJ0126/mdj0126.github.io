@@ -1,3 +1,11 @@
+html {
+  scrollbar-gutter: stable;
+}
+
+.portfolio-shell {
+  overflow-anchor: none;
+}
+
 .post-card .post-tools {
   position: static;
   display: flex;
@@ -6,23 +14,25 @@
   gap: 6px;
 }
 
-.portfolio-js .post-card[data-card-reveal] {
+.portfolio-js [data-page-reveal] {
   opacity: 0;
   transform: translate3d(0, 34px, 0);
-  transition: opacity .65s cubic-bezier(.22, 1, .36, 1) var(--card-reveal-delay, 0s),
-              transform .65s cubic-bezier(.22, 1, .36, 1) var(--card-reveal-delay, 0s),
-              box-shadow .18s;
+  transition: opacity .52s cubic-bezier(.22, 1, .36, 1) var(--page-reveal-delay, 0s),
+              transform .52s cubic-bezier(.22, 1, .36, 1) var(--page-reveal-delay, 0s);
 }
 
-.post-grid .post-card:nth-child(2) { --card-reveal-delay: .1s; }
-.post-grid .post-card:nth-child(3) { --card-reveal-delay: .2s; }
-
-.portfolio-js .post-card[data-card-reveal].is-visible {
+.portfolio-js [data-page-reveal].is-visible {
   opacity: 1;
   transform: translate3d(0, 0, 0);
 }
 
-.portfolio-js .post-card[data-card-reveal].is-visible:hover {
+.portfolio-js .post-card[data-page-reveal] {
+  transition: opacity .52s cubic-bezier(.22, 1, .36, 1) var(--page-reveal-delay, 0s),
+              transform .52s cubic-bezier(.22, 1, .36, 1) var(--page-reveal-delay, 0s),
+              box-shadow .18s;
+}
+
+.portfolio-js .post-card[data-page-reveal].is-visible:hover {
   transform: translate3d(0, -3px, 0);
 }
 
