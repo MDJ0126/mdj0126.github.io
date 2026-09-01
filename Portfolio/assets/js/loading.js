@@ -19,6 +19,12 @@
       });
       visibleEntries.forEach(function (entry, index) {
         entry.target.style.setProperty('--page-reveal-delay', (index * 0.07).toFixed(2) + 's');
+        var resetRevealDelay = function (event) {
+          if (event.propertyName !== 'opacity') return;
+          entry.target.style.setProperty('--page-reveal-delay', '0s');
+          entry.target.removeEventListener('transitionend', resetRevealDelay);
+        };
+        entry.target.addEventListener('transitionend', resetRevealDelay);
         entry.target.classList.add('is-visible');
         observer.unobserve(entry.target);
       });
