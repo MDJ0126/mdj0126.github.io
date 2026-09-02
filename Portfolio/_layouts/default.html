@@ -41,6 +41,7 @@
   </script>
   {% endif %}
   {% if page.images %}<script src="{{ '/assets/js/gallery.js' | relative_url }}"></script>{% endif %}
+  {% unless page.category_label %}<script src="{{ '/assets/js/card-thumbnails.js' | relative_url }}"></script>{% endunless %}
   {% unless page.category_label %}<script src="{{ '/assets/js/loading.js' | relative_url }}"></script>{% endunless %}
 </body>
 </html>

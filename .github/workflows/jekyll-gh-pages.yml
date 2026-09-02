@@ -39,6 +39,16 @@ jobs:
           ruby-version: "3.1"
           bundler-cache: true
           working-directory: .
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: Portfolio/scripts/requirements-thumbnails.txt
+      - name: Generate portfolio card thumbnails
+        run: |
+          python -m pip install -r Portfolio/scripts/requirements-thumbnails.txt
+          python Portfolio/scripts/generate_card_thumbnails.py
       - name: Build with Jekyll
         run: bundle exec jekyll build --config _config.yml --destination "${{ github.workspace }}/_site/Resume" --trace
       - name: Build Portfolio

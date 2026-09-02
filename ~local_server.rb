@@ -12,7 +12,7 @@ def source_files(project_root, resume_root, portfolio_root)
   nested_files = [resume_root, portfolio_root].flat_map do |root|
     Dir.glob(File.join(root, '**', '*'), File::FNM_DOTMATCH).select do |path|
       normalized = path.tr('\\', '/')
-      File.file?(path) && !normalized.include?('/.jekyll-cache/') && !normalized.include?('/.sass-cache/') && !normalized.end_with?('/.jekyll-metadata')
+      File.file?(path) && !normalized.include?('/.jekyll-cache/') && !normalized.include?('/.sass-cache/') && !normalized.include?('/assets/img/thumbnails/') && !normalized.end_with?('/.jekyll-metadata')
     end
   end
   shared_assets = Dir.glob(File.join(project_root, 'assets', '**', '*')).select { |path| File.file?(path) }
@@ -28,6 +28,13 @@ end
 
 def build_site(project_root, resume_root, portfolio_root, local_site)
   puts "\nChange detected. Rebuilding local site..."
+  thumbnail_script = File.join(portfolio_root, 'scripts', 'generate_card_thumbnails.py')
+  python = ENV['PYTHON'] || (Gem.win_platform? ? 'python' : 'python3')
+  unless system(python, thumbnail_script)
+    warn "Thumbnail generation failed. Install Python and run: #{python} -m pip install -r #{File.join(portfolio_root, 'scripts', 'requirements-thumbnails.txt')}"
+    warn 'Continuing with the existing thumbnails.'
+  end
+
   jekyll = File.join(RbConfig::CONFIG['bindir'], 'jekyll')
   resume_destination = File.join(local_site, 'Resume')
   success = system(RbConfig.ruby, '-rbundler/setup', jekyll, 'build', '--config', File.join(project_root, '_config.yml'), '--destination', resume_destination)

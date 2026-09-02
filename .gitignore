@@ -1,4 +1,5 @@
 .local-site/
 .sass-cache/
 .jekyll-cache/
+Portfolio/assets/img/thumbnails/
 analytics-worker/.wrangler/
