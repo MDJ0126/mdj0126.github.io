@@ -12,11 +12,11 @@ from pathlib import Path
 from PIL import Image, ImageOps, ImageSequence
 
 
-CARD_SIZE = (600, 248)
+CARD_SIZE = (300, 124)
 JPEG_QUALITY = 78
 GIF_COLORS = 128
 MAX_GIF_FRAMES = 50
-GENERATOR_VERSION = "4"
+GENERATOR_VERSION = "5"
 IMAGES_PATTERN = re.compile(r"^images:\s*\[\s*([^,\]]+)", re.MULTILINE)
 
 
@@ -46,6 +46,14 @@ def fitted(frame: Image.Image) -> Image.Image:
     return ImageOps.fit(frame.convert("RGB"), CARD_SIZE, method=Image.Resampling.LANCZOS)
 
 
+def fitted_gif_frame(frame: Image.Image) -> Image.Image:
+    return fitted(frame).quantize(
+        colors=GIF_COLORS,
+        method=Image.Quantize.MEDIANCUT,
+        dither=Image.Dither.NONE,
+    )
+
+
 def generate_gif(source: Path, destination: Path) -> None:
     with Image.open(source) as image:
         source_frames = [frame.copy() for frame in ImageSequence.Iterator(image)]
@@ -53,7 +61,7 @@ def generate_gif(source: Path, destination: Path) -> None:
         loop = image.info.get("loop", 0)
 
     source_frames = source_frames[:MAX_GIF_FRAMES]
-    frames = [fitted(frame) for frame in source_frames]
+    frames = [fitted_gif_frame(frame) for frame in source_frames]
     durations = source_durations[:MAX_GIF_FRAMES]
 
     with tempfile.NamedTemporaryFile(suffix=".gif", delete=False) as temporary:
