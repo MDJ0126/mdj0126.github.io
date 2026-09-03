@@ -7,7 +7,7 @@
   <meta name="robots" content="noindex,nofollow">
   <title>문동준 포트폴리오</title>
   <link rel="stylesheet" href="{{ '/assets/css/portfolio.css' | relative_url }}">
-  <link rel="stylesheet" href="{{ '/assets/css/card-tools.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/card-tools.css?v=20260903-2' | relative_url }}">
   {% unless page.category_label %}<link rel="stylesheet" href="{{ '/assets/css/loading.css' | relative_url }}">{% endunless %}
   <link rel="stylesheet" href="/assets/css/site-overlays.css">
 </head>
@@ -40,8 +40,8 @@
     });
   </script>
   {% endif %}
-  {% if page.images %}<script src="{{ '/assets/js/gallery.js' | relative_url }}"></script>{% endif %}
-  {% unless page.category_label %}<script src="{{ '/assets/js/card-thumbnails.js' | relative_url }}"></script>{% endunless %}
+  {% if page.images %}<script src="{{ '/assets/js/gallery.js?v=20260903-2' | relative_url }}"></script>{% endif %}
+  {% unless page.category_label %}<script src="{{ '/assets/js/card-thumbnails.js?v=20260903-2' | relative_url }}"></script>{% endunless %}
   {% unless page.category_label %}<script src="{{ '/assets/js/loading.js' | relative_url }}"></script>{% endunless %}
 </body>
 </html>

@@ -222,12 +222,15 @@ html {
 }
 
 .gallery-image-loader i {
+  display: block;
   width: 15px;
   height: 15px;
+  flex: 0 0 15px;
   border: 2px solid rgba(255, 255, 255, .18);
   border-top-color: #f5821f;
   border-radius: 50%;
   animation: gallery-image-spin .75s linear infinite;
+  will-change: transform;
 }
 
 .gallery-image-loader em {
@@ -253,11 +256,6 @@ html {
 
   .portfolio-js .post-card-thumbnail img {
     transition: none;
-  }
-
-  .gallery-loading-enabled .gallery-slide.is-loading::before,
-  .gallery-image-loader i {
-    animation: none;
   }
 
   .gallery-loading-enabled .gallery-slide img {
