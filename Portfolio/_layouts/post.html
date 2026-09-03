@@ -23,8 +23,9 @@ layout: default
       <div class="gallery-viewport">
         <div class="gallery-track">
           {% for image in page.images %}
-            <button class="gallery-slide" type="button" data-gallery-image aria-label="스크린샷 {{ forloop.index }} 확대">
+            <button class="gallery-slide is-loading" type="button" data-gallery-image aria-label="스크린샷 {{ forloop.index }} 확대">
               <img src="{{ '/assets/img/post/' | append: image | relative_url }}" alt="{{ page.title }} 스크린샷 {{ forloop.index }}" loading="lazy" decoding="async">
+              <span class="gallery-image-loader" aria-hidden="true"><i></i><em>이미지 불러오는 중</em></span>
             </button>
           {% endfor %}
         </div>

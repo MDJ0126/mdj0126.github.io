@@ -1,4 +1,6 @@
 (function () {
+  document.documentElement.classList.add('gallery-loading-enabled');
+
   var viewer = document.getElementById('image-viewer');
   var viewerImage = viewer && viewer.querySelector('img');
   var closeButton = viewer && viewer.querySelector('.image-viewer-close');
@@ -29,6 +31,23 @@
     var pointerStart = null;
     var suppressClick = false;
 
+    slides.forEach(function (slide) {
+      var image = slide.querySelector('img');
+
+      function finish(state) {
+        slide.classList.remove('is-loading', 'is-loaded', 'is-error');
+        slide.classList.add(state);
+        if (state === 'is-error') {
+          var message = slide.querySelector('.gallery-image-loader em');
+          if (message) message.textContent = '이미지를 불러오지 못했습니다';
+        }
+      }
+
+      image.addEventListener('load', function () { finish('is-loaded'); }, { once: true });
+      image.addEventListener('error', function () { finish('is-error'); }, { once: true });
+      if (image.complete) finish(image.naturalWidth > 0 ? 'is-loaded' : 'is-error');
+    });
+
     function render() {
       track.style.transform = 'translateX(-' + (index * 100) + '%)';
       if (current) current.textContent = String(index + 1);
@@ -45,6 +64,10 @@
     if (next) next.addEventListener('click', function () { move(1); });
     slides.forEach(function (slide) {
       slide.addEventListener('click', function (event) {
+        if (!slide.classList.contains('is-loaded')) {
+          event.preventDefault();
+          return;
+        }
         if (suppressClick) {
           event.preventDefault();
           return;

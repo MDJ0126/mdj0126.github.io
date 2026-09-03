@@ -2,7 +2,7 @@
 layout: default
 title: 포트폴리오
 ---
-<header class="portfolio-header" data-page-reveal><small>PORTFOLIO</small><h1>문동준 포트폴리오</h1><p>회사 프로젝트와 개인 프로젝트{% unless jekyll.environment == "production" %}, 기술적으로 눈에 띄는 작업{% endunless %}을 기록합니다.</p></header>
+<header class="portfolio-header" data-page-reveal><small>PORTFOLIO</small><h1>문동준 포트폴리오</h1><p>회사 프로젝트에서 담당한 업무와 개인 프로젝트의 구현 내용을 기록합니다{% unless jekyll.environment == "production" %}. 기술 노트에서는 구현 과정을 정리합니다{% endunless %}.</p></header>
 <section class="portfolio-section" aria-labelledby="company-projects-title">
   {% assign company_projects = site.posts | where: "category", "company-projects" | sort: "date" | reverse %}
   <div class="section-heading" data-page-reveal><div><small>COMPANY PROJECT</small><h2 id="company-projects-title">회사 프로젝트</h2></div><span>{{ company_projects | size }} POSTS</span></div>
