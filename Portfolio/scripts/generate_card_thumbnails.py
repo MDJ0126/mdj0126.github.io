@@ -12,11 +12,11 @@ from pathlib import Path
 from PIL import Image, ImageOps, ImageSequence
 
 
-CARD_SIZE = (300, 124)
+CARD_SIZE = (600, 248)
 JPEG_QUALITY = 78
-GIF_COLORS = 128
-MAX_GIF_FRAMES = 50
-GENERATOR_VERSION = "5"
+GIF_COLORS = 256
+MAX_GIF_FRAMES = 30
+GENERATOR_VERSION = "6"
 IMAGES_PATTERN = re.compile(r"^images:\s*\[\s*([^,\]]+)", re.MULTILINE)
 
 
