@@ -54,4 +54,4 @@ BP_Character
 
 [GitHub에서 프로젝트 보기](https://github.com/MDJ0126/BP_HackAndSlash)
 
-[빌드 파일 다운로드](https://github.com/MDJ0126/BP_HackAndSlash/blob/main/BladeSlash.zip?raw=true)
+[빌드 파일 다운로드 (약 1.2GB)](https://github.com/MDJ0126/BP_HackAndSlash/blob/main/BladeSlash.zip?raw=true)
