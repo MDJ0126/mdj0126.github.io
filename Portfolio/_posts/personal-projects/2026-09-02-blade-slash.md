@@ -53,3 +53,5 @@ BP_Character
 언리얼을 공부하는 과정에서 만들어본 프로젝트입니다. 처음부터 새로 만들어야하는 유니티와 달리, 언리얼에서는 정해둔 구조에 맞게 작업을 하면서 전체적인 컨벤션이 어떻게 만들어졌는지 이해하는데 익숙해지고 도움이 되었습니다.
 
 [GitHub에서 프로젝트 보기](https://github.com/MDJ0126/BP_HackAndSlash)
+
+[빌드 파일 다운로드](https://github.com/MDJ0126/BP_HackAndSlash/blob/main/BladeSlash.zip?raw=true)
