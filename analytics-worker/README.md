@@ -28,3 +28,11 @@ npx wrangler deploy
 
 각 값에는 OAuth 클라이언트 ID, 허용 이메일, 서비스 계정 이메일, JSON 키의 `private_key`, Maps Embed API 키를 입력합니다. 값은 파일이나 Git 저장소에 저장하지 않습니다.
 
+## 크롤링 제출 기록
+
+- `/crawler-report`: 자동 수집 도구가 기관명, 방문 목적, 사용 도구를 제출하는 공개 페이지
+- `POST /api/crawler-report`: 같은 내용을 JSON으로 제출하는 공개 API
+- `/api/crawler-reports`: 관리자 Google 계정으로 인증한 뒤 제출 기록을 조회하는 API
+
+제출 기록은 `CrawlerReportStore` Durable Object에 저장되며 관리자 화면의 `크롤링 제출 기록` 탭에서 확인합니다. 요청 시각, User-Agent, Referer, 국가와 도시 정보는 Worker가 요청에서 직접 기록합니다.
+
