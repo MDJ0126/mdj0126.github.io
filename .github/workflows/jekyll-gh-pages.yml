@@ -64,6 +64,74 @@ jobs:
           cp robots.txt _site/robots.txt
           cp -R assets _site/assets
           cp Resume/assets/img/common/favicon.ico _site/favicon.ico
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Inject and verify analytics in all generated pages
+        run: |
+          node <<'NODE'
+          const fs = require('node:fs');
+          const path = require('node:path');
+          const root = '_site';
+          const analytics = `<script id="site-analytics">
+          (function () {
+            if (window.siteAnalytics) return;
+            var measurementId = 'G-6GHV7BHE5J';
+            var disableKey = 'ga-disable-' + measurementId;
+            var host = window.location.hostname;
+            var excluded = ['localhost', '127.0.0.1', '0.0.0.0', '[::1]'].indexOf(host) !== -1;
+            try { excluded = excluded || localStorage.getItem('exclude_analytics') === 'true'; } catch (e) {}
+
+            function disable() { window[disableKey] = true; }
+            window.siteAnalytics = {
+              exclude: function () {
+                disable();
+                try { localStorage.setItem('exclude_analytics', 'true'); } catch (e) {}
+              }
+            };
+            window.addEventListener('storage', function (event) {
+              if (event.key === 'exclude_analytics' && event.newValue === 'true') disable();
+            });
+            if (excluded || window[disableKey]) { disable(); return; }
+
+            window.dataLayer = window.dataLayer || [];
+            window.gtag = function () {
+              if (!window[disableKey]) window.dataLayer.push(arguments);
+            };
+            window.gtag('js', new Date());
+            window.gtag('config', measurementId);
+            var script = document.createElement('script');
+            script.async = true;
+            script.src = 'https://www.googletagmanager.com/gtag/js?id=' + measurementId;
+            document.head.appendChild(script);
+          })();
+          </script>`;
+          function htmlFiles(dir) {
+            return fs.readdirSync(dir, {withFileTypes: true}).flatMap(entry => {
+              const file = path.join(dir, entry.name);
+              return entry.isDirectory() ? htmlFiles(file) : /\.html?$/i.test(file) ? [file] : [];
+            });
+          }
+          const files = htmlFiles(root);
+          if (!files.length) throw new Error('No generated HTML found');
+          for (const file of files) {
+            let html = fs.readFileSync(file, 'utf8');
+            if (!/<head\b[^>]*>/i.test(html)) throw new Error('Missing head: ' + file);
+            if (/googletagmanager\.com\/gtag\/js|site-analytics\.js|gtag\(['"]config/i.test(html)) {
+              throw new Error('Page-specific analytics must be removed: ' + file);
+            }
+            html = html.replace(/(<head\b[^>]*>)\s*/i, (_, head) => head + '\n' + analytics);
+            fs.writeFileSync(file, html);
+          }
+          for (const file of files) {
+            const html = fs.readFileSync(file, 'utf8');
+            if ((html.match(/id="site-analytics"/g) || []).length !== 1 || !html.includes(analytics)) {
+              throw new Error('Analytics injection verification failed: ' + file);
+            }
+          }
+          console.log('Analytics injected and verified in ' + files.length + ' HTML files');
+          NODE
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
 

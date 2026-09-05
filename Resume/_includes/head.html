@@ -4,22 +4,6 @@
   <style>.resume-skip-loading .loading-screen{display:none}</style>
   <title>{{ site.author.name_ko }} 이력서</title>
   <meta name="description" content="Unity와 C#을 기반으로 초기 개발부터 글로벌 출시와 라이브 서비스를 담당한 게임 클라이언트 개발자 문동준의 이력서입니다.">
-  {% if site.google_analytics and site.google_analytics != "" %}
-  <script>
-    try {
-      var host = window.location.hostname;
-      var isLocal = host === 'localhost' || host === '127.0.0.1' || host === '0.0.0.0' || host === '[::1]';
-      if (isLocal || localStorage.getItem('exclude_analytics') === 'true') window['ga-disable-{{ site.google_analytics }}'] = true;
-    } catch (e) {}
-    window.addEventListener('storage', function (event) {
-      if (event.key === 'exclude_analytics' && event.newValue === 'true') {
-        window['ga-disable-{{ site.google_analytics }}'] = true;
-      }
-    });
-  </script>
-  <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics }}"></script>
-  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','{{ site.google_analytics }}');</script>
-  {% endif %}
   <meta name="robots" content="noindex, nofollow">
   <meta property="og:type" content="profile">
   <meta property="og:url" content="{{ site.url }}{{ site.baseurl }}/">
