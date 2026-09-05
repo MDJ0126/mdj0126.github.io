@@ -13,6 +13,9 @@ class MemoryStorage {
   constructor() { this.values = new Map(); }
   async get(key) { return this.values.get(key); }
   async put(key, value) { this.values.set(key, structuredClone(value)); }
+  async delete(keys) { for (const key of Array.isArray(keys) ? keys : [keys]) this.values.delete(key); }
+  async setAlarm(timestamp) { this.alarm = timestamp; }
+  async getAlarm() { return this.alarm ?? null; }
   async list({ prefix = '', limit = Infinity } = {}) {
     return new Map([...this.values].filter(([key]) => key.startsWith(prefix)).sort(([a], [b]) => a.localeCompare(b)).slice(0, limit));
   }
@@ -31,7 +34,9 @@ const page = await worker.default.fetch(new Request('https://worker.example/craw
 assert.equal(page.status, 200);
 assert.match(await page.text(), /소속 기관명/);
 const dashboard = await worker.default.fetch(new Request('https://worker.example/'), env);
-assert.match(await dashboard.text(), /크롤링 제출 기록/);
+const dashboardHtml = await dashboard.text();
+assert.match(dashboardHtml, /크롤링 제출 기록/);
+assert.match(dashboardHtml, /일반 방문 기록/);
 
 const payload = { organization:'테스트 기관', purpose:'포트폴리오 검토', crawler:'테스트 크롤러', reportedUrl:'https://mdj0126.github.io/Portfolio/' };
 const submit = () => worker.default.fetch(new Request('https://worker.example/api/crawler-report', { method:'POST', headers:{ 'content-type':'application/json', 'user-agent':'CrawlerTest/1.0' }, body:JSON.stringify(payload) }), env);
@@ -61,4 +66,17 @@ const finalRecords = await (await reportStore.fetch(new Request('https://interna
 assert.equal(finalRecords.length, 3);
 assert.equal(finalRecords.filter(record => record.recordType === 'automatic').length, 1);
 
-console.log('PASS: voluntary reports, automatic access records, deduplication, reported-user suppression, CORS, private records API');
+const visitorPayload = { pageUrl:'https://mdj0126.github.io/Portfolio/' };
+const visitorAccess = () => worker.default.fetch(new Request('https://worker.example/api/visitor-access', { method:'POST', headers:{ origin:'https://mdj0126.github.io', 'content-type':'text/plain;charset=UTF-8', 'user-agent':'NormalBrowser/1.0' }, body:JSON.stringify(visitorPayload) }), env);
+assert.equal((await (await visitorAccess()).json()).recorded, true);
+assert.equal((await (await visitorAccess()).json()).reason, 'duplicate');
+const visitors = await (await reportStore.fetch(new Request('https://internal/visitors'))).json();
+assert.equal(visitors.length, 1);
+assert.equal(visitors[0].pageUrl, visitorPayload.pageUrl);
+assert.equal((await worker.default.fetch(new Request('https://worker.example/api/visitor-records'), env)).status, 401);
+await storage.put('visitor:expired', { submittedAt:new Date(Date.now() - 366 * 86400000).toISOString() });
+await reportStore.alarm();
+assert.equal(await storage.get('visitor:expired'), undefined);
+assert.equal((await (await reportStore.fetch(new Request('https://internal/records'))).json()).length, 3);
+
+console.log('PASS: crawler reports, automatic access, general visits, deduplication, one-year cleanup, CORS, private APIs');

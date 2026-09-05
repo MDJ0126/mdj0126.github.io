@@ -39,3 +39,5 @@ npx wrangler deploy
 제출 기록은 `CrawlerReportStore` Durable Object에 저장되며 관리자 화면의 `크롤링 제출 기록` 탭에서 확인합니다. 요청 시각, User-Agent, Referer, 국가와 도시 정보는 Worker가 요청에서 직접 기록합니다.
 동일 접속자가 방문 정보를 제출했다면 이후 자동 접근은 미신고 기록으로 만들지 않습니다. 같은 접속자와 페이지에서 반복되는 미신고 기록은 하루에 한 번만 저장합니다. JavaScript를 실행하지 않거나 자동화 신호를 숨긴 수집 도구는 GitHub Pages 구조에서 감지할 수 없습니다.
 
+일반 브라우저 방문은 `/api/visitor-access`를 통해 접속자·페이지별 하루 한 건으로 저장하고 1년 뒤 Durable Object alarm에서 자동 삭제합니다. 크롤러 제출 및 자동화 접근 기록 본문은 사이트 운영과 권리 보호 목적이 유지되는 동안 보관합니다. 원본 IP 주소는 저장하지 않습니다.
+

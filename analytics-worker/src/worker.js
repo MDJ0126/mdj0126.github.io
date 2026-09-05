@@ -25,9 +25,10 @@ function setupTheme(){const saved=localStorage.getItem('dashboard_theme'),dark=s
 function syncSelectedDots(){const zones=Array.from(document.querySelectorAll('.hit-area')),coversAll=zones.length>0&&!!activeStart&&activeStart<=zones[0].dataset.date&&activeEnd>=zones.at(-1).dataset.date;document.querySelectorAll('.dot').forEach(dot=>dot.classList.toggle('in-range',!!activeStart&&dot.dataset.date>=activeStart&&dot.dataset.date<=activeEnd));zones.forEach(zone=>{zone.classList.remove('drag-selected');zone.classList.toggle('selected',!coversAll&&!!activeStart&&zone.dataset.date>=activeStart&&zone.dataset.date<=activeEnd)})}
 function setupChartRange(){const svg=document.querySelector('#chart');let dragStart=-1,dragEnd=-1,suppressClick=false;const zones=()=>Array.from(svg.querySelectorAll('.hit-area'));const indexAt=clientX=>{const items=zones();if(!items.length)return-1;const box=svg.getBoundingClientRect(),view=svg.viewBox.baseVal,x=(clientX-box.left)/box.width*view.width;return items.findIndex(zone=>{const left=+zone.getAttribute('x'),right=left+(+zone.getAttribute('width'));return x>=left&&x<=right})};const preview=(a,b)=>{const min=Math.min(a,b),max=Math.max(a,b),items=zones();items.forEach((zone,i)=>zone.classList.toggle('drag-selected',i>=min&&i<=max));document.querySelectorAll('.dot').forEach(dot=>{const i=items.findIndex(zone=>zone.dataset.date===dot.dataset.date);dot.classList.toggle('drag-selected',i>=min&&i<=max)})};svg.onpointerdown=e=>{const i=indexAt(e.clientX);if(i<0)return;e.preventDefault();dragStart=dragEnd=i;svg.setPointerCapture?.(e.pointerId);preview(i,i)};svg.onpointermove=e=>{if(dragStart<0)return;const i=indexAt(e.clientX);if(i<0)return;dragEnd=i;preview(dragStart,dragEnd)};svg.onpointerup=e=>{if(dragStart<0)return;const items=zones(),first=items[Math.min(dragStart,dragEnd)]?.dataset.date,last=items[Math.max(dragStart,dragEnd)]?.dataset.date;dragStart=dragEnd=-1;suppressClick=true;svg.releasePointerCapture?.(e.pointerId);if(first&&last)applyGraphRange(first,last)};svg.onpointercancel=()=>{dragStart=dragEnd=-1;document.querySelectorAll('.drag-selected').forEach(el=>el.classList.remove('drag-selected'))};svg.addEventListener('click',e=>{if(!suppressClick)return;e.preventDefault();e.stopImmediatePropagation();suppressClick=false},true);new MutationObserver(syncSelectedDots).observe(svg,{childList:true})}
 function setupFilterStyles(){const style=document.createElement('style');style.textContent='.apply-range{background:var(--text)!important;border-color:var(--text)!important;color:var(--panel)!important}.ranges.custom-range .date-filter-label{color:#2563eb}.ranges.custom-range .date-input{border-color:#3b82f6;box-shadow:0 0 0 3px color-mix(in srgb,#3b82f6 16%,transparent);background:color-mix(in srgb,#3b82f6 5%,var(--panel))}.ranges.custom-range .apply-range{background:#2563eb!important;border-color:#2563eb!important;color:#fff!important}.dot.in-range,.dot.drag-selected{fill:var(--accent)!important}.hit-area.selected{fill:color-mix(in srgb,#3b82f6 10%,transparent)}.hit-area.drag-selected{fill:color-mix(in srgb,#2563eb 30%,transparent)!important}';document.head.appendChild(style)}
-function setupAdminTabs(){const style=document.createElement('style');style.textContent='.admin-tabs{display:none;gap:8px;margin:0 0 18px}.authorized .admin-tabs{display:flex}.admin-tab{padding:10px 14px;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--text);cursor:pointer}.admin-tab.active{border-color:var(--accent);background:var(--accent);color:#fff}.crawler-records{display:grid;gap:12px}.crawler-record{padding:18px;border:1px solid var(--line);border-radius:14px;background:var(--panel)}.crawler-record-head{display:flex;justify-content:space-between;gap:16px}.crawler-record h3{margin:0;font-size:15px}.crawler-record time,.crawler-meta{color:var(--muted);font-size:11px}.crawler-record p{margin:10px 0 0;white-space:pre-wrap}.crawler-meta{margin-top:10px;line-height:1.7;overflow-wrap:anywhere}@media(max-width:720px){.crawler-record-head{flex-direction:column;gap:4px}}';document.head.appendChild(style);const tabs=document.createElement('nav');tabs.className='admin-tabs';tabs.setAttribute('aria-label','관리 화면');tabs.innerHTML='<button class="admin-tab active" data-tab="analytics" type="button">방문 통계</button><button class="admin-tab" data-tab="crawler" type="button">크롤링 제출 기록</button>';dashboard.before(tabs);const panel=document.createElement('section');panel.id='crawlerPanel';panel.hidden=true;panel.innerHTML='<section class="panel"><div class="panel-head"><h2>크롤링 제출 기록</h2><button class="icon-btn" type="button" onclick="loadCrawlerReports()">↻ 새로고침</button></div><div id="crawlerRecords" class="crawler-records"><div class="empty">탭을 열면 기록을 불러옵니다.</div></div></section>';dashboard.after(panel);tabs.querySelectorAll('.admin-tab').forEach(button=>button.addEventListener('click',()=>switchAdminTab(button.dataset.tab)))}
-function switchAdminTab(tab){const analytics=tab==='analytics';dashboard.hidden=!analytics;crawlerPanel.hidden=analytics;document.querySelectorAll('.admin-tab').forEach(button=>button.classList.toggle('active',button.dataset.tab===tab));document.querySelector('.actions .icon-btn').onclick=analytics?()=>loadData():()=>loadCrawlerReports();if(!analytics)loadCrawlerReports()}
+function setupAdminTabs(){const style=document.createElement('style');style.textContent='.admin-tabs{display:none;gap:8px;margin:0 0 18px}.authorized .admin-tabs{display:flex}.admin-tab{padding:10px 14px;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--text);cursor:pointer}.admin-tab.active{border-color:var(--accent);background:var(--accent);color:#fff}.crawler-records{display:grid;gap:12px}.crawler-record{padding:18px;border:1px solid var(--line);border-radius:14px;background:var(--panel)}.crawler-record-head{display:flex;justify-content:space-between;gap:16px}.crawler-record h3{margin:0;font-size:15px}.crawler-record time,.crawler-meta{color:var(--muted);font-size:11px}.crawler-record p{margin:10px 0 0;white-space:pre-wrap}.crawler-meta{margin-top:10px;line-height:1.7;overflow-wrap:anywhere}@media(max-width:720px){.crawler-record-head{flex-direction:column;gap:4px}}';document.head.appendChild(style);const tabs=document.createElement('nav');tabs.className='admin-tabs';tabs.setAttribute('aria-label','관리 화면');tabs.innerHTML='<button class="admin-tab active" data-tab="analytics" type="button">방문 통계</button><button class="admin-tab" data-tab="visitors" type="button">일반 방문 기록</button><button class="admin-tab" data-tab="crawler" type="button">크롤링 제출 기록</button>';dashboard.before(tabs);const crawler=document.createElement('section');crawler.id='crawlerPanel';crawler.hidden=true;crawler.innerHTML='<section class="panel"><div class="panel-head"><h2>크롤링 제출 기록</h2><button class="icon-btn" type="button" onclick="loadCrawlerReports()">↻ 새로고침</button></div><div id="crawlerRecords" class="crawler-records"><div class="empty">탭을 열면 기록을 불러옵니다.</div></div></section>';dashboard.after(crawler);const visitors=document.createElement('section');visitors.id='visitorPanel';visitors.hidden=true;visitors.innerHTML='<section class="panel"><div class="panel-head"><h2>일반 방문 기록 · 1년 보관</h2><button class="icon-btn" type="button" onclick="loadVisitorRecords()">↻ 새로고침</button></div><div id="visitorRecords" class="crawler-records"><div class="empty">탭을 열면 기록을 불러옵니다.</div></div></section>';crawler.after(visitors);tabs.querySelectorAll('.admin-tab').forEach(button=>button.addEventListener('click',()=>switchAdminTab(button.dataset.tab)))}
+function switchAdminTab(tab){dashboard.hidden=tab!=='analytics';crawlerPanel.hidden=tab!=='crawler';visitorPanel.hidden=tab!=='visitors';document.querySelectorAll('.admin-tab').forEach(button=>button.classList.toggle('active',button.dataset.tab===tab));document.querySelector('.actions .icon-btn').onclick=tab==='analytics'?()=>loadData():tab==='crawler'?()=>loadCrawlerReports():()=>loadVisitorRecords();if(tab==='crawler')loadCrawlerReports();if(tab==='visitors')loadVisitorRecords()}
 async function loadCrawlerReports(){crawlerRecords.innerHTML='<div class="empty">기록을 불러오는 중입니다.</div>';const response=await fetch('/api/crawler-reports');if(response.status===401){crawlerRecords.innerHTML='<div class="error">다시 로그인해 주세요.</div>';return}if(!response.ok){crawlerRecords.innerHTML='<div class="error">기록을 불러오지 못했습니다.</div>';return}const records=await response.json();crawlerRecords.innerHTML=records.map(record=>'<article class="crawler-record"><div class="crawler-record-head"><h3>'+escapeHtml(record.organization)+'</h3><time>'+escapeHtml(new Date(record.submittedAt).toLocaleString('ko-KR',{timeZone:'Asia/Seoul'}))+'</time></div><p>'+escapeHtml(record.purpose)+'</p><div class="crawler-meta">도구: '+escapeHtml(record.crawler)+'<br>열람 페이지: '+escapeHtml(record.reportedUrl||'-')+'<br>접속 위치: '+escapeHtml([record.city,record.country].filter(Boolean).join(', ')||'-')+'<br>User-Agent: '+escapeHtml(record.userAgent||'-')+'<br>Referer: '+escapeHtml(record.referer||'-')+'</div></article>').join('')||'<div class="empty">제출된 기록이 없습니다.</div>'}
+async function loadVisitorRecords(){visitorRecords.innerHTML='<div class="empty">기록을 불러오는 중입니다.</div>';const response=await fetch('/api/visitor-records');if(response.status===401){visitorRecords.innerHTML='<div class="error">다시 로그인해 주세요.</div>';return}if(!response.ok){visitorRecords.innerHTML='<div class="error">기록을 불러오지 못했습니다.</div>';return}const records=await response.json();visitorRecords.innerHTML=records.map(record=>'<article class="crawler-record"><div class="crawler-record-head"><h3>'+escapeHtml(record.pageUrl||'-')+'</h3><time>'+escapeHtml(new Date(record.submittedAt).toLocaleString('ko-KR',{timeZone:'Asia/Seoul'}))+'</time></div><div class="crawler-meta">접속 위치: '+escapeHtml([record.city,record.country].filter(Boolean).join(', ')||'-')+'<br>User-Agent: '+escapeHtml(record.userAgent||'-')+'<br>Referer: '+escapeHtml(record.referer||'-')+'</div></article>').join('')||'<div class="empty">저장된 일반 방문 기록이 없습니다.</div>'}
 window.onload=()=>{setPublicUi();setupTheme();setupFilterStyles();setupChartRange();setupCityMap();setupAdminTabs();google.accounts.id.initialize({client_id:'__CLIENT_ID__',callback:login});google.accounts.id.renderButton(document.querySelector('#button'),{theme:'outline',size:'large'});loadData(true)};
 </script></body></html>`;
 
@@ -39,7 +40,10 @@ export default {
     if (url.pathname === "/api/crawler-report" && request.method === "POST") return submitCrawlerReport(request, env);
     if (url.pathname === "/api/crawler-access" && request.method === "POST") return recordCrawlerAccess(request, env);
     if (url.pathname === "/api/crawler-access" && request.method === "OPTIONS") return new Response(null, { status:204, headers:crawlerCorsHeaders(request) });
+    if (url.pathname === "/api/visitor-access" && request.method === "POST") return recordVisitorAccess(request, env);
+    if (url.pathname === "/api/visitor-access" && request.method === "OPTIONS") return new Response(null, { status:204, headers:crawlerCorsHeaders(request) });
     if (url.pathname === "/api/crawler-reports" && request.method === "GET") return crawlerReports(request, env);
+    if (url.pathname === "/api/visitor-records" && request.method === "GET") return visitorRecords(request, env);
     if (url.pathname === "/api/session" && request.method === "POST") return createSession(request, env);
     if (url.pathname === "/api/logout" && request.method === "POST") return new Response(null, { status: 204, headers: { "set-cookie": "resume_session=; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=0" } });
     if (url.pathname === "/api/report") return report(request, env, Math.min(30, Math.max(7, Number(url.searchParams.get("days")) || 7)), url.searchParams.get("date"), url.searchParams.get("start"), url.searchParams.get("end"));
@@ -48,7 +52,7 @@ export default {
 };
 
 export class CrawlerReportStore {
-  constructor(state) { this.storage = state.storage; }
+  constructor(state) { this.state = state; this.storage = state.storage; }
   async fetch(request) {
     const url = new URL(request.url);
     if (request.method === "POST" && url.pathname === "/submit") {
@@ -62,6 +66,7 @@ export class CrawlerReportStore {
       await this.storage.put(`report:${reverseTime}:${crypto.randomUUID()}`, storedReport);
       if (rateKey) await this.storage.put(rateKey, Date.now());
       if (report.requesterHash) await this.storage.put(`reported:${report.requesterHash}`, Date.now());
+      await this.scheduleCleanup();
       return Response.json({ ok:true });
     }
     if (request.method === "POST" && url.pathname === "/access") {
@@ -76,13 +81,51 @@ export class CrawlerReportStore {
       delete storedReport.pathHash;
       await this.storage.put(`report:${reverseTime}:${crypto.randomUUID()}`, storedReport);
       await this.storage.put(accessKey, Date.now());
+      await this.scheduleCleanup();
+      return Response.json({ ok:true, recorded:true });
+    }
+    if (request.method === "POST" && url.pathname === "/visit") {
+      const visit = await request.json();
+      const dedupeKey = `visitor-dedupe:${visit.requesterHash}:${visit.pathHash}`;
+      const lastVisit = await this.storage.get(dedupeKey);
+      if (lastVisit && Date.now() - lastVisit < 86400000) return Response.json({ ok:true, recorded:false, reason:"duplicate" });
+      const reverseTime = String(9999999999999 - Date.parse(visit.submittedAt)).padStart(13, "0");
+      const storedVisit = { ...visit };
+      delete storedVisit.requesterHash;
+      delete storedVisit.pathHash;
+      await this.storage.put(`visitor:${reverseTime}:${crypto.randomUUID()}`, storedVisit);
+      await this.storage.put(dedupeKey, Date.now());
+      await this.scheduleCleanup();
       return Response.json({ ok:true, recorded:true });
     }
     if (request.method === "GET" && url.pathname === "/records") {
       const records = await this.storage.list({ prefix:"report:", limit:200 });
       return Response.json([...records.values()]);
     }
+    if (request.method === "GET" && url.pathname === "/visitors") {
+      const records = await this.storage.list({ prefix:"visitor:", limit:500 });
+      return Response.json([...records.values()]);
+    }
     return new Response("Not found", { status:404 });
+  }
+  async scheduleCleanup() {
+    if (!this.state.storage.setAlarm) return;
+    const current = this.state.storage.getAlarm ? await this.state.storage.getAlarm() : null;
+    if (current === null || current > Date.now() + 86400000) await this.state.storage.setAlarm(Date.now() + 86400000);
+  }
+  async alarm() {
+    const now = Date.now(), visitorCutoff = now - 365 * 86400000, shortCutoff = now - 2 * 86400000;
+    for (const prefix of ["visitor:", "visitor-dedupe:", "access:", "rate:", "reported:"]) {
+      const entries = await this.storage.list({ prefix });
+      const expired = [];
+      for (const [key, value] of entries) {
+        const timestamp = typeof value === "number" ? value : Date.parse(value?.submittedAt || "");
+        const cutoff = prefix === "visitor:" || prefix === "reported:" ? visitorCutoff : shortCutoff;
+        if (Number.isFinite(timestamp) && timestamp < cutoff) expired.push(key);
+      }
+      if (expired.length && this.storage.delete) await this.storage.delete(expired);
+    }
+    await this.scheduleCleanup();
   }
 }
 
@@ -100,7 +143,7 @@ async function submitCrawlerReport(request, env) {
   const organization = text("organization", 120), purpose = text("purpose", 1000), crawler = text("crawler", 120), reportedUrl = text("reportedUrl", 500);
   if (!organization || !purpose || !crawler) return Response.json({ error:"소속 기관명, 방문 목적, 사용 도구를 모두 입력해 주세요." }, { status:400 });
   const cf = request.cf || {};
-  const requester = request.headers.get("cf-connecting-ip") || request.headers.get("user-agent") || "unknown";
+  const requester = (request.headers.get("cf-connecting-ip") || "unknown") + "|" + (request.headers.get("user-agent") || "unknown");
   const requesterHash = [...new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(requester)))].map(byte=>byte.toString(16).padStart(2,"0")).join("");
   const report = { organization, purpose, crawler, reportedUrl, submittedAt:new Date().toISOString(), userAgent:(request.headers.get("user-agent") || "").slice(0, 500), referer:(request.headers.get("referer") || "").slice(0, 500), country:cf.country || "", city:cf.city || "", requesterHash };
   const response = await crawlerReportStore(env).fetch("https://internal/submit", { method:"POST", headers:{ "content-type":"application/json" }, body:JSON.stringify(report) });
@@ -127,7 +170,7 @@ async function recordCrawlerAccess(request, env) {
   let parsedUrl;
   try { parsedUrl = new URL(pageUrl); } catch { return new Response("Invalid URL", { status:400, headers:cors }); }
   if (parsedUrl.origin !== "https://mdj0126.github.io") return new Response("Invalid site", { status:400, headers:cors });
-  const requester = request.headers.get("cf-connecting-ip") || request.headers.get("user-agent") || "unknown";
+  const requester = (request.headers.get("cf-connecting-ip") || "unknown") + "|" + (request.headers.get("user-agent") || "unknown");
   const digest = async value => [...new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(value)))].map(byte=>byte.toString(16).padStart(2,"0")).join("");
   const cf = request.cf || {};
   const report = { organization:"미신고 자동 접근", purpose:"안내 정보를 제출하지 않은 상태에서 사이트 페이지에 자동화 접근 신호가 감지되었습니다.", crawler:clientSignal, reportedUrl:pageUrl, submittedAt:new Date().toISOString(), userAgent:(request.headers.get("user-agent") || "").slice(0, 500), referer:(request.headers.get("referer") || "").slice(0, 500), country:cf.country || "", city:cf.city || "", recordType:"automatic", requesterHash:await digest(requester), pathHash:await digest(parsedUrl.pathname) };
@@ -135,9 +178,33 @@ async function recordCrawlerAccess(request, env) {
   return new Response(await response.text(), { status:response.status, headers:{ ...cors, "content-type":"application/json;charset=UTF-8" } });
 }
 
+async function recordVisitorAccess(request, env) {
+  const origin = request.headers.get("origin") || "";
+  const cors = crawlerCorsHeaders(request);
+  if (origin && !cors["access-control-allow-origin"]) return new Response("Forbidden", { status:403 });
+  if (Number(request.headers.get("content-length") || 0) > 1024) return new Response("Payload too large", { status:413, headers:cors });
+  let input;
+  try { input = JSON.parse(await request.text()); } catch { return new Response("Invalid JSON", { status:400, headers:cors }); }
+  const pageUrl = typeof input.pageUrl === "string" ? input.pageUrl.slice(0, 500) : "";
+  let parsedUrl;
+  try { parsedUrl = new URL(pageUrl); } catch { return new Response("Invalid URL", { status:400, headers:cors }); }
+  if (parsedUrl.origin !== "https://mdj0126.github.io") return new Response("Invalid site", { status:400, headers:cors });
+  const requester = (request.headers.get("cf-connecting-ip") || "unknown") + "|" + (request.headers.get("user-agent") || "unknown");
+  const digest = async value => [...new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(value)))].map(byte=>byte.toString(16).padStart(2,"0")).join("");
+  const cf = request.cf || {};
+  const visit = { submittedAt:new Date().toISOString(), pageUrl, userAgent:(request.headers.get("user-agent") || "").slice(0, 500), referer:(request.headers.get("referer") || "").slice(0, 500), country:cf.country || "", city:cf.city || "", requesterHash:await digest(requester), pathHash:await digest(parsedUrl.pathname) };
+  const response = await crawlerReportStore(env).fetch("https://internal/visit", { method:"POST", headers:{ "content-type":"application/json" }, body:JSON.stringify(visit) });
+  return new Response(await response.text(), { status:response.status, headers:{ ...cors, "content-type":"application/json;charset=UTF-8" } });
+}
+
 async function crawlerReports(request, env) {
   if (!await validSession(request, env)) return new Response("Unauthorized", { status:401 });
   return crawlerReportStore(env).fetch("https://internal/records");
+}
+
+async function visitorRecords(request, env) {
+  if (!await validSession(request, env)) return new Response("Unauthorized", { status:401 });
+  return crawlerReportStore(env).fetch("https://internal/visitors");
 }
 
 async function report(request, env, days, requestedDate, requestedStart, requestedEnd) {

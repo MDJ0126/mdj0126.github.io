@@ -158,6 +158,10 @@
     license.href = '/license.html';
     license.textContent = 'LICENSE';
 
+    var privacy = document.createElement('a');
+    privacy.href = '/privacy.html';
+    privacy.textContent = 'PRIVACY';
+
     var separator = document.createElement('span');
     separator.setAttribute('aria-hidden', 'true');
     separator.textContent = '·';
@@ -167,6 +171,9 @@
 
     footer.appendChild(license);
     footer.appendChild(separator);
+    footer.appendChild(privacy);
+    var privacySeparator = separator.cloneNode(true);
+    footer.appendChild(privacySeparator);
     footer.appendChild(copyright);
     document.body.appendChild(footer);
   }

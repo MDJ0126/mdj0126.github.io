@@ -99,11 +99,11 @@ jobs:
             });
             var crawlerPattern = /bot|crawler|spider|slurp|bingpreview|headless|phantom|selenium|playwright|puppeteer|chatgpt|gptbot|claudebot|anthropic|perplexity|bytespider|cohere|google-extended|amazonbot|applebot-extended/i;
             var crawlerSignal = navigator.webdriver ? 'navigator.webdriver' : (crawlerPattern.test(navigator.userAgent) ? navigator.userAgent.slice(0, 120) : '');
-            if (!excluded && crawlerSignal) {
-              fetch('https://resume-analytics-dashboard.ehdwns0126.workers.dev/api/crawler-access', {
+            if (!excluded) {
+              fetch('https://resume-analytics-dashboard.ehdwns0126.workers.dev/api/' + (crawlerSignal ? 'crawler-access' : 'visitor-access'), {
                 method: 'POST', mode: 'cors', keepalive: true,
                 headers: {'content-type': 'text/plain;charset=UTF-8'},
-                body: JSON.stringify({pageUrl: location.href, signal: crawlerSignal})
+                body: JSON.stringify(crawlerSignal ? {pageUrl: location.href, signal: crawlerSignal} : {pageUrl: location.href})
               }).catch(function () {});
             }
             if (excluded || window[disableKey]) { disable(); return; }
