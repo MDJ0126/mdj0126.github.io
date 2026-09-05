@@ -1,0 +1,52 @@
+---
+title: 데미안 전기
+category: company-projects
+category_label: COMPANY PROJECT
+permalink: /company-projects/demian-saga/
+summary: 공통 UI 프레임워크와 주요 아웃게임 콘텐츠를 개발한 수집형 RPG 프로젝트입니다.
+genre: 수집형 RPG
+date: 2020-08-01
+order: 2
+tags: [Unity, C#, NGUI, URP, AssetBundle]
+icon: demiansaga.jpg
+images: [demian_saga_1.jpg, demian_saga_2.jpg, demian_saga_3.jpg, demian_saga_4.jpg]
+tools:
+  - { name: Unity, icon: unity.png }
+---
+## 프로젝트 개요
+
+- **개발 기간:** 2020.08 ~ 2023.12
+- **출시:** 2023년 4월
+- **장르:** 수집형 RPG
+- **소속:** 해긴
+- **팀 구성:** 총 20명 · 클라이언트 4명
+- **기술:** Unity Engine 2021.3, C#, NGUI, URP
+- **관리 및 배포:** SVN, Jenkins
+
+공통 UI 프레임워크와 주요 아웃게임 콘텐츠를 개발한 수집형 RPG 프로젝트입니다.
+
+## 담당 기능
+
+- UI 전환·팝업·씬 관리를 포함한 아웃게임 공통 프레임워크 설계 및 구현
+- 콘텐츠별 화면 생성·전환·종료 흐름과 상태 관리 방식 표준화
+- 로그인 프로세스와 로비 진입 공통 알림 처리 개발
+- 캐릭터 목록·정보·레벨업·승급·잠재력·인연·링크 콘텐츠 개발
+- 인벤토리와 장비·소울기어·신화 장비 관리 콘텐츠 개발
+- 상점·교환 상점·멤버십 및 인앱 상품 콘텐츠 개발
+- 무한의 탑·시련의 탑·아레나·점령전 콘텐츠 개발
+- 캐릭터 스킨·동료 찾기·파견·이벤트 콘텐츠 개발
+- 아이템·재화·보상·상품·업적·퀘스트 등 유저 정보 관리 구조 개발
+- TCP 기반 실시간 길드 대항전 콘텐츠 개발
+- AssetBundle 기반 캐릭터·리소스 로드 및 관리
+- NGUI 환경에서 Spine 및 파티클 컴포넌트가 정상 동작하도록 호환 기능 개발
+- Jenkins 기반 Android·iOS 빌드·배포 및 유지보수
+- 글로벌 출시와 라이브 서비스 업데이트·QA 이슈 대응
+
+## 주요 성과
+
+- 기존 UI Manager를 프로젝트 구조에 맞게 리팩터링하여 공통 UI 관리 구조로 개선
+- 아틀라스와 캐릭터·스킨 프리팹을 생성하는 제작 도구 개발
+- 실시간 길드 대항전에서 TCP 연결 종료를 감지하고 재연결하는 처리 구현
+- AssetBundle 캐릭터의 T-포즈와 크래시를 분석하고 코드 스트리핑 설정 및 더미 프리팹 포함 방식으로 해결
+- Google Play 정책 변경에 맞춰 APK·OBB 배포 구조를 AAB·PAD 기반으로 전환
+- 프로젝트 초기 개발부터 글로벌 출시 및 라이브 운영까지 참여하여 신규 콘텐츠 개발과 업데이트·QA 대응 수행
