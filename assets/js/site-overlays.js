@@ -93,20 +93,17 @@
     contact.className = 'site-contact';
     contact.setAttribute('aria-label', '연락처');
 
-    var title = document.createElement('small');
-    title.className = 'site-contact-title';
-    title.textContent = 'CONTACT';
-
     var links = document.createElement('div');
     links.className = 'site-contact-links';
     links.setAttribute('aria-label', '연락처 바로가기');
 
-    links.appendChild(createLink(
-      'site-contact-linkedin',
-      'https://www.linkedin.com/in/moondongjun/',
-      'LinkedIn 프로필 열기',
-      'LinkedIn으로 이동하기'
-    ));
+
+    if (/^\/(Resume|Portfolio)(\/|$)/.test(window.location.pathname)) {
+      var home = createLink('site-contact-home', '/', '홈으로 이동', '홈으로 이동하기');
+      home.removeAttribute('target');
+      home.removeAttribute('rel');
+      links.appendChild(home);
+    }
 
     var email = document.createElement('button');
     email.className = 'site-contact-button site-contact-email';
@@ -130,13 +127,19 @@
     links.appendChild(email);
 
     links.appendChild(createLink(
+      'site-contact-linkedin',
+      'https://www.linkedin.com/in/moondongjun/',
+      'LinkedIn 프로필 열기',
+      'LinkedIn으로 이동하기'
+    ));
+
+    links.appendChild(createLink(
       'site-contact-kakao',
       'https://open.kakao.com/o/sWoSndmh',
       '카카오톡 1:1 오픈채팅 열기',
       '카카오톡 오픈채팅으로 이동하기'
     ));
 
-    contact.appendChild(title);
     contact.appendChild(links);
     document.body.appendChild(contact);
 
@@ -172,7 +175,7 @@
 
   var profile = document.querySelector('.github-profile');
   if (profile) attachPointerTooltip(profile, 'GitHub로 이동하기');
-  document.querySelectorAll('.site-contact-button, .site-home-link').forEach(function (button) {
+  document.querySelectorAll('.site-contact-button').forEach(function (button) {
     attachPointerTooltip(button, button.dataset.pointerTooltip);
   });
 })();
