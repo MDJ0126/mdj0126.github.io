@@ -40,4 +40,20 @@ assert.equal(records[0].requesterHash, undefined);
 assert.equal((await worker.default.fetch(new Request('https://worker.example/api/crawler-reports'), env)).status, 401);
 assert.equal((await worker.default.fetch(new Request('https://worker.example/api/crawler-report', { method:'POST', body:'{}' }), env)).status, 415);
 
-console.log('PASS: report page, JSON submission, storage, rate limit, private records API, content-type validation');
+const automaticPayload = { pageUrl:'https://mdj0126.github.io/Resume/', signal:'navigator.webdriver' };
+const automaticAccess = userAgent => worker.default.fetch(new Request('https://worker.example/api/crawler-access', { method:'POST', headers:{ origin:'https://mdj0126.github.io', 'content-type':'text/plain;charset=UTF-8', 'user-agent':userAgent }, body:JSON.stringify(automaticPayload) }), env);
+const automatic = await automaticAccess('HeadlessTest/1.0');
+assert.equal(automatic.status, 200);
+assert.equal(automatic.headers.get('access-control-allow-origin'), 'https://mdj0126.github.io');
+assert.equal((await automatic.json()).recorded, true);
+assert.equal((await (await automaticAccess('HeadlessTest/1.0')).json()).reason, 'duplicate');
+assert.equal((await worker.default.fetch(new Request('https://worker.example/api/crawler-access', { method:'POST', headers:{ origin:'https://example.com', 'content-type':'text/plain' }, body:JSON.stringify(automaticPayload) }), env)).status, 403);
+
+const reportedSubmit = await worker.default.fetch(new Request('https://worker.example/api/crawler-report', { method:'POST', headers:{ 'content-type':'application/json', 'user-agent':'ReportedBot/1.0' }, body:JSON.stringify({ ...payload, crawler:'ReportedBot/1.0' }) }), env);
+assert.equal(reportedSubmit.status, 201);
+assert.equal((await (await automaticAccess('ReportedBot/1.0')).json()).reason, 'reported');
+const finalRecords = await (await reportStore.fetch(new Request('https://internal/records'))).json();
+assert.equal(finalRecords.length, 3);
+assert.equal(finalRecords.filter(record => record.recordType === 'automatic').length, 1);
+
+console.log('PASS: voluntary reports, automatic access records, deduplication, reported-user suppression, CORS, private records API');

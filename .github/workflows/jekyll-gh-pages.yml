@@ -97,6 +97,15 @@ jobs:
             window.addEventListener('storage', function (event) {
               if (event.key === 'exclude_analytics' && event.newValue === 'true') disable();
             });
+            var crawlerPattern = /bot|crawler|spider|slurp|bingpreview|headless|phantom|selenium|playwright|puppeteer|chatgpt|gptbot|claudebot|anthropic|perplexity|bytespider|cohere|google-extended|amazonbot|applebot-extended/i;
+            var crawlerSignal = navigator.webdriver ? 'navigator.webdriver' : (crawlerPattern.test(navigator.userAgent) ? navigator.userAgent.slice(0, 120) : '');
+            if (!excluded && crawlerSignal) {
+              fetch('https://resume-analytics-dashboard.ehdwns0126.workers.dev/api/crawler-access', {
+                method: 'POST', mode: 'cors', keepalive: true,
+                headers: {'content-type': 'text/plain;charset=UTF-8'},
+                body: JSON.stringify({pageUrl: location.href, signal: crawlerSignal})
+              }).catch(function () {});
+            }
             if (excluded || window[disableKey]) { disable(); return; }
 
             window.dataLayer = window.dataLayer || [];

@@ -37,6 +37,8 @@ export default {
     if (url.pathname === "/") return new Response(HTML.replaceAll("__CLIENT_ID__", env.GOOGLE_CLIENT_ID).replaceAll("__MAPS_API_KEY__", JSON.stringify(env.GOOGLE_MAPS_EMBED_API_KEY || "")), { headers: { "content-type": "text/html;charset=UTF-8", "cache-control": "no-store" } });
     if (url.pathname === "/crawler-report" && request.method === "GET") return new Response(CRAWLER_REPORT_HTML, { headers: { "content-type": "text/html;charset=UTF-8", "cache-control": "no-store" } });
     if (url.pathname === "/api/crawler-report" && request.method === "POST") return submitCrawlerReport(request, env);
+    if (url.pathname === "/api/crawler-access" && request.method === "POST") return recordCrawlerAccess(request, env);
+    if (url.pathname === "/api/crawler-access" && request.method === "OPTIONS") return new Response(null, { status:204, headers:crawlerCorsHeaders(request) });
     if (url.pathname === "/api/crawler-reports" && request.method === "GET") return crawlerReports(request, env);
     if (url.pathname === "/api/session" && request.method === "POST") return createSession(request, env);
     if (url.pathname === "/api/logout" && request.method === "POST") return new Response(null, { status: 204, headers: { "set-cookie": "resume_session=; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=0" } });
@@ -59,7 +61,22 @@ export class CrawlerReportStore {
       delete storedReport.requesterHash;
       await this.storage.put(`report:${reverseTime}:${crypto.randomUUID()}`, storedReport);
       if (rateKey) await this.storage.put(rateKey, Date.now());
+      if (report.requesterHash) await this.storage.put(`reported:${report.requesterHash}`, Date.now());
       return Response.json({ ok:true });
+    }
+    if (request.method === "POST" && url.pathname === "/access") {
+      const report = await request.json();
+      if (await this.storage.get(`reported:${report.requesterHash}`)) return Response.json({ ok:true, recorded:false, reason:"reported" });
+      const accessKey = `access:${report.requesterHash}:${report.pathHash}`;
+      const lastAccess = await this.storage.get(accessKey);
+      if (lastAccess && Date.now() - lastAccess < 86400000) return Response.json({ ok:true, recorded:false, reason:"duplicate" });
+      const reverseTime = String(9999999999999 - Date.parse(report.submittedAt)).padStart(13, "0");
+      const storedReport = { ...report };
+      delete storedReport.requesterHash;
+      delete storedReport.pathHash;
+      await this.storage.put(`report:${reverseTime}:${crypto.randomUUID()}`, storedReport);
+      await this.storage.put(accessKey, Date.now());
+      return Response.json({ ok:true, recorded:true });
     }
     if (request.method === "GET" && url.pathname === "/records") {
       const records = await this.storage.list({ prefix:"report:", limit:200 });
@@ -89,6 +106,33 @@ async function submitCrawlerReport(request, env) {
   const response = await crawlerReportStore(env).fetch("https://internal/submit", { method:"POST", headers:{ "content-type":"application/json" }, body:JSON.stringify(report) });
   if (!response.ok) return Response.json(await response.json(), { status:response.status });
   return Response.json({ ok:true, message:"방문 정보가 제출되었습니다." }, { status:201 });
+}
+
+function crawlerCorsHeaders(request) {
+  const origin = request.headers.get("origin") || "";
+  const allowed = origin === "https://mdj0126.github.io" || /^http:\/\/(?:127\.0\.0\.1|localhost)(?::\d+)?$/.test(origin);
+  return allowed ? { "access-control-allow-origin":origin, "access-control-allow-methods":"POST, OPTIONS", "access-control-allow-headers":"content-type", "vary":"Origin" } : {};
+}
+
+async function recordCrawlerAccess(request, env) {
+  const origin = request.headers.get("origin") || "";
+  const cors = crawlerCorsHeaders(request);
+  if (origin && !cors["access-control-allow-origin"]) return new Response("Forbidden", { status:403 });
+  if (Number(request.headers.get("content-length") || 0) > 2048) return new Response("Payload too large", { status:413, headers:cors });
+  let input;
+  try { input = JSON.parse(await request.text()); } catch { return new Response("Invalid JSON", { status:400, headers:cors }); }
+  const pageUrl = typeof input.pageUrl === "string" ? input.pageUrl.slice(0, 500) : "";
+  const clientSignal = typeof input.signal === "string" ? input.signal.slice(0, 120) : "";
+  if (!pageUrl || !clientSignal) return new Response("Missing fields", { status:400, headers:cors });
+  let parsedUrl;
+  try { parsedUrl = new URL(pageUrl); } catch { return new Response("Invalid URL", { status:400, headers:cors }); }
+  if (parsedUrl.origin !== "https://mdj0126.github.io") return new Response("Invalid site", { status:400, headers:cors });
+  const requester = request.headers.get("cf-connecting-ip") || request.headers.get("user-agent") || "unknown";
+  const digest = async value => [...new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(value)))].map(byte=>byte.toString(16).padStart(2,"0")).join("");
+  const cf = request.cf || {};
+  const report = { organization:"미신고 자동 접근", purpose:"안내 정보를 제출하지 않은 상태에서 사이트 페이지에 자동화 접근 신호가 감지되었습니다.", crawler:clientSignal, reportedUrl:pageUrl, submittedAt:new Date().toISOString(), userAgent:(request.headers.get("user-agent") || "").slice(0, 500), referer:(request.headers.get("referer") || "").slice(0, 500), country:cf.country || "", city:cf.city || "", recordType:"automatic", requesterHash:await digest(requester), pathHash:await digest(parsedUrl.pathname) };
+  const response = await crawlerReportStore(env).fetch("https://internal/access", { method:"POST", headers:{ "content-type":"application/json" }, body:JSON.stringify(report) });
+  return new Response(await response.text(), { status:response.status, headers:{ ...cors, "content-type":"application/json;charset=UTF-8" } });
 }
 
 async function crawlerReports(request, env) {
