@@ -68,6 +68,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Test build processing
+        run: node scripts/finalize-site.test.cjs
+      - name: Finalize and validate all pages
+        run: node scripts/finalize-site.cjs _site
       - name: Inject and verify analytics in all generated pages
         run: |
           node <<'NODE'
@@ -113,7 +117,7 @@ jobs:
               return entry.isDirectory() ? htmlFiles(file) : /\.html?$/i.test(file) ? [file] : [];
             });
           }
-          const files = htmlFiles(root);
+          const files = htmlFiles(root).filter(file => /<head\b/i.test(fs.readFileSync(file, 'utf8')));
           if (!files.length) throw new Error('No generated HTML found');
           for (const file of files) {
             let html = fs.readFileSync(file, 'utf8');

@@ -4,12 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   {% unless page.category_label %}<script>document.documentElement.classList.add('portfolio-js');try{if(sessionStorage.getItem('portfolio-loading-shown')==='true'){document.documentElement.classList.add('portfolio-skip-loading')}else{sessionStorage.setItem('portfolio-loading-shown','true');document.documentElement.classList.add('page-loading')}}catch(e){document.documentElement.classList.add('page-loading')}</script>{% endunless %}
-  <meta name="robots" content="noindex,nofollow">
   <title>문동준 포트폴리오</title>
   <link rel="stylesheet" href="{{ '/assets/css/portfolio.css' | relative_url }}">
   <link rel="stylesheet" href="{{ '/assets/css/card-tools.css?v=20260903-2' | relative_url }}">
   {% unless page.category_label %}<link rel="stylesheet" href="{{ '/assets/css/loading.css' | relative_url }}">{% endunless %}
-  <link rel="stylesheet" href="/assets/css/site-overlays.css">
 </head>
 <body>
   {% unless page.category_label %}
@@ -24,7 +22,6 @@
   {% endif %}
   <main class="portfolio-shell">{{ content }}</main>
   <div class="image-viewer" id="image-viewer" role="dialog" aria-modal="true" aria-label="스크린샷 확대 보기" hidden><button type="button" class="image-viewer-close" aria-label="닫기">×</button><img alt="확대된 프로젝트 스크린샷"></div>
-  <script src="/assets/js/site-overlays.js"></script>
   {% if page.category_label %}
   <script>
     document.querySelectorAll('.home-back, .post-back').forEach(function (link) {

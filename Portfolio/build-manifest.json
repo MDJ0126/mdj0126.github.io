@@ -1,0 +1,8 @@
+---
+layout: null
+---
+[
+{% for post in site.posts %}
+  {"source":{{ post.path | jsonify }},"url":{{ post.url | relative_url | jsonify }},"title":{{ post.title | jsonify }},"summary":{{ post.summary | default: post.title | jsonify }},"image":{{ post.images.first | default: '' | jsonify }}}{% unless forloop.last %},{% endunless %}
+{% endfor %}
+]
