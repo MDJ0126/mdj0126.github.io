@@ -1,7 +1,12 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 
-const source = fs.readFileSync(new URL('./src/worker.js', import.meta.url), 'utf8');
+const markdown = fs.readFileSync(new URL('./src/crawler-report.md', import.meta.url), 'utf8');
+const pageModule = fs.readFileSync(new URL('./src/crawler-report-page.js', import.meta.url), 'utf8')
+  .replace('import crawlerReportMarkdown from "./crawler-report.md";', `const crawlerReportMarkdown = ${JSON.stringify(markdown)};`)
+  .replace('export function crawlerReportHtml()', 'function crawlerReportHtml()');
+const source = fs.readFileSync(new URL('./src/worker.js', import.meta.url), 'utf8')
+  .replace('import { crawlerReportHtml } from "./crawler-report-page.js";', pageModule);
 const worker = await import('data:text/javascript;base64,' + Buffer.from(source).toString('base64'));
 
 class MemoryStorage {

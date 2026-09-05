@@ -30,6 +30,7 @@ npx wrangler deploy
 
 ## 크롤링 제출 기록
 
+- `src/crawler-report.md`: 공개 안내 페이지의 제목과 안내 문구. 문구를 바꿀 때 이 파일만 수정합니다.
 - `/crawler-report`: 자동 수집 도구가 기관명, 방문 목적, 사용 도구를 제출하는 공개 페이지
 - `POST /api/crawler-report`: 같은 내용을 JSON으로 제출하는 공개 API
 - `POST /api/crawler-access`: 빌드에 삽입된 공통 스크립트가 감지한 미신고 자동화 접근을 기록하는 API
