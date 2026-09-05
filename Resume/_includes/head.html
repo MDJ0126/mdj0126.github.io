@@ -11,6 +11,11 @@
       var isLocal = host === 'localhost' || host === '127.0.0.1' || host === '0.0.0.0' || host === '[::1]';
       if (isLocal || localStorage.getItem('exclude_analytics') === 'true') window['ga-disable-{{ site.google_analytics }}'] = true;
     } catch (e) {}
+    window.addEventListener('storage', function (event) {
+      if (event.key === 'exclude_analytics' && event.newValue === 'true') {
+        window['ga-disable-{{ site.google_analytics }}'] = true;
+      }
+    });
   </script>
   <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics }}"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','{{ site.google_analytics }}');</script>

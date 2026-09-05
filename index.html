@@ -26,6 +26,11 @@
           window['ga-disable-G-6GHV7BHE5J'] = true;
         }
       } catch (e) {}
+      window.addEventListener('storage', function (event) {
+        if (event.key === 'exclude_analytics' && event.newValue === 'true') {
+          window['ga-disable-G-6GHV7BHE5J'] = true;
+        }
+      });
     </script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-6GHV7BHE5J"></script>
     <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-6GHV7BHE5J');</script>
@@ -96,7 +101,7 @@
       <p class="github-provider">POWERED BY GITHUB</p>
       <div class="headline">
         <h1 id="about-headline"></h1>
-        <a class="admin-icon" href="https://resume-analytics-dashboard.ehdwns0126.workers.dev" target="_blank" rel="noopener" aria-label="관리 페이지 열기" title="사이트 관리" onclick="try { localStorage.setItem('exclude_analytics', 'true'); } catch (e) {}">⚙️</a>
+        <a class="admin-icon" href="https://resume-analytics-dashboard.ehdwns0126.workers.dev" target="_blank" rel="noopener" aria-label="관리 페이지 열기" title="사이트 관리" onclick="window['ga-disable-G-6GHV7BHE5J'] = true; try { localStorage.setItem('exclude_analytics', 'true'); } catch (e) {}">⚙️</a>
       </div>
       <section class="intro" aria-labelledby="intro-title">
         <small id="intro-title"></small>
