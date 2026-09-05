@@ -58,12 +58,14 @@ jobs:
           cp index.html _site/index.html
           cp about.md _site/about.md
           cp license.html _site/license.html
+          cp privacy.html _site/privacy.html
           cp Resume/LICENSE _site/LICENSE.md
           cp 403.html _site/403.html
           cp 404.html _site/404.html
           cp robots.txt _site/robots.txt
           cp -R assets _site/assets
           cp Resume/assets/img/common/favicon.ico _site/favicon.ico
+          test -f _site/privacy.html
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
