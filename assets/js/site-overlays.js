@@ -172,7 +172,7 @@
 
   var profile = document.querySelector('.github-profile');
   if (profile) attachPointerTooltip(profile, 'GitHub로 이동하기');
-  document.querySelectorAll('.site-contact-button').forEach(function (button) {
+  document.querySelectorAll('.site-contact-button, .site-home-link').forEach(function (button) {
     attachPointerTooltip(button, button.dataset.pointerTooltip);
   });
 })();

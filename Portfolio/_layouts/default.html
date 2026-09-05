@@ -22,7 +22,7 @@
   {% if page.category_label %}
   <a class="home-back" href="{{ '/' | relative_url }}" aria-label="이전 페이지로 돌아가기"><img src="/Resume/assets/img/common/back-arrow.svg" alt="" width="32" height="32"></a>
   {% else %}
-  <span class="home-back is-disabled" aria-hidden="true" style="display:none"><img src="/Resume/assets/img/common/back-arrow.svg" alt="" width="32" height="32"></span>
+  <a class="site-home-link" href="/" aria-label="홈으로 이동" data-pointer-tooltip="홈으로 이동하기"><img src="https://avatars.githubusercontent.com/u/83164393?v=4&amp;s=64" width="26" height="26" alt=""><span>moon dong jun</span></a>
   {% endif %}
   <main class="portfolio-shell">{{ content }}</main>
   <div class="image-viewer" id="image-viewer" role="dialog" aria-modal="true" aria-label="스크린샷 확대 보기" hidden><button type="button" class="image-viewer-close" aria-label="닫기">×</button><img alt="확대된 프로젝트 스크린샷"></div>
